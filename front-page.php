@@ -8,18 +8,12 @@ $query_news = new WP_Query([
     'category_name' => 'Aktuálně'
 ]);
 
-$fp_meta = get_post_meta(get_queried_object_id());
-$fp_meta_boxes = get_post_meta(get_queried_object_id(), 'box_group', true);
-$fp_link = get_post_meta(get_queried_object_id(), 'hp_link', true);
-
-if ($fp_link != '') {
-    $fp_link = get_permalink($fp_meta['hp_link']['0']);
-}
+$blocks = parse_blocks(get_the_content());
 
 ?>
 
 <div class="jumbotron-intro">
-    
+
     <img
     class="img-fluid img-main lazy"
     data-sizes="(max-width: 1400px) 100vw, 1400px"
@@ -41,69 +35,31 @@ if ($fp_link != '') {
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2503.jpg 2503w,
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2557.jpg 2557w,
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2559.jpg 2559w,
-    <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg 2560w" 
+    <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg 2560w"
     data-src="<?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg"
     alt="Korespondence" role="presentation">
-    
+
 </div>
 
-
+<?php while (have_posts()) : ?>
+    <?php
+    the_post();
+    $blocks = parse_blocks(get_the_content());
+    ?>
 <div class="row bg-dark-500">
-    <div class="container">
-        <?php while (have_posts()) : ?>
-            <?php the_post(); ?>
-            <div class="row">
-                <div class="col-12 jumbotron text-center mb-0">
-                    <p class="lead">
-                        <?= $fp_meta['hp_intro']['0']; ?>
-                    </p>
-                    <a href="<?= $fp_link; ?>" class="btn btn-outline-white btn-sm text-uppercase btn-state-primary px-4 mt-4" style="font-size:16px">
-                        <?php _e('Více', 'hiko'); ?>&nbsp;&nbsp;&raquo;
-                    </a>
-                </div>
-            </div>
-        <?php endwhile; ?>
-    </div>
+    <?php output_block_by_name($blocks, 'carbon-fields/uvod'); ?>
 </div>
 
 <div class="row my-5 py-3 lh-lg">
     <div class="container">
         <div class="row featured">
-            
-            <?php foreach ($fp_meta_boxes as $box) : ?>
-                <div class="col-lg-4 col-md-6">
-                    <div class="featured-box">
-                        <h3 class="title">
-                            <?php if (array_key_exists('url', $box) && $box['url'] != '') : ?>
-                                <a href="<?= get_permalink($box['url']); ?>">
-                                    <?= get_esc_setted_value($box['title']); ?>
-                                </a>
-                            <?php else : ?>
-                                <?= get_esc_setted_value($box['title']); ?>
-                            <?php endif; ?>
-                        </h3>
-                        <?php if ($box['descr'] != '') : ?>
-                            <p>
-                                <?= esc_html($box['descr']); ?>
-                                <?php if (array_key_exists('url', $box) && $box['url'] != '') : ?>
-                                    <a href="<?= get_permalink($box['url']); ?>">
-                                        <?php _e('Více', 'hiko'); ?> »
-                                    </a>
-                                <?php endif; ?>
-                            </p>
-                        <?php elseif ($box['desc-html'] != '') : ?>
-                            <?= $box['desc-html']; ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-            
+            <?php output_block_by_name($blocks, 'carbon-fields/uvodni-box'); ?>
         </div>
     </div>
-    
-    
-</div>
 
+
+</div>
+<?php endwhile; ?>
 <div class="row bg-light lh-lg">
     <div class="container">
         <div class="row my-5 py-3">
