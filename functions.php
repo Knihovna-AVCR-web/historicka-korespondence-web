@@ -84,48 +84,6 @@ function conditional_body_class($classes)
 add_filter('body_class', 'conditional_body_class');
 
 
-class NavbarWalker extends Walker_Nav_Menu
-{
-    public function start_el(&$output, $item, $depth = 0, $args = [], $id = 0)
-    {
-        $new_classes = '';
-        //$toggle = '';
-
-        if (in_array('current-menu-item', $item->classes) || in_array('current-page-ancestor', $item->classes)) {
-            $new_classes .= ' active';
-        }
-        /*
-        if (in_array('menu-item-has-children', $item->classes)) {
-        $new_classes .= ' dropdown';
-        $toggle = 'dropdown-toggle';
-    }
-    */
-    ob_start();
-    ?>
-    <a class="nav-link" href="<?= $item->url; ?>">
-        <?= $item->title; ?>
-    </a>
-    <?php /* ?>
-    <?php if ($toggle == '') : ?>
-
-    <?php else : ?>
-    <a class="nav-link dropdown-toggle" href="<?= $item->url; ?>" id="<?= $item->url; ?>" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <?= $item->title; ?>
-    </a>
-    <?php endif; ?>
-    <?php */ ?>
-    <?php
-    $output .=  '<li class="nav-item py-1 py-lg-0 ' . $new_classes . '">' . ob_get_clean();
-}
-
-public function end_el(&$output, $item, $depth = 0, $args = [], $id = 0)
-{
-    $output .= '</li>';
-}
-}
-
-
-
 function register_all_menus()
 {
     register_nav_menu('main-menu', 'Main Menu');
@@ -296,3 +254,4 @@ function output_block_by_name($blocks, $block_name)
 
 require 'inc/custom-fields.php';
 require 'inc/theme-options.php';
+require 'inc/navbar-walker.php';
