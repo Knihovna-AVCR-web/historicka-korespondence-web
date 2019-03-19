@@ -1,5 +1,13 @@
 <?php
 
+function crb_load()
+{
+    require_once(get_template_directory() . '/vendor/autoload.php');
+    \Carbon_Fields\Carbon_Fields::boot();
+}
+add_action('after_setup_theme', 'crb_load');
+
+
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'feed_links', 2);
@@ -276,6 +284,15 @@ function is_localhost($whitelist = ['127.0.0.1', '::1'])
     return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
 }
 
+
+function output_block_by_name($blocks, $block_name)
+{
+    foreach ($blocks as $block) {
+        if ($block['blockName'] == $block_name) {
+            echo render_block($block);
+        }
+    }
+}
 
 require 'inc/custom-fields.php';
 require 'inc/theme-options.php';
