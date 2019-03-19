@@ -1,0 +1,59 @@
+$red: #c0262c;
+
+$primary: $red;
+
+$theme-colors: (
+    primary: $red
+);
+
+$light: #eeedeb;
+
+$dark: #524640;
+
+$super-light: #e3e0dd;
+
+$dark-500: #8f8279;
+
+$body-color: $dark;
+
+$border-radius: 0;
+
+$border-radius-lg: 0;
+
+$border-radius-sm: 0;
+
+$font-family-serif: 'Merriweather', Georgia, serif;
+
+$font-family-base: $font-family-serif;
+
+$font-size-base: 0.875rem;
+
+$h4-font-size: $font-size-base * 1.45;
+
+$h5-font-size: $font-size-base * 1.2;
+
+$headings-font-weight: 700;
+
+$display1-weight: 400;
+
+$display2-weight: 400;
+
+$display3-weight: 400;
+
+$display4-weight: 400;
+
+$navbar-light-color: $dark;
+
+$navbar-light-hover-color: $primary;
+
+$navbar-light-active-color: $primary;
+
+$jumbotron-bg: $dark-500;
+
+$breadcrumb-padding-x: 0;
+
+$breadcrumb-bg: $white;
+
+$link-color: theme-color("primary");
+
+$link-hover-color: darken($link-color, 15%);
