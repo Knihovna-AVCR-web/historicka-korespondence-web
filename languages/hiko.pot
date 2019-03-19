@@ -1,0 +1,209 @@
+# Copyright (C) 2018 hiko
+# This file is distributed under the same license as the hiko package.
+msgid ""
+msgstr ""
+"Project-Id-Version: hiko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Jarka Pachlová <pachlova@lib.cas.cz>\n"
+"Last-Translator: Jarka Pachlová <pachlova@lib.cas.cz>\n"
+"Report-Msgid-Bugs-To: pachlova@lib.cas.cz\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: 404.php:8
+msgid "Nenalezeno"
+msgstr ""
+
+#: 404.php:11
+msgid "Zadaná stránka nebyla nalezena."
+msgstr ""
+
+#: category.php:27, front-page.php:61, front-page.php:90, front-page.php:127, page-templates/page-blekastad-front.php:89, search.php:29
+msgid "Více"
+msgstr ""
+
+#: front-page.php:111
+msgid "Aktuálně"
+msgstr ""
+
+#: functions.php:51
+msgid "Načítám"
+msgstr ""
+
+#: functions.php:52
+msgid "Při načítání dat se vyskytla chyba. Zkuste to ještě jednou"
+msgstr ""
+
+#: functions.php:139
+msgid "Úvod"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:3
+msgid "Blekastad DB"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:33, page-templates/page-blekastad-db.php:80, page-templates/page-blekastad-db.php:137
+msgid "Autor"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:40, page-templates/page-blekastad-db.php:81, page-templates/page-blekastad-db.php:151
+msgid "Příjemce"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:47, page-templates/page-blekastad-db.php:82, page-templates/page-blekastad-db.php:173
+msgid "Počáteční místo"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:54, page-templates/page-blekastad-db.php:83, page-templates/page-blekastad-db.php:187
+msgid "Místo určení"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:78
+msgid "Číslo"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:79
+msgid "Datum"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:111
+msgid "Data"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:115
+msgid "Datum dopisu"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:120
+msgid "Nejisté datum"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:125
+msgid "Poznámky"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:133
+msgid "Lidé"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:142
+msgid "Nejistý autor"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:146
+msgid "Autor vyvozený z obsahu dopisu"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:156
+msgid "Nejistý příjemce"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:160
+msgid "Příjemce vyvozený z obsahu dopisu"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:169
+msgid "Místa"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:178
+msgid "Nejisté počáteční místo"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:182
+msgid "Počáteční místo vyvozeno z obsahu dopisu"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:192
+msgid "Nejisté místo určení"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:196
+msgid "Místo určení vyvozeno z obsahu dopisu"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:205
+msgid "Obsah"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:209
+msgid "Jazyk"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:213
+msgid "Abstrakt"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:217
+msgid "Incipit"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:221
+msgid "Explicit"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:225
+msgid "Klíčová slova"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:233
+msgid "Zmíněné osoby"
+msgstr ""
+
+#: page-templates/page-blekastad-db.php:241
+msgid "Poznámka"
+msgstr ""
+
+#: page-templates/page-blekastad-front.php:3
+msgid "Blekastad Front Page"
+msgstr ""
+
+#: page-templates/page-blekastad-front.php:53
+msgid "Vstup do databáze"
+msgstr ""
+
+#: page-templates/page-blekastad-front.php:64
+msgid "Korespondence"
+msgstr ""
+
+#: page-templates/page-blekastad-front.php:66
+msgid "Milady Blekastad"
+msgstr ""
+
+#: page-templates/page-full.php:3
+msgid "Full Width"
+msgstr ""
+
+#: page-templates/page-home.php:2
+msgid "Home Page"
+msgstr ""
+
+#: partials/main-nav.php:7
+msgid "Historická<br>korespondence"
+msgstr ""
+
+#: partials/main-nav.php:11
+msgid "online"
+msgstr ""
+
+#: search.php:12
+msgid "Výsledky vyhledávání pro:"
+msgstr ""
+
+#: search.php:15
+msgid "Počet výsledků"
+msgstr ""
+
+#: search.php:36
+msgid "Zadaný výraz nebyl nalezen. Zkuste to znovu."
+msgstr ""
+
+#: searchform.php:3, searchform.php:4
+msgid "Hledat"
+msgstr ""

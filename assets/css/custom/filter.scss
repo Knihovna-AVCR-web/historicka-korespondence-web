@@ -1,0 +1,27 @@
+.filter {
+    & .filter-title {
+        border-bottom: 1px solid $primary;
+        color: $primary;
+        text-transform: uppercase;
+    }
+
+    & .filter-list li {
+        cursor: pointer;
+
+        &::before {
+            background-image: url('../icons/plus.svg');
+            background-position-y: 1px;
+            background-repeat: no-repeat;
+            background-size: 14px 14px;
+            content: '';
+            display: inline-block;
+            height: 14px;
+            margin-right: 4px;
+            width: 14px;
+        }
+
+        &.active::before {
+            background-image: url('../icons/minus.svg');
+        }
+    }
+}

@@ -1,0 +1,31 @@
+.btn-state-primary:hover,
+.btn-state-primary:active,
+.btn-state-primary:focus {
+    background-color: $primary !important;
+    border-color: $primary !important;
+    color: #fff;
+}
+
+.btn-state-primary:active,
+.btn-state-primary:focus {
+    box-shadow: 0 0 0 $input-btn-focus-width rgba($primary, 0.25);
+}
+
+.bg-dark-500 {
+    background-color: $dark-500;
+    color: #fff;
+}
+
+a.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.bb-light {
+    border-bottom: 2px solid $light;
+}
+
+.underlined {
+    text-decoration: underline;
+}
