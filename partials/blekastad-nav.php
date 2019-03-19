@@ -1,11 +1,8 @@
 <?php
 
 $options = get_option('hko_options');
-$blekastad_front = '#';
 
-if (is_array($options) && array_key_exists('mb_front', $options)) {
-    $blekastad_front = get_permalink($options['mb_front']);
-}
+$blekastad_front = get_permalink(carbon_get_theme_option('mb_front'));
 
 ?>
 

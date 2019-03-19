@@ -10,13 +10,7 @@ get_header();
 $fp_meta = get_post_meta(get_queried_object_id());
 $fp_meta_boxes = get_post_meta(get_queried_object_id(), 'bf_box_group', true);
 
-$options = get_option('hko_options');
-
-$db_url = '#';
-
-if (is_array($options) && array_key_exists('mb_db', $options)) {
-    $db_url = get_permalink($options['mb_db']);
-}
+$db_url = get_permalink(carbon_get_theme_option('mb_db'));
 
 ?>
 

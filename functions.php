@@ -58,7 +58,7 @@ function hiko_load_scripts()
         'loading' => __('Načítám', 'hiko'),
         'error' => __('Při načítání dat se vyskytla chyba. Zkuste to ještě jednou', 'hiko'),
         'notLoaded' => ('Požadovaný dopis se nepodařilo načíst'),
-        'home' => str_replace(home_url(), '', get_permalink(get_option('hko_options')['mb_db']))
+        'home' => str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db')))
 
 
     ]);
