@@ -251,6 +251,40 @@ function output_block_by_name($blocks, $block_name)
     }
 }
 
+
+function encode_string_to_ASCII($string)
+{
+     $output = '';
+
+    for ($i = 0; $i < strlen($string); $i++) {
+          $output .= '&#'.ord($string[$i]).';';
+    }
+
+    return $output;
+}
+
+
+function get_encoded_mailto_link($classes)
+{
+    $email = carbon_get_theme_option('contact_email');
+    if (!$email) {
+        return '';
+    }
+    $email = encode_string_to_ASCII($email);
+    $mailto = encode_string_to_ASCII('mailto:');
+
+    ob_start();
+    ?>
+
+    <a href="<?= $mailto . $email; ?>" class="<?= $classes; ?>">
+        <?= $email; ?>
+    </a>
+
+    <?php
+    return ob_get_clean();
+}
+
+
 require 'inc/custom-fields.php';
 require 'inc/theme-options.php';
 require 'inc/navbar-walker.php';
