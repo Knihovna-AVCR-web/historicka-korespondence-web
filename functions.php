@@ -40,7 +40,7 @@ function hiko_load_scripts()
         wp_enqueue_script('jquery');
     }
 
-    wp_enqueue_script('bootstrap', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.25/bootstrap-native-v4.min.js', [], null, true);
+    wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.25/dist/bootstrap-native-v4.min.js', [], null, true);
     wp_enqueue_script('lazyload', 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@10.19.0/dist/lazyload.min.js', [], null, true);
 
     if (!is_front_page()) {
@@ -50,7 +50,7 @@ function hiko_load_scripts()
             wp_enqueue_script('vue', 'https://cdn.jsdelivr.net/npm/vue', [], null, true);
         }
         wp_enqueue_script('bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.js', [], null, true);
-        wp_enqueue_script('axios', 'https://unpkg.com/axios/dist/axios.min.js', [], null, true);
+        wp_enqueue_script('axios', 'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js', [], null, true);
         wp_enqueue_script('vue-router', 'https://cdn.jsdelivr.net/npm/vue-router@3.0.2/dist/vue-router.min.js', [], null, true);
         wp_enqueue_script('lodash', 'https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js', [], null, true);
 
