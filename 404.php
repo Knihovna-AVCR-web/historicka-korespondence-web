@@ -13,7 +13,7 @@ require 'partials/entry-header.php'; ?>
 
 <?php
 
-get_search_form();
+get_template_part('partials/searchform');
 
 require 'partials/entry-footer.php';
 
