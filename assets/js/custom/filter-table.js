@@ -1,7 +1,7 @@
 /* global axios globals Vue lodash VueRouter */
-const _ = lodash
 
 if (document.getElementById('letters')) {
+    const _ = lodash
     const Home = { template: '<div></div>' }
     const Letter = { template: '<div></div>' }
 
