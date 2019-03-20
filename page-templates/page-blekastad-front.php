@@ -6,11 +6,9 @@ Template Name: Blekastad Front Page
 
 get_header();
 
-
-$fp_meta = get_post_meta(get_queried_object_id());
-$fp_meta_boxes = get_post_meta(get_queried_object_id(), 'bf_box_group', true);
-
 $db_url = get_permalink(carbon_get_theme_option('mb_db'));
+
+$blocks = parse_blocks(get_the_content());
 
 ?>
 
@@ -61,34 +59,7 @@ $db_url = get_permalink(carbon_get_theme_option('mb_db'));
                     </p>
                 </div>
             </div>
-
-            <?php if (is_array($fp_meta_boxes)) : ?>
-                <?php foreach ($fp_meta_boxes as $box) : ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="featured-box">
-                            <h3 class="title">
-                                <?php if (array_key_exists('url', $box) && $box['url'] != '') : ?>
-                                    <a href="<?= get_permalink($box['url']); ?>">
-                                        <?= get_esc_setted_value($box['title']); ?>
-                                    </a>
-                                <?php else : ?>
-                                    <?= get_esc_setted_value($box['title']); ?>
-                                <?php endif; ?>
-                            </h3>
-                            <?php if ($box['descr'] != '') : ?>
-                                <p>
-                                    <?= esc_html($box['descr']); ?>
-                                    <?php if (array_key_exists('url', $box) && $box['url'] != '') : ?>
-                                        <a href="<?= get_permalink($box['url']); ?>">
-                                            <?php _e('Více', 'hiko'); ?> »
-                                        </a>
-                                    <?php endif; ?>
-                                </p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+            <?php output_block_by_name($blocks, 'carbon-fields/uvodni-box'); ?>
         </div>
     </div>
 </div>
