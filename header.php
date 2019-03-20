@@ -18,6 +18,7 @@
     var homeUrl = "<?= esc_url(home_url('/')); ?>";
     </script>
     <?php wp_head(); ?>
+    <?php require_once 'partials/fonts.php'; ?>
 </head>
 <body <?php body_class(); ?>>
 
