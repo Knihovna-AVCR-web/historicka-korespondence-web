@@ -52,6 +52,31 @@ function hiko_remove_version()
 }
 add_filter('the_generator', 'hiko_remove_version');
 
+function clean_style_tag($input)
+{
+    preg_match_all(
+        "!<link rel='stylesheet'\s?(id='[^']+')?\s+href='(.*)' type='text/css' media='(.*)' />!",
+        $input,
+        $matches
+    );
+    if (empty($matches[2])) {
+        return $input;
+    }
+
+    // Only display media if it is meaningful
+    $media = $matches[3][0] !== '' && $matches[3][0] !== 'all' ? ' media="' . $matches[3][0] . '"' : '';
+    return '<link rel="stylesheet" href="' . $matches[2][0] . '"' . $media . '>' . "\n";
+}
+add_filter('style_loader_tag', 'clean_style_tag');
+
+
+function clean_script_tag($input)
+{
+    $input = str_replace("type='text/javascript' ", '', $input);
+    return str_replace("'", '"', $input);
+}
+add_filter('script_loader_tag', 'clean_script_tag');
+
 
 function hiko_load_scripts()
 {
