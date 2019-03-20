@@ -1,4 +1,4 @@
-<div class="row mt-5 py-5 bg-dark-500">
+<div class="row mt-5 py-5 bg-dark-500 footer">
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-auto" style="max-width:100%">
