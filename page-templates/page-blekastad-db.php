@@ -13,21 +13,21 @@ get_header();
 
 <?php while (have_posts()) : ?>
     <?php
-    
+
     the_post();
-    
+
     ?>
     <h1 class="my-5 mx-3">
         <?php the_title(); ?>
     </h1>
-    
+
     <div class="row main-content mb-5" id="letters">
-        
+
         <div class="col-md-3">
             <router-link to="/" :class="'router-link-active text-primary h3 d-block mb-3'" v-if="['letter'].indexOf($route.name) > -1">
             Zpět k vyhledávání
         </router-link>
-        
+
         <div class="filters" v-if="['home'].indexOf($route.name) > -1">
             <div class="filter pb-3">
                 <p class="filter-title mb-2"><?php _e('Autor', 'hiko'); ?></p>
@@ -35,21 +35,21 @@ get_header();
                     <li v-for="author in getAuthours" :key="author[0]" @click="toggleFilter('author', author[0]);" :class="{ active : filter.author == author[0]}"> {{ author[0] }} ({{ author[1] }}) </li>
                 </ul>
             </div>
-            
+
             <div class="filter pb-3">
                 <p class="filter-title mb-2"><?php _e('Příjemce', 'hiko'); ?></p>
                 <ul class="list-unstyled filter-list">
                     <li v-for="recipient in getRecipients" :key="recipient[0]" @click="toggleFilter('recipient', recipient[0]);" :class="{ active : filter.recipient == recipient[0]}"> {{ recipient[0] }} ({{ recipient[1] }}) </li>
                 </ul>
             </div>
-            
+
             <div class="filter pb-3">
                 <p class="filter-title mb-2"><?php _e('Počáteční místo', 'hiko'); ?></p>
-                <ul class="list-unstyled filter-list">                
+                <ul class="list-unstyled filter-list">
                     <li v-for="origin in getOrigins" :key="origin[0]" @click="toggleFilter('origin', origin[0]);" :class="{ active : filter.origin == origin[0]}"> {{ origin[0] }} ({{ origin[1] }}) </li>
                 </ul>
             </div>
-            
+
             <div class="filter pb-3">
                 <p class="filter-title mb-2"><?php _e('Místo určení', 'hiko'); ?></p>
                 <ul class="list-unstyled filter-list">
@@ -58,20 +58,20 @@ get_header();
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-9">
         <div class="loading mb-5" v-if="loading && ['home'].indexOf($route.name) > -1">
             <?php _e('Načítám'); ?>
         </div>
-        
+
         <div v-if="error && ['home'].indexOf($route.name) > -1" class="error alert alert-warning mb-5">
             {{ error }}
         </div>
-        
+
         <div v-if="letterErr && ['letter'].indexOf($route.name) > -1" class="error alert alert-warning mb-5">
             {{ letterErr }}
         </div>
-        
+
         <table class="table table-bordered table-hover table-striped filter-table" v-if="['home'].indexOf($route.name) > -1">
             <thead>
                 <tr>
@@ -85,7 +85,7 @@ get_header();
             </thead>
             <tbody>
                 <tr v-for="(row, index) in filteredData" :key="index">
-                    <td> 
+                    <td>
                         <router-link :to="{ name: 'letter', params: { id: row.l_no, y: row.year ? row.year : '0000', m: row.month ? row.month : '00', d: row.day ? row.day : '00' }}" :class="'underlined'">{{ row.l_no }} </router-link>
                     </td>
                     <td data-date="">
@@ -98,7 +98,7 @@ get_header();
                 </tr>
             </tbody>
         </table>
-        
+
         <div class="letter-single" v-if="['letter'].indexOf($route.name) > -1 && letter && !letterErr">
             <h3>
                 {{ letter.day ? letter.day : '?' }}. {{ letter.month ? letter.month : '?'}}. {{ letter.year ? letter.year : '?' }}:&#32;
@@ -106,7 +106,7 @@ get_header();
                 {{ letter.recipient ? '&rarr; ' : ''}}
                 {{ letter.recipient ? letter.recipient.replace(/;/g, ', ') : '' }} {{ letter.dest ? '(' + letter.dest.replace(/;/g, ', ') + ')' : '' }}
             </h3>
-            
+
             <div class="my-5">
                 <h5><?php _e('Data', 'hiko'); ?></h5>
                 <table class="table">
@@ -114,9 +114,9 @@ get_header();
                         <tr>
                             <td style="width: 20%"><?php _e('Datum dopisu', 'hiko'); ?></td>
                             <td>
-                                {{ letter.day ? letter.day : '?' }}. {{ letter.month ? letter.month : '?'}}. {{ letter.year ? letter.year : '????' }} 
+                                {{ letter.day ? letter.day : '?' }}. {{ letter.month ? letter.month : '?'}}. {{ letter.year ? letter.year : '????' }}
                                 <span v-if="letter.date_uncertain">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Nejisté datum', 'hiko'); ?>)</small>
                                 </span>
                             </td>
@@ -128,7 +128,7 @@ get_header();
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mb-5">
                 <h5><?php _e('Lidé', 'hiko'); ?></h5>
                 <table class="table">
@@ -138,11 +138,11 @@ get_header();
                             <td>
                                 <span v-html="letter.author.replace(/;/g, '<br>')"></span>
                                 <span v-if="letter.author_uncertain">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Nejistý autor', 'hiko'); ?>)</small>
                                 </span>
                                 <span v-if="letter.author_inferred">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Autor vyvozený z obsahu dopisu', 'hiko'); ?>)</small>
                                 </span>
                             </td>
@@ -152,11 +152,11 @@ get_header();
                             <td>
                                 <span v-html="letter.recipient.replace(/;/g, '<br>')"></span>
                                 <span v-if="letter.recipient_uncertain">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Nejistý příjemce', 'hiko'); ?>)</small>
                                 </span>
                                 <span v-if="letter.recipient_inferred">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Příjemce vyvozený z obsahu dopisu', 'hiko'); ?>)</small>
                                 </span>
                             </td>
@@ -164,7 +164,7 @@ get_header();
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mb-5">
                 <h5><?php _e('Místa', 'hiko'); ?></h5>
                 <table class="table">
@@ -174,11 +174,11 @@ get_header();
                             <td>
                                 <span v-html="letter.origin.replace(/;/g, '<br>')"></span>
                                 <span v-if="letter.origin_uncertain">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Nejisté počáteční místo', 'hiko'); ?>)</small>
                                 </span>
                                 <span v-if="letter.origin_inferred">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Počáteční místo vyvozeno z obsahu dopisu', 'hiko'); ?>)</small>
                                 </span>
                             </td>
@@ -188,11 +188,11 @@ get_header();
                             <td>
                                 <span v-html="letter.dest.replace(/;/g, '<br>')"></span>
                                 <span v-if="letter.dest_uncertain">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Nejisté místo určení', 'hiko'); ?>)</small>
                                 </span>
                                 <span v-if="letter.dest_inferred">
-                                    <br> 
+                                    <br>
                                     <small>(<?php _e('Místo určení vyvozeno z obsahu dopisu', 'hiko'); ?>)</small>
                                 </span>
                             </td>
@@ -200,7 +200,7 @@ get_header();
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mb-5">
                 <h5><?php _e('Obsah', 'hiko'); ?></h5>
                 <table class="table">
@@ -246,42 +246,7 @@ get_header();
                     </tbody>
                 </table>
             </div>
-        <?php /* ?>
-            <div class="mb-5">
-                <h5><?php _e('Uložení a poznámky', 'hiko'); ?></h5>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td style="width: 20%"><?php _e('Data', 'hiko'); ?>Místo uložení</td>
-                            <td>Filosofický ústav AV ČR</td>
-                        </tr>
-                        <tr>
-                            <td><?php _e('Poznámky', 'hiko'); ?></td>
-                            <td>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed convallis magna eu sem. In convallis. Nulla non arcu lacinia neque faucibus fringilla. </td>
-                        </tr>
-                        
-                        <tr>
-                            <td><?php _e('Data', 'hiko'); ?>MS manifestation?</td>
-                            <td>MS Letter</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="mb-5">
-                <h5><?php _e('Data', 'hiko'); ?>Propojené zdroje</h5>
-                <table class="table single-table">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <a href="#">
-                                    Název zdroje
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <?php */ ?>
+
         </div>
     </div>
 </div>

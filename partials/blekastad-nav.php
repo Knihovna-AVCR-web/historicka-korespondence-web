@@ -1,7 +1,5 @@
 <?php
 
-$options = get_option('hko_options');
-
 $blekastad_front = get_permalink(carbon_get_theme_option('mb_front'));
 
 ?>

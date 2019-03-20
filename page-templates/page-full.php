@@ -11,7 +11,7 @@ get_header(); ?>
 
     the_post();
 
-    require __DIR__ . '/../partials/entry-header-full.php';
+    require get_template_directory() . '/partials/entry-header-full.php';
 
     echo do_shortcode('[breadcrumbs]'); ?>
 
@@ -25,7 +25,8 @@ get_header(); ?>
 
     cmb2_output_gallery('hk_gallery');
 
-    require __DIR__ . '/../partials/entry-footer.php'; ?>
+    require get_template_directory() . '/partials/entry-footer.php';
+    ?>
 
 <?php endwhile;
 
