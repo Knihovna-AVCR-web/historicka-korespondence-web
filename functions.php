@@ -29,6 +29,30 @@ remove_action('wp_print_styles', 'print_emoji_styles');
 remove_action('admin_print_styles', 'print_emoji_styles');
 
 
+function hiko_remove_wp_version_strings($src)
+{
+
+    global $wp_version;
+
+    parse_str(parse_url($src, PHP_URL_QUERY), $query);
+
+    if (!empty($query['ver']) && $query['ver'] === $wp_version) {
+        $src = remove_query_arg('ver', $src);
+    }
+
+    return $src;
+}
+add_filter('script_loader_src', 'hiko_remove_wp_version_strings');
+add_filter('style_loader_src', 'hiko_remove_wp_version_strings');
+
+
+function hiko_remove_version()
+{
+    return '';
+}
+add_filter('the_generator', 'hiko_remove_version');
+
+
 function hiko_load_scripts()
 {
     wp_deregister_script('jquery');
