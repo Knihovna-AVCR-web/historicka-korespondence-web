@@ -78,6 +78,19 @@ function clean_script_tag($input)
 add_filter('script_loader_tag', 'clean_script_tag');
 
 
+function add_security_headers()
+{
+    header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+
+    header('X-Frame-Options: DENY');
+
+    header('X-XSS-Protection: 1; mode=block');
+
+    header('X-Content-Type-Options: nosniff');
+}
+add_action('send_headers', 'add_security_headers', 1);
+
+
 function hiko_load_scripts()
 {
     wp_deregister_script('jquery');
