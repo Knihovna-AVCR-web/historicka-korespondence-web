@@ -1,3 +1,6 @@
 /* global baguetteBox */
 
-baguetteBox.run('.gallery', {})
+
+if (document.body.contains(document.querySelector('.gallery'))) {
+    baguetteBox.run('.gallery', {})
+}
