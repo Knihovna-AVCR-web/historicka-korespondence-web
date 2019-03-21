@@ -38,3 +38,5 @@ vendor/
 assets/dist/
 assets/img/raw/
 wpgulp.config.js
+
+.vscode/
