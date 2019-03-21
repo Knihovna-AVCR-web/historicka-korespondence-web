@@ -9,7 +9,7 @@ $blekastad_front = get_permalink(carbon_get_theme_option('mb_front'));
         <div class="navbar-brand d-flex">
             <span class="first"></span>
             <a class="font-italic text-white" href="<?= $blekastad_front; ?>">
-                Milada Blekastad
+                <?php _e('Korespondence Milady Blekastad', 'hiko'); ?>
             </a>
         </div>
 
