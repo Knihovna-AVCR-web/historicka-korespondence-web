@@ -54,8 +54,9 @@ add_filter('the_generator', 'hiko_remove_version');
 
 function clean_style_tag($input)
 {
+    $re = "!<link rel='stylesheet'\s?(id='[^']+')?\s+href='(.*)' type='text/css' media='(.*)' />!";
     preg_match_all(
-        "!<link rel='stylesheet'\s?(id='[^']+')?\s+href='(.*)' type='text/css' media='(.*)' />!",
+        $re,
         $input,
         $matches
     );
@@ -63,7 +64,6 @@ function clean_style_tag($input)
         return $input;
     }
 
-    // Only display media if it is meaningful
     $media = $matches[3][0] !== '' && $matches[3][0] !== 'all' ? ' media="' . $matches[3][0] . '"' : '';
     return '<link rel="stylesheet" href="' . $matches[2][0] . '"' . $media . '>' . "\n";
 }
@@ -93,34 +93,101 @@ add_action('send_headers', 'add_security_headers', 1);
 
 function hiko_load_scripts()
 {
+    $custom_js = get_template_directory_uri() . '/assets/dist/custom.min.js?v=' . filemtime(get_template_directory() . '/assets/dist/custom.min.js');
     wp_deregister_script('jquery');
     wp_deregister_script('jquery-migrate');
     wp_deregister_script('wp-embed');
-    wp_register_script('jquery', 'https://code.jquery.com/jquery-3.3.1.min.js', false, null, true);
+    wp_register_script(
+        'jquery',
+        'https://code.jquery.com/jquery-3.3.1.min.js',
+        false,
+        null,
+        true
+    );
 
     if (is_user_logged_in()) {
         wp_enqueue_script('jquery');
     }
 
-    wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.25/dist/bootstrap-native-v4.min.js', [], null, true);
-    wp_enqueue_script('lazyload', 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@10.19.0/dist/lazyload.min.js', [], null, true);
+    wp_enqueue_script(
+        'bootstrap',
+        'https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.25/dist/bootstrap-native-v4.min.js',
+        [],
+        null,
+        true
+    );
+    wp_enqueue_script(
+        'lazyload',
+        'https://cdn.jsdelivr.net/npm/vanilla-lazyload@10.19.0/dist/lazyload.min.js',
+        [],
+        null,
+        true
+    );
 
     if (!is_front_page()) {
         if (is_user_logged_in()) {
-            wp_enqueue_script('vue', 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js', [], null, true);
+            wp_enqueue_script(
+                'vue',
+                'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
+                [],
+                null,
+                true
+            );
         } else {
-            wp_enqueue_script('vue', 'https://cdn.jsdelivr.net/npm/vue', [], null, true);
+            wp_enqueue_script(
+                'vue',
+                'https://cdn.jsdelivr.net/npm/vue',
+                [],
+                null,
+                true
+            );
         }
-        wp_enqueue_script('bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.js', [], null, true);
-        wp_enqueue_script('axios', 'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js', [], null, true);
-        wp_enqueue_script('vue-router', 'https://cdn.jsdelivr.net/npm/vue-router@3.0.2/dist/vue-router.min.js', [], null, true);
-        wp_enqueue_script('lodash', 'https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js', [], null, true);
 
-        wp_enqueue_script('main', get_template_directory_uri() . '/assets/dist/custom.min.js?v=' . filemtime(get_template_directory() . '/assets/dist/custom.min.js'), ['lazyload', 'axios', 'vue', 'bbox', 'lodash'], null, true);
+        wp_enqueue_script(
+            'bbox',
+            'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.js',
+            [],
+            null,
+            true
+        );
+        wp_enqueue_script(
+            'axios',
+            'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js',
+            [],
+            null,
+            true
+        );
+        wp_enqueue_script(
+            'vue-router',
+            'https://cdn.jsdelivr.net/npm/vue-router@3.0.2/dist/vue-router.min.js',
+            [],
+            null,
+            true
+        );
+        wp_enqueue_script(
+            'lodash',
+            'https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js',
+            [],
+            null,
+            true
+        );
+
+        wp_enqueue_script(
+            'main',
+            $custom_js,
+            ['lazyload', 'axios', 'vue', 'bbox', 'lodash'],
+            null,
+            true
+        );
     } else {
-        wp_enqueue_script('main', get_template_directory_uri() . '/assets/dist/custom.min.js?v=' . filemtime(get_template_directory() . '/assets/dist/custom.min.js'), ['lazyload',], null, true);
+        wp_enqueue_script(
+            'main',
+            $custom_js,
+            ['lazyload',],
+            null,
+            true
+        );
     }
-
 
     wp_localize_script('main', 'globals', [
         'url' => home_url('/data/data-1.json'),
@@ -133,9 +200,16 @@ function hiko_load_scripts()
     wp_dequeue_style('wp-block-library');
 
     if (!is_front_page()) {
-        wp_enqueue_style('bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.css');
+        wp_enqueue_style(
+            'bbox',
+            'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.css'
+        );
     }
-    wp_enqueue_style('main', get_template_directory_uri() . '/assets/dist/main.min.css?v=' . filemtime(get_template_directory() . '/assets/dist/main.min.css'));
+
+    wp_enqueue_style(
+        'main',
+        get_template_directory_uri() . '/assets/dist/main.min.css?v=' . filemtime(get_template_directory() . '/assets/dist/main.min.css')
+    );
 }
 add_action('wp_enqueue_scripts', 'hiko_load_scripts');
 
@@ -159,58 +233,6 @@ function register_all_menus()
     register_nav_menu('blekastad-menu', 'Blekastad Menu');
 }
 add_action('init', 'register_all_menus');
-
-
-function breadcrumbs()
-{
-    ob_start();
-    ?>
-
-    <nav aria-label="breadcrumb" class="breadcrumbs">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="<?= home_url('/'); ?>">
-                    <?php _e('Úvod', 'hiko'); ?>
-                </a>
-            </li>
-
-            <?php if (is_category()) : ?>
-                <li class="breadcrumb-item active">
-                    <?= get_the_category()[0]->name; ?>
-                </li>
-            <?php elseif (is_single()) : ?>
-                <?php if (has_category()) : ?>
-                    <li class="breadcrumb-item">
-                        <a href="<?= get_category_link(get_the_category()[0]->term_id); ?>">
-                            <?= get_the_category()[0]->name; ?>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li class="breadcrumb-item active">
-                    <?= get_the_title(); ?>
-                </li>
-            <?php elseif (is_page()) : ?>
-                <?php global $post; ?>
-                <?php if ($post->post_parent) : ?>
-                    <li class="breadcrumb-item">
-                        <a href="<?= get_permalink($post->post_parent); ?>">
-                            <?= get_the_title($post->post_parent); ?>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li class="breadcrumb-item active">
-                    <?= get_the_title(); ?>
-                </li>
-            <?php endif; ?>
-        </ol>
-
-
-    </nav>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('breadcrumbs', 'breadcrumbs');
-
 
 
 function language_switcher()
@@ -237,7 +259,9 @@ function language_switcher()
             href="<?= ($is_disabled) ? '#' : $lang['url']; ?>"
             class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>"
             aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>"
-            ><?= $lang['slug'] ?></a>
+            >
+                <?= $lang['slug'] ?>
+            </a>
         </span>
         <?php
         $output[] = ob_get_clean();
@@ -262,6 +286,7 @@ function get_all_posts()
         $the_query->the_post();
         $results[get_the_ID()] = get_the_title();
     }
+
     wp_reset_postdata();
 
     return $results;
@@ -272,6 +297,7 @@ function get_esc_setted_value($value)
     if (isset($value)) {
         return esc_html($value);
     }
+
     return '';
 }
 
@@ -297,8 +323,15 @@ function cmb2_output_gallery($file_list_meta_key)
     <div class="gallery">
 
         <?php foreach ((array) $files as $file_id => $file_url) : ?>
-            <a href="<?= $file_url; ?>" data-caption="<?= wp_get_attachment_caption($file_id); ?>">
-                <img src="<?= wp_get_attachment_image_src($file_id, 'medium')[0]; ?>" alt="<?= wp_get_attachment_caption($file_id); ?>" class="img-fluid img-thumbnail mr-3 mb-3">
+            <a
+                href="<?= $file_url; ?>"
+                data-caption="<?= wp_get_attachment_caption($file_id); ?>"
+            >
+                <img
+                    src="<?= wp_get_attachment_image_src($file_id, 'medium')[0]; ?>"
+                    alt="<?= wp_get_attachment_caption($file_id); ?>"
+                    class="img-fluid img-thumbnail mr-3 mb-3"
+                >
             </a>
 
         <?php endforeach; ?>
@@ -337,9 +370,11 @@ function encode_string_to_ASCII($string)
 function get_encoded_mailto_link($classes)
 {
     $email = carbon_get_theme_option('contact_email');
+
     if (!$email) {
         return '';
     }
+
     $email = encode_string_to_ASCII($email);
     $mailto = encode_string_to_ASCII('mailto:');
 
@@ -358,3 +393,4 @@ function get_encoded_mailto_link($classes)
 require 'inc/custom-fields.php';
 require 'inc/theme-options.php';
 require 'inc/navbar-walker.php';
+require 'inc/breadcrumbs.php';
