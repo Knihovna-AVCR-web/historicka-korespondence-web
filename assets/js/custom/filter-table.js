@@ -24,6 +24,82 @@ if (document.getElementById('letters')) {
 
     Vue.use(VueRouter)
 
+    Vue.component('button-counter', {
+        data: function() {
+            return {
+                count: 0,
+            }
+        },
+        template:
+            '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+    })
+
+    Vue.component('filter-list', {
+        props: {
+            letters: {
+                type: Array,
+                required: true,
+            },
+            filterType: {
+                type: String,
+                required: true,
+            },
+            activeFilters: {
+                type: Object,
+                required: true,
+            },
+        },
+
+        template: `
+        <ul class="list-unstyled filter-list">
+        <li
+            v-for="item in items"
+            v-show="item[0]"
+            @click="toggle(item[0]);"
+            :key="item[0]"
+            :class="{ active : activeFilters[filterType] == item[0]}"
+        >
+            {{ item[0] }} ({{ item[1] }})
+        </li>
+    </ul>
+    `,
+        computed: {
+            items: function() {
+                return this.getCountedData(this.letters, this.filterType)
+            },
+        },
+        methods: {
+            toggle: function(item) {
+                let filterType = this.filterType
+                this.$root.toggleFilter(filterType, item)
+            },
+
+            getCountedData: function(data, keyName) {
+                let names = []
+                Object.keys(data).map(key => {
+                    names.push(data[key][keyName].split(';'))
+                })
+                names = [].concat.apply([], names)
+
+                let counted = names.reduce(function(prev, cur) {
+                    prev[cur] = (prev[cur] || 0) + 1
+                    return prev
+                }, {})
+
+                let sortable = []
+                for (let element in counted) {
+                    sortable.push([element, counted[element]])
+                }
+
+                let result = sortable.sort(function(a, b) {
+                    return b[1] - a[1]
+                })
+
+                return result
+            },
+        },
+    })
+
     new Vue({
         router,
         el: '#letters',
@@ -32,24 +108,12 @@ if (document.getElementById('letters')) {
             error: false,
             loading: true,
             sort: false,
-            filter: {},
+            activeFilter: {},
             letter: null,
             letterErr: false,
         },
 
         computed: {
-            getAuthours: function() {
-                return getCountedData(this.filteredData, 'author')
-            },
-            getRecipients: function() {
-                return getCountedData(this.filteredData, 'recipient')
-            },
-            getOrigins: function() {
-                return getCountedData(this.filteredData, 'origin')
-            },
-            getDests: function() {
-                return getCountedData(this.filteredData, 'dest')
-            },
             filteredData: function() {
                 let data = this.filterData()
                 data = this.sortData(data, this.sort)
@@ -115,7 +179,7 @@ if (document.getElementById('letters')) {
             },
 
             filterData: function() {
-                let filter = this.filter
+                let filter = this.activeFilter
                 let result = this.unfilteredData.filter(function(item) {
                     for (let key in filter) {
                         let filterKey = filter[key]
@@ -151,12 +215,12 @@ if (document.getElementById('letters')) {
 
             toggleFilter: function(key, value) {
                 if (
-                    this.filter[key] == undefined ||
-                    this.filter[key] != value
+                    this.activeFilter[key] == undefined ||
+                    this.activeFilter[key] != value
                 ) {
-                    Vue.set(this.filter, key, value)
+                    Vue.set(this.activeFilter, key, value)
                 } else {
-                    Vue.delete(this.filter, key)
+                    Vue.delete(this.activeFilter, key)
                 }
             },
 
@@ -177,36 +241,15 @@ if (document.getElementById('letters')) {
         },
         mounted() {
             this.getData()
+            this.$root.$on('toggle', e => {
+                console.log(e)
+            })
         },
     })
 }
 
 function isInArray(value, array) {
     return array.indexOf(value) > -1
-}
-
-function getCountedData(data, keyName) {
-    let names = []
-    Object.keys(data).map(key => {
-        names.push(data[key][keyName].split(';'))
-    })
-    names = [].concat.apply([], names)
-
-    let counted = names.reduce(function(prev, cur) {
-        prev[cur] = (prev[cur] || 0) + 1
-        return prev
-    }, {})
-
-    let sortable = []
-    for (let element in counted) {
-        sortable.push([element, counted[element]])
-    }
-
-    let result = sortable.sort(function(a, b) {
-        return b[1] - a[1]
-    })
-
-    return result
 }
 
 function normaliseData(data) {
