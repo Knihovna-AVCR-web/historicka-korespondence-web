@@ -33,7 +33,7 @@ node_modules/
 ##########
 /vendor/
 vendor/
-
+!assets/css/bootstrap/vendor/
 
 assets/dist/
 assets/img/raw/
