@@ -1,5 +1,5 @@
 .filter-table {
-    & th {
+    & th:not(:first-child) {
         cursor: pointer;
     }
 
