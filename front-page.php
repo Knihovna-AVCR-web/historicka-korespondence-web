@@ -20,6 +20,9 @@ while ($query_news->have_posts()) {
         <a href="<?= get_permalink(); ?>">
             <?= get_the_title(); ?>
         </a>
+        <small>
+            <?= ' (' . get_the_date() . ')'; ?>
+        </small>
     </h6>
 <?php
     $news_content = ob_get_clean();
