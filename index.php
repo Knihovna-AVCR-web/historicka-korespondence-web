@@ -1,26 +1,25 @@
-<?php get_header(); ?>
+<?php
 
-<?php while (have_posts()) : ?>
-    <?php
+get_header();
 
-    the_post();
+the_post();
 
-    require 'partials/entry-header.php';
+require 'partials/entry-header.php';
 
-    echo do_shortcode('[breadcrumbs]'); ?>
+echo do_shortcode('[breadcrumbs]');
 
-    <h1>
-        <?php the_title(); ?>
-    </h1>
+?>
 
-    <?php
+<h1>
+    <?php the_title(); ?>
+</h1>
 
-    the_content();
+<?php
 
-    cmb2_output_gallery('hk_gallery');
+the_content();
 
-    require 'partials/entry-footer.php'; ?>
+cmb2_output_gallery('hk_gallery');
 
-<?php endwhile;
+require 'partials/entry-footer.php';
 
 get_footer();
