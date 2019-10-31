@@ -27,8 +27,9 @@ while ($query_news->have_posts()) {
 <?php
     $news_content = ob_get_clean();
 }
+
 wp_reset_postdata();
-var_dump($news_content);
+
 the_post();
 
 $blocks = parse_blocks(get_the_content());
