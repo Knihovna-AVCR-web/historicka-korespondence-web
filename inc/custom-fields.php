@@ -2,7 +2,6 @@
 
 use Carbon_Fields\Block;
 use Carbon_Fields\Field;
-use Carbon_Fields\Container;
 
 function hk_intro_box()
 {
@@ -14,19 +13,11 @@ function hk_intro_box()
     ])
     ->set_render_callback(
         function ($block) {
-            ?>
-            <div class="col-lg-4 col-md-6">
-                <div class="featured-box">
-                    <h3 class="title">
-                        <a href="<?= get_permalink($block['link']); ?>">
-                            <?= get_esc_setted_value($block['title']); ?>
-                        </a>
-                    </h3>
-
-                    <?= apply_filters('the_content', $block['content']); ?>
-                </div>
-            </div>
-            <?php
+            echo output_intro_box(
+                get_permalink($block['link']),
+                get_esc_setted_value($block['title']),
+                apply_filters('the_content', $block['content'])
+            );
         }
     );
 }
@@ -44,18 +35,16 @@ function hk_home_page_intro()
         function ($block) {
             ?>
             <div class="container">
-
-                    <div class="row">
-                        <div class="col-12 jumbotron text-center mb-0">
-                            <p class="lead">
-                                <?= $block['content']; ?>
-                            </p>
-                            <a href="<?= get_permalink($block['link']); ?>" class="btn btn-outline-white btn-sm text-uppercase btn-state-primary px-4 mt-4" style="font-size:16px">
-                                <?php _e('Více', 'hiko'); ?>&nbsp;&nbsp;&raquo;
-                            </a>
-                        </div>
+                <div class="row">
+                    <div class="col-12 jumbotron text-center mb-0">
+                        <p class="lead">
+                            <?= $block['content']; ?>
+                        </p>
+                        <a href="<?= get_permalink($block['link']); ?>" class="btn btn-outline-white btn-sm text-uppercase btn-state-primary px-4 mt-4" style="font-size:16px">
+                            <?php _e('Více', 'hiko'); ?>&nbsp;&nbsp;&raquo;
+                        </a>
                     </div>
-
+                </div>
             </div>
             <?php
         }

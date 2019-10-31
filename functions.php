@@ -7,7 +7,6 @@ function crb_load()
 }
 add_action('after_setup_theme', 'crb_load');
 
-
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'feed_links', 2);
@@ -356,6 +355,24 @@ function output_block_by_name($blocks, $block_name)
             echo render_block($block);
         }
     }
+}
+
+function output_intro_box($permalink, $title, $content)
+{
+    ob_start();
+    ?>
+    <div class="col-lg-4 col-md-6">
+        <div class="featured-box">
+            <h3 class="title">
+                <a href="<?= $permalink; ?>">
+                    <?= $title; ?>
+                </a>
+            </h3>
+            <?= $content; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
 }
 
 

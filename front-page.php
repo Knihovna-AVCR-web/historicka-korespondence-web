@@ -8,16 +8,33 @@ $query_news = new WP_Query([
     'category_name' => 'Aktuálně'
 ]);
 
+$news_link = get_category_link(get_cat_ID('Aktuálně'));
+
+$news_title = __('Aktuálně', 'hiko');
+
+while ($query_news->have_posts()) {
+    $query_news->the_post();
+    ob_start();
+    ?>
+    <h6>
+        <a href="<?= get_permalink(); ?>">
+            <?= get_the_title(); ?>
+        </a>
+    </h6>
+<?php
+    $news_content = ob_get_clean();
+}
+wp_reset_postdata();
+var_dump($news_content);
+the_post();
+
 $blocks = parse_blocks(get_the_content());
 
 ?>
 
 <div class="jumbotron-intro">
 
-    <img
-    class="img-fluid img-main lazy"
-    data-sizes="(max-width: 1400px) 100vw, 1400px"
-    data-srcset="
+    <img class="img-fluid img-main lazy" data-sizes="(max-width: 1400px) 100vw, 1400px" data-srcset="
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_200.jpg 200w,
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_579.jpg 579w,
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_831.jpg 831w,
@@ -35,17 +52,10 @@ $blocks = parse_blocks(get_the_content());
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2503.jpg 2503w,
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2557.jpg 2557w,
     <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2559.jpg 2559w,
-    <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg 2560w"
-    data-src="<?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg"
-    alt="Korespondence" role="presentation">
+    <?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg 2560w" data-src="<?= get_template_directory_uri() . '/assets/img/'; ?>main_bg_urfh37_c_scale,w_2560.jpg" alt="Korespondence" role="presentation">
 
 </div>
 
-<?php while (have_posts()) : ?>
-    <?php
-    the_post();
-    $blocks = parse_blocks(get_the_content());
-    ?>
 <div class="row bg-dark-500">
     <?php output_block_by_name($blocks, 'carbon-fields/uvod'); ?>
 </div>
@@ -53,41 +63,14 @@ $blocks = parse_blocks(get_the_content());
 <div class="row my-5 py-3 lh-lg">
     <div class="container">
         <div class="row featured">
-            <?php output_block_by_name($blocks, 'carbon-fields/uvodni-box'); ?>
-        </div>
-    </div>
-
-
-</div>
-<?php endwhile; ?>
-<div class="row bg-light lh-lg">
-    <div class="container">
-        <div class="row my-5 py-3">
-            <div class="col-12 text-center">
-                <h3 class="mb-4 h2"><?php _e('Aktuálně', 'hiko'); ?></h3>
-            </div>
-            <div class="row featured featured-news">
-                <?php while ($query_news->have_posts()) : ?>
-                    <?php $query_news->the_post(); ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="featured-box">
-                            <h6 class="title">
-                                <a href="<?= get_permalink(); ?>">
-                                    <?= get_the_title(); ?>
-                                </a>
-                            </h6>
-                            <p>
-                                <?= get_the_excerpt(); ?>
-                                <br>
-                                <a href="<?= get_permalink(); ?>" class="float-right">
-                                    <?php _e('Více', 'hiko'); ?> »
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-                <?php wp_reset_postdata(); ?>
-            </div>
+            <?php
+            output_block_by_name($blocks, 'carbon-fields/uvodni-box');
+            echo output_intro_box(
+                $news_link,
+                $news_title,
+                $news_content
+            );
+            ?>
         </div>
     </div>
 </div>
