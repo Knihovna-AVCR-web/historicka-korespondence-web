@@ -244,6 +244,10 @@ function language_switcher()
         return false;
     }
 
+    if (!is_user_logged_in()) {
+        return false;
+    }
+
     $output = [];
 
     $languages = pll_the_languages([
