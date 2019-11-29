@@ -12,6 +12,8 @@ $news_link = get_category_link(get_cat_ID('Aktuálně'));
 
 $news_title = __('Aktuálně', 'hiko');
 
+$news_content = '';
+    
 while ($query_news->have_posts()) {
     $query_news->the_post();
     ob_start();
@@ -25,7 +27,7 @@ while ($query_news->have_posts()) {
         </small>
     </h6>
 <?php
-    $news_content = ob_get_clean();
+    $news_content .= ob_get_clean();
 }
 
 wp_reset_postdata();
