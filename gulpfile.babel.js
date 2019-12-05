@@ -17,7 +17,6 @@ config.BROWSERS_LIST = [
 const gulp = require('gulp')
 
 const sass = require('gulp-sass')
-const minifycss = require('gulp-uglifycss')
 const autoprefixer = require('gulp-autoprefixer')
 
 const concat = require('gulp-concat')
@@ -28,7 +27,6 @@ const imagemin = require('gulp-imagemin')
 
 const rename = require('gulp-rename')
 const lineec = require('gulp-line-ending-corrector')
-const filter = require('gulp-filter')
 const sourcemaps = require('gulp-sourcemaps')
 const notify = require('gulp-notify')
 const browserSync = require('browser-sync').create()
@@ -67,24 +65,14 @@ gulp.task('styles', () => {
         .pipe(
             sass({
                 errLogToConsole: true,
-                outputStyle: 'compact',
+                outputStyle: 'compressed',
                 precision: 10,
             })
         )
         .on('error', sass.logError)
-        .pipe(sourcemaps.write({ includeContent: false }))
-        .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(autoprefixer(config.BROWSERS_LIST))
         .pipe(sourcemaps.write('./'))
-        .pipe(lineec())
         .pipe(gulp.dest('./assets/dist/'))
-        .pipe(filter('**/*.css'))
-        .pipe(browserSync.stream())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(minifycss({ maxLineLen: 10 }))
-        .pipe(lineec())
-        .pipe(gulp.dest('./assets/dist/'))
-        .pipe(filter('**/*.css'))
         .pipe(browserSync.stream())
         .pipe(
             notify({
