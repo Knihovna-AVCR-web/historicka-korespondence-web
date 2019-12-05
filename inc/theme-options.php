@@ -12,7 +12,8 @@ function hk_theme_options()
         Field::make('select', 'mb_db', 'Databáze MB')
             ->add_options('get_all_posts'),
         Field::make('text', 'contact_email', 'Kontaktní e-mail')
-            ->set_attribute('pattern', '[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+')
+            ->set_attribute('pattern', '[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+'),
+        Field::make('text', 'ga_code', 'Číslo pro měření GA')
     ]);
 }
 add_action('carbon_fields_register_fields', 'hk_theme_options');

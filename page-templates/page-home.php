@@ -2,27 +2,22 @@
 
 /* Template Name: Home Page */
 
-get_header(); ?>
+get_header();
 
-<?php while (have_posts()) : ?>
-    <?php
+the_post();
 
-    the_post();
+require get_template_directory() . '/partials/entry-header.php';
 
-    require get_template_directory() . '/partials/entry-header.php';
+echo do_shortcode('[breadcrumbs]'); ?>
 
-    echo do_shortcode('[breadcrumbs]'); ?>
+<h1>
+    <?php the_title(); ?>
+</h1>
 
-    <h1>
-        <?php the_title(); ?>
-    </h1>
+<?php
 
-    <?php
+the_content();
 
-    the_content();
-
-    require get_template_directory() . '/partials/entry-footer.php'; ?>
-
-<?php endwhile;
+require get_template_directory() . '/partials/entry-footer.php';
 
 get_footer();

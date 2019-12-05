@@ -4,30 +4,24 @@
 Template Name: Full Width
 */
 
-get_header(); ?>
+get_header();
 
-<?php while (have_posts()) : ?>
-    <?php
+the_post();
 
-    the_post();
+require get_template_directory() . '/partials/entry-header-full.php';
 
-    require get_template_directory() . '/partials/entry-header-full.php';
+echo do_shortcode('[breadcrumbs]'); ?>
 
-    echo do_shortcode('[breadcrumbs]'); ?>
+<h1>
+    <?php the_title(); ?>
+</h1>
 
-    <h1>
-        <?php the_title(); ?>
-    </h1>
+<?php
 
-    <?php
+the_content();
 
-    the_content();
+cmb2_output_gallery('hk_gallery');
 
-    cmb2_output_gallery('hk_gallery');
-
-    require get_template_directory() . '/partials/entry-footer.php';
-    ?>
-
-<?php endwhile;
+require get_template_directory() . '/partials/entry-footer.php';
 
 get_footer();

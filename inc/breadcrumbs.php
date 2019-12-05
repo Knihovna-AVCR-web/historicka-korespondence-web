@@ -43,7 +43,6 @@ function breadcrumbs()
             <?php endif; ?>
         </ol>
 
-
     </nav>
     <?php
     return ob_get_clean();

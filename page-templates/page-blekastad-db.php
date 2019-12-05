@@ -17,7 +17,6 @@ get_header();
 
 <div class="row main-content mb-5" id="letters">
 
-
     <div class="col-md-3">
         <router-link to="/" v-if="isInArray('letter', $route.name)" :class="'router-link-active text-primary h3 d-block mb-3'">
             Back to results

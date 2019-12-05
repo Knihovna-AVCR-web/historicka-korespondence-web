@@ -30,7 +30,6 @@ remove_action('admin_print_styles', 'print_emoji_styles');
 
 function hiko_remove_wp_version_strings($src)
 {
-
     global $wp_version;
 
     parse_str(parse_url($src, PHP_URL_QUERY), $query);
@@ -67,14 +66,6 @@ function clean_style_tag($input)
     return '<link rel="stylesheet" href="' . $matches[2][0] . '"' . $media . '>' . "\n";
 }
 add_filter('style_loader_tag', 'clean_style_tag');
-
-
-function clean_script_tag($input)
-{
-    $input = str_replace("type='text/javascript' ", '', $input);
-    return str_replace("'", '"', $input);
-}
-//add_filter('script_loader_tag', 'clean_script_tag');
 
 
 function add_security_headers()
@@ -313,10 +304,12 @@ function get_site_title()
 {
     if (is_home()) {
         echo bloginfo('name');
-    } else {
-        echo wp_title(' | ', false, 'right');
-        echo bloginfo('name');
+        return;
     }
+
+    echo wp_title(' | ', false, 'right');
+    echo bloginfo('name');
+    return;
 }
 
 

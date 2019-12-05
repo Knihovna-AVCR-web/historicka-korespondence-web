@@ -17,8 +17,10 @@
     <script type="text/javascript">
     var homeUrl = "<?= esc_url(home_url('/')); ?>";
     </script>
-    <?php wp_head(); ?>
-    <?php require_once 'partials/fonts.php'; ?>
+    <?php
+    wp_head();
+    require_once 'partials/fonts.php';
+    require_once 'partials/analytics.php'; ?>
 </head>
 <body <?php body_class(); ?>>
 
