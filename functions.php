@@ -86,8 +86,8 @@ function hiko_load_scripts()
     $custom_js = get_template_directory_uri() . '/assets/dist/custom.min.js';
     $custom_js .= '?v=' . filemtime(get_template_directory() . '/assets/dist/custom.min.js');
 
-    $custom_css = get_template_directory_uri() . '/assets/dist/main.min.css';
-    $custom_css .= '?v=' . filemtime(get_template_directory() . '/assets/dist/main.min.css');
+    $custom_css = get_template_directory_uri() . '/assets/dist/main.css';
+    $custom_css .= '?v=' . filemtime(get_template_directory() . '/assets/dist/main.css');
     wp_deregister_script('jquery');
     wp_deregister_script('jquery-migrate');
     wp_deregister_script('wp-embed');
