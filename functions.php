@@ -119,7 +119,7 @@ function hiko_load_scripts()
     );
 
     if (!is_front_page()) {
-        if (is_user_logged_in()) {
+        if (is_user_logged_in() || is_localhost()) {
             wp_enqueue_script(
                 'vue',
                 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
@@ -152,20 +152,12 @@ function hiko_load_scripts()
             true
         );
         wp_enqueue_script(
-            'vue-router',
-            'https://cdn.jsdelivr.net/npm/vue-router@3.0.2/dist/vue-router.min.js',
-            [],
-            null,
-            true
-        );
-        wp_enqueue_script(
             'lodash',
             'https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js',
             [],
             null,
             true
         );
-
         wp_enqueue_script(
             'main',
             $custom_js,
@@ -184,10 +176,9 @@ function hiko_load_scripts()
     }
 
     wp_localize_script('main', 'globals', [
-        'url' => home_url('/data/data-1.json'),
-        'loading' => __('Načítám', 'hiko'),
-        'error' => __('Při načítání dat se vyskytla chyba. Zkuste to ještě jednou', 'hiko'),
-        'notLoaded' => ('Požadovaný dopis se nepodařilo načíst'),
+        'url' => admin_url('admin-ajax.php?action=get_blekastad_data'),
+        'loading' => 'Loading',
+        'error' => 'Can\'t load data, please try again.',
         'home' => str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db')))
     ]);
 
@@ -406,6 +397,16 @@ function get_encoded_mailto_link($classes)
     <?php
     return ob_get_clean();
 }
+
+
+function get_blekastad_data()
+{
+    $url = 'https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=public_list_all_letters&type=blekastad';
+    $data = file_get_contents($url);
+    wp_die($data);
+}
+add_action('wp_ajax_nopriv_get_blekastad_data', 'get_blekastad_data');
+add_action('wp_ajax_get_blekastad_data', 'get_blekastad_data');
 
 
 require 'inc/custom-fields.php';
