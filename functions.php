@@ -177,6 +177,7 @@ function hiko_load_scripts()
 
     wp_localize_script('main', 'globals', [
         'url' => admin_url('admin-ajax.php?action=get_blekastad_data'),
+        'detail' => admin_url('admin-ajax.php?action=get_blekastad_letter'),
         'loading' => 'Loading',
         'error' => 'Can\'t load data, please try again.',
         'home' => str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db')))
@@ -399,6 +400,26 @@ function get_encoded_mailto_link($classes)
 }
 
 
+function get_custom_route_template($route, $template)
+{
+    $route = trim($route, '/');
+    $url_path = trim(parse_url(add_query_arg([]), PHP_URL_PATH), '/');
+
+    if (strpos($url_path, $route) !== false) {
+        load_template(get_template_directory() . '/page-templates/' . $template);
+        exit();
+    }
+}
+
+
+function blekastad_custom_route()
+{
+    $route = str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db'))) . 'letter';
+    get_custom_route_template($route, 'page-letter-detail.php');
+}
+add_action('init', 'blekastad_custom_route');
+
+
 function get_blekastad_data()
 {
     $url = 'https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=public_list_all_letters&type=blekastad';
@@ -407,6 +428,17 @@ function get_blekastad_data()
 }
 add_action('wp_ajax_nopriv_get_blekastad_data', 'get_blekastad_data');
 add_action('wp_ajax_get_blekastad_data', 'get_blekastad_data');
+
+
+function get_blekastad_letter()
+{
+    $id = (int) $_GET['id'];
+    $url = "https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=list_public_letters_single&l_type=bl_letter&pods_id={$id}";
+    $data = file_get_contents($url);
+    wp_die($data);
+}
+add_action('wp_ajax_nopriv_get_blekastad_letter', 'get_blekastad_letter');
+add_action('wp_ajax_get_blekastad_letter', 'get_blekastad_letter');
 
 
 require 'inc/custom-fields.php';
