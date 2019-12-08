@@ -29,7 +29,7 @@ the_post();
         </div>
 
         <div v-if="error" class="error alert alert-warning mb-5">
-            {{ error }}
+            <span>{{ globals.error }}</span>
         </div>
 
         <div class="letter-single" v-if="!loading && !error">
