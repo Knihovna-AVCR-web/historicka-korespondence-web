@@ -2,9 +2,17 @@ $red: #c0262c;
 
 $primary: $red;
 
-$theme-colors: (
-    primary: $red
-);
+$theme-colors:
+  (
+    "primary":    $red,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+  );
 
 $light: #eeedeb;
 

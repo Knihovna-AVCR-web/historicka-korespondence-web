@@ -86,6 +86,7 @@ gulp.task('customJS', () => {
     return gulp
         .src('./assets/js/custom/*.js', { since: gulp.lastRun('customJS') })
         .pipe(plumber(errorHandler))
+        .pipe(sourcemaps.init())
         .pipe(
             babel({
                 presets: [
@@ -110,6 +111,7 @@ gulp.task('customJS', () => {
         )
         .pipe(uglify())
         .pipe(lineec())
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./assets/dist/'))
         .pipe(
             notify({
