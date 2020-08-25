@@ -10,7 +10,7 @@ if (document.getElementById('letters')) {
                 required: true,
             },
         },
-        data: function() {
+        data: function () {
             return {
                 sort: false,
                 url: globals.home + 'letter/',
@@ -18,11 +18,11 @@ if (document.getElementById('letters')) {
         },
         computed: {},
         methods: {
-            sortBy: function(val) {
+            sortBy: function (val) {
                 this.sort = val
                 this.$root.sort = val
             },
-            haveImages: function(data) {
+            haveImages: function (data) {
                 if (data == null) {
                     return false
                 }
@@ -62,7 +62,7 @@ if (document.getElementById('letters')) {
         <tbody>
         <tr v-for="(row, index) in letters" :key="index">
         <td>
-            <a :href="url + row.id" target="_blank">
+            <a :href="url + row.ID" target="_blank">
                 Detail
             </a>
             <div v-if="haveImages(row.images)">
@@ -175,19 +175,19 @@ if (document.getElementById('letters')) {
 
     `,
         computed: {
-            items: function() {
+            items: function () {
                 return this.getCountedData(this.letters, this.filterType)
             },
         },
         methods: {
-            toggle: function(item) {
+            toggle: function (item) {
                 let filterType = this.filterType
                 this.$root.toggleFilter(filterType, item)
             },
 
-            getCountedData: function(data, keyName) {
+            getCountedData: function (data, keyName) {
                 let names = []
-                Object.keys(data).map(key => {
+                Object.keys(data).map((key) => {
                     let nameEl = data[key][keyName]
                     if (Array.isArray(nameEl)) {
                         for (let i = 0; i < nameEl.length; i++) {
@@ -204,7 +204,7 @@ if (document.getElementById('letters')) {
 
                 names = [].concat.apply([], names)
 
-                let counted = names.reduce(function(prev, cur) {
+                let counted = names.reduce(function (prev, cur) {
                     prev[cur] = (prev[cur] || 0) + 1
                     return prev
                 }, {})
@@ -214,7 +214,7 @@ if (document.getElementById('letters')) {
                     sortable.push([element, counted[element]])
                 }
 
-                let result = sortable.sort(function(a, b) {
+                let result = sortable.sort(function (a, b) {
                     return b[1] - a[1]
                 })
 
@@ -236,7 +236,7 @@ if (document.getElementById('letters')) {
         },
 
         computed: {
-            filteredData: function() {
+            filteredData: function () {
                 let data = this.filterData()
                 data = this.sortData(data, this.sort)
                 return data
@@ -244,11 +244,11 @@ if (document.getElementById('letters')) {
         },
 
         methods: {
-            isInArray: function(value, array) {
+            isInArray: function (value, array) {
                 return array.indexOf(value) > -1
             },
 
-            getData: function(sessionName) {
+            getData: function (sessionName) {
                 let self = this
                 let sessionData = sessionStorage.getItem(sessionName)
 
@@ -260,7 +260,7 @@ if (document.getElementById('letters')) {
 
                 axios
                     .get(globals.url)
-                    .then(function(response) {
+                    .then(function (response) {
                         let normalisedData = normaliseData(response.data)
                         self.unfilteredData = normalisedData
                         sessionStorage.setItem(
@@ -268,7 +268,7 @@ if (document.getElementById('letters')) {
                             JSON.stringify(normalisedData)
                         )
                     })
-                    .catch(function(e) {
+                    .catch(function (e) {
                         console.log(e)
                         self.error = globals.error
                     })
@@ -277,10 +277,10 @@ if (document.getElementById('letters')) {
                     })
             },
 
-            filterData: function() {
+            filterData: function () {
                 let self = this
                 let filter = self.activeFilter
-                let result = self.unfilteredData.filter(function(item) {
+                let result = self.unfilteredData.filter(function (item) {
                     for (let key in filter) {
                         let filterKey = filter[key]
 
@@ -304,12 +304,12 @@ if (document.getElementById('letters')) {
                 return result
             },
 
-            sortData: function(data, key) {
+            sortData: function (data, key) {
                 let self = this
                 self.$forceUpdate()
 
                 if (key == 'date') {
-                    return data.sort(function(a, b) {
+                    return data.sort(function (a, b) {
                         a = self.dateToTimeStamp(a.day, a.month, a.year)
                         b = self.dateToTimeStamp(b.day, b.month, b.year)
                         return a - b
@@ -318,7 +318,7 @@ if (document.getElementById('letters')) {
                 return _.orderBy(data, key)
             },
 
-            toggleFilter: function(key, value) {
+            toggleFilter: function (key, value) {
                 let activeKey = this.activeFilter[key]
                 if (activeKey == undefined || activeKey != value) {
                     Vue.set(this.activeFilter, key, value)
@@ -327,7 +327,7 @@ if (document.getElementById('letters')) {
                 }
             },
 
-            dateToTimeStamp: function(day, month, year) {
+            dateToTimeStamp: function (day, month, year) {
                 day = day != '' && day != '0' ? day : 1
                 month = month != '' && month != '0' ? month : 1
                 year =
