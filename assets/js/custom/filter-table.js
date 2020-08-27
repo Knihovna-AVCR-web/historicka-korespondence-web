@@ -45,16 +45,16 @@ if (document.getElementById('letters')) {
             <th @click="sortBy('date')" :class="{sorted: sort == 'date'}">
                 Date
             </th>
-            <th @click="sortBy('author')" :class="{sorted: sort == 'author'}">
+            <th @click="sortBy('aut')" :class="{sorted: sort == 'aut'}">
                 Author
             </th>
-            <th @click="sortBy('recipient')" :class="{sorted: sort == 'recipient'}">
+            <th @click="sortBy('rec')" :class="{sorted: sort == 'rec'}">
                 Recipient
             </th>
-            <th @click="sortBy('origin')" :class="{sorted: sort == 'origin'}">
+            <th @click="sortBy('ori')" :class="{sorted: sort == 'ori'}">
                 Origin
             </th>
-            <th @click="sortBy('dest')" :class="{sorted: sort == 'dest'}">
+            <th @click="sortBy('des')" :class="{sorted: sort == 'des'}">
                 Destination
             </th>
         </tr>
@@ -62,7 +62,7 @@ if (document.getElementById('letters')) {
         <tbody>
         <tr v-for="(row, index) in letters" :key="index">
         <td>
-            <a :href="url + row.ID" target="_blank">
+            <a :href="url + row.id" target="_blank">
                 Detail
             </a>
             <div v-if="haveImages(row.images)">
@@ -70,33 +70,33 @@ if (document.getElementById('letters')) {
             </div>
         </td>
         <td>
-            {{ row.signature }}
+            {{ row.sig }}
         </td>
         <td data-date="">
-            {{ row.year + '/' + row.month + '/' + row.day }}
+            {{ row.yy + '/' + row.mm + '/' + row.dd }}
         </td>
         <td>
-            <div v-if="typeof row.author === 'string'" v-html="row.author"></div>
+            <div v-if="typeof row.aut === 'string'" v-html="row.aut"></div>
             <div v-else>
-                <div v-for="r in row.author" v-html="r"></div>
+                <div v-for="r in row.aut" v-html="r"></div>
             </div>
         </td>
         <td>
-            <div v-if="typeof row.recipient === 'string'" v-html="row.recipient"></div>
+            <div v-if="typeof row.rec === 'string'" v-html="row.rec"></div>
             <div v-else>
-                <div v-for="r in row.recipient" v-html="r"></div>
+                <div v-for="r in row.rec" v-html="r"></div>
             </div>
         </td>
         <td>
-            <div v-if="typeof row.origin === 'string'" v-html="row.origin"></div>
+            <div v-if="typeof row.ori === 'string'" v-html="row.ori"></div>
             <div v-else>
-                <div v-for="r in row.origin" v-html="r"></div>
+                <div v-for="r in row.ori" v-html="r"></div>
             </div>
         </td>
         <td>
-            <div v-if="typeof row.dest === 'string'" v-html="row.dest"></div>
+            <div v-if="typeof row.des === 'string'" v-html="row.des"></div>
             <div v-else>
-                <div v-for="r in row.dest" v-html="r"></div>
+                <div v-for="r in row.des" v-html="r"></div>
             </div>
         </td>
         </tr>
@@ -119,16 +119,16 @@ if (document.getElementById('letters')) {
 
         template: `
         <div>
-            <filter-list :title="'Author'" :letters="letters" :filter-type="'author'" :active-filters="activeFilter">
+            <filter-list :title="'Author'" :letters="letters" :filter-type="'aut'" :active-filters="activeFilter">
             </filter-list>
 
-            <filter-list :title="'Recipient'" :letters="letters" :filter-type="'recipient'" :active-filters="activeFilter">
+            <filter-list :title="'Recipient'" :letters="letters" :filter-type="'rec'" :active-filters="activeFilter">
             </filter-list>
 
-            <filter-list :title="'Origin'" :letters="letters" :filter-type="'origin'" :active-filters="activeFilter">
+            <filter-list :title="'Origin'" :letters="letters" :filter-type="'ori'" :active-filters="activeFilter">
             </filter-list>
 
-            <filter-list :title="'Destination'" :letters="letters" :filter-type="'dest'" :active-filters="activeFilter">
+            <filter-list :title="'Destination'" :letters="letters" :filter-type="'des'" :active-filters="activeFilter">
             </filter-list>
         </div>
 
@@ -350,9 +350,9 @@ function normaliseData(data) {
     let dl = data.length
     for (let i = 0; i < dl; i++) {
         normalisedData.push(data[i])
-        normalisedData[i]['year'] = String(data[i].date_year)
-        normalisedData[i]['month'] = String(data[i].date_month)
-        normalisedData[i]['day'] = String(data[i].date_day)
+        normalisedData[i]['year'] = String(data[i].yy)
+        normalisedData[i]['month'] = String(data[i].mm)
+        normalisedData[i]['day'] = String(data[i].dd)
     }
 
     return normalisedData
