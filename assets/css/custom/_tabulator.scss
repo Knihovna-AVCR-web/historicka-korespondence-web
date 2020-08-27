@@ -34,6 +34,17 @@ $footerBorderColor: #aaa !default; //footer border color
 $footerSeperatorColor: #999 !default; //footer bottom seperator color
 $footerActiveColor: #d00 !default; //footer bottom active text color
 
+// custom variables
+$rowAltBackgroundColor: $gray-200;
+$rowHoverBackground: $gray-300;
+$headerBackgroundColor: $gray-200;
+$footerBackgroundColor: $gray-200;
+$borderColor: $table-border-color;
+$headerBorderColor: $table-border-color;
+$rowBorderColor: $table-border-color;
+$footerBorderColor: $table-border-color;
+$backgroundColor: $gray-100;
+
 //Tabulator Containing Element
 .tabulator {
     position: relative;
@@ -46,10 +57,6 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
     text-align: left;
     overflow: hidden;
 
-    -webkit-transform: translatez(0);
-    -moz-transform: translatez(0);
-    -ms-transform: translatez(0);
-    -o-transform: translatez(0);
     transform: translatez(0);
 
     &[tabulator-layout='fitDataFill'] {
@@ -83,10 +90,7 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
         white-space: nowrap;
         overflow: hidden;
 
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        -o-user-select: none;
+        user-select: none;
 
         &.tabulator-header-hidden {
             display: none;
@@ -332,7 +336,6 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
         width: 100%;
         white-space: nowrap;
         overflow: auto;
-        -webkit-overflow-scrolling: touch;
 
         &:focus {
             outline: none;
@@ -401,10 +404,7 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
         white-space: nowrap;
         user-select: none;
 
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        -o-user-select: none;
+        user-select: none;
 
         .tabulator-calcs-holder {
             box-sizing: border-box;
@@ -696,10 +696,7 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
             align-items: center;
             justify-content: center;
 
-            -moz-user-select: none;
-            -khtml-user-select: none;
-            -webkit-user-select: none;
-            -o-user-select: none;
+            user-select: none;
 
             //handle holder
             .tabulator-row-handle-box {
@@ -803,10 +800,7 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
             align-items: center;
             justify-content: center;
 
-            -moz-user-select: none;
-            -khtml-user-select: none;
-            -webkit-user-select: none;
-            -o-user-select: none;
+            user-select: none;
 
             height: 15px;
             width: 15px;
@@ -930,7 +924,6 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
     font-size: $textSize;
 
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 
     z-index: 10000;
 
@@ -967,7 +960,6 @@ $footerActiveColor: #d00 !default; //footer bottom active text color
     font-size: $textSize;
 
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 
     z-index: 10000;
 
@@ -1196,5 +1188,26 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
                 background: $rowTextColor;
             }
         }
+    }
+}
+
+// custom
+
+.tabulator-row {
+    &.tabulator-group {
+        border-bottom-color: $gray-500;
+        border-top-color: $gray-500;
+
+        &:hover {
+            background-color: rgba($gray-400, 0.75);
+        }
+    }
+}
+
+.tabulator {
+    width: 100%;
+
+    & .tabulator-footer {
+        text-align: left;
     }
 }
