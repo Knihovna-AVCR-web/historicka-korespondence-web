@@ -40,6 +40,76 @@ function sortLetterMultiData(aData, bData) {
     return a.localeCompare(b)
 }
 
+function countData(data, filtered) {
+    let authors = {}
+    let recipients = {}
+    let origins = {}
+    let destinations = {}
+    let years = { min: null, max: null }
+
+    data.map((item) => {
+        if (filtered) {
+            item = item.getData()
+        }
+
+        authors = countDataDimension(authors, item.aut)
+        recipients = countDataDimension(recipients, item.rec)
+        origins = countDataDimension(origins, item.ori)
+        destinations = countDataDimension(destinations, item.des)
+        years = getMinMaxYears(years, item.yy)
+    })
+
+    return {
+        authors: authors,
+        recipients: recipients,
+        origins: origins,
+        destinations: destinations,
+        years: years,
+    }
+}
+
+function countDataDimension(resultData, row) {
+    if (!row || row == 'null') {
+        return resultData
+    }
+
+    if (Array.isArray(row)) {
+        row.forEach((r) => {
+            if (!resultData.hasOwnProperty(r)) {
+                resultData[r] = 1
+            } else {
+                resultData[r]++
+            }
+        })
+    } else {
+        if (!resultData.hasOwnProperty(row)) {
+            resultData[row] = 1
+        } else {
+            resultData[row]++
+        }
+    }
+
+    return resultData
+}
+
+function getMinMaxYears(resultData, year) {
+    year = parseInt(year)
+
+    if (!Number.isInteger(year) || year == 0) {
+        return resultData
+    }
+
+    if (resultData.min == null || resultData.min > year) {
+        resultData.min = year
+    }
+
+    if (resultData.max == null || resultData.max < year) {
+        resultData.max = year
+    }
+
+    return resultData
+}
+
 if (document.getElementById('letters')) {
     table = new Tabulator('#letters-table', {
         ajaxResponse: function (url, params, response) {
@@ -67,6 +137,7 @@ if (document.getElementById('letters')) {
                 field: 'sig',
                 formatter: 'textarea',
                 title: 'Signature',
+                headerFilter: true,
             },
             {
                 field: 'date',
@@ -148,10 +219,12 @@ if (document.getElementById('letters')) {
         ],
         dataFiltered: function (filters, rows) {
             document.getElementById('search-count').innerHTML = rows.length
+            countData(rows, true)
         },
         dataLoaded: function (data) {
             document.getElementById('counter').classList.remove('d-none')
             document.getElementById('total-count').innerHTML = data.length
+            countData(data)
         },
         layout: 'fitColumns',
         maxHeight: '100%',
