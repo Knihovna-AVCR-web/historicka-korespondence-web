@@ -1,9 +1,19 @@
 <?php
 
-function index_hiko_letters($type)
+function index_hiko_letters()
 {
-    $url = "https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=public_list_all_letters&type={$type}";
-    wp_die(file_get_contents($url));
+    if (!isset($_GET['type'])) {
+        wp_send_json_error([], 404);
+    }
+
+    $data = file_get_contents(
+        "https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=public_list_all_letters&type={$_GET['type']}"
+    );
+
+    header('Content-Type: application/json');
+
+    wp_die($data);
+
 }
 add_action('wp_ajax_nopriv_index_hiko_letters', 'index_hiko_letters');
 add_action('wp_ajax_index_hiko_letters', 'index_hiko_letters');

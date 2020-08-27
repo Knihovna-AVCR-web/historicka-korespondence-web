@@ -16,6 +16,7 @@
 
     <script type="text/javascript">
     var homeUrl = "<?= esc_url(home_url('/')); ?>";
+    var ajaxUrl = '<?= admin_url('admin-ajax.php'); ?>';
     </script>
     <?php
     wp_head();
