@@ -81,123 +81,60 @@ function add_security_headers()
 add_action('send_headers', 'add_security_headers', 1);
 
 
-function hiko_load_scripts()
-{
+add_action('wp_enqueue_scripts', function () {
     $custom_js = get_template_directory_uri() . '/assets/dist/custom.min.js';
     $custom_js .= '?v=' . filemtime(get_template_directory() . '/assets/dist/custom.min.js');
-
     $custom_css = get_template_directory_uri() . '/assets/dist/main.css';
     $custom_css .= '?v=' . filemtime(get_template_directory() . '/assets/dist/main.css');
-    wp_deregister_script('jquery');
-    wp_deregister_script('jquery-migrate');
-    wp_deregister_script('wp-embed');
-    wp_register_script(
-        'jquery',
-        'https://code.jquery.com/jquery-3.3.1.min.js',
-        false,
-        null,
-        true
-    );
 
-    if (is_user_logged_in()) {
-        wp_enqueue_script('jquery');
-    }
+    wp_dequeue_script('jquery');
+    wp_deregister_script('wp-embed');
 
     wp_enqueue_script(
         'bootstrap',
-        'https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.25/dist/bootstrap-native-v4.min.js',
+        'https://cdn.jsdelivr.net/npm/bootstrap.native@3.0.10/dist/bootstrap-native.min.js',
         [],
         null,
         true
     );
+
     wp_enqueue_script(
         'lazyload',
-        'https://cdn.jsdelivr.net/npm/vanilla-lazyload@10.19.0/dist/lazyload.min.js',
+        'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js',
         [],
         null,
         true
     );
 
-    if (!is_front_page()) {
-        if (is_user_logged_in() || is_localhost()) {
-            wp_enqueue_script(
-                'vue',
-                'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
-                [],
-                null,
-                true
-            );
-        } else {
-            wp_enqueue_script(
-                'vue',
-                'https://cdn.jsdelivr.net/npm/vue',
-                [],
-                null,
-                true
-            );
-        }
-
-        wp_enqueue_script(
-            'bbox',
-            'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.js',
-            [],
-            null,
-            true
-        );
-        wp_enqueue_script(
-            'axios',
-            'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js',
-            [],
-            null,
-            true
-        );
-        wp_enqueue_script(
-            'lodash',
-            'https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js',
-            [],
-            null,
-            true
-        );
-        wp_enqueue_script(
-            'main',
-            $custom_js,
-            ['lazyload', 'axios', 'vue', 'bbox', 'lodash'],
-            null,
-            true
-        );
-    } else {
-        wp_enqueue_script(
-            'main',
-            $custom_js,
-            ['lazyload',],
-            null,
-            true
-        );
-    }
-
-    wp_localize_script('main', 'globals', [
-        'url' => admin_url('admin-ajax.php?action=get_blekastad_data'),
-        'detail' => admin_url('admin-ajax.php?action=get_blekastad_letter'),
-        'loading' => 'Loading',
-        'error' => 'Can\'t load data, please try again.',
-        'home' => str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db')))
-    ]);
-
-    wp_dequeue_style('wp-block-library');
-
-    if (!is_front_page()) {
-        wp_enqueue_style(
-            'bbox',
-            'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.css'
-        );
-    }
-
-    wp_enqueue_style(
-        'main',
-        $custom_css
+    wp_enqueue_script(
+        'bbox',
+        'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.1/dist/baguetteBox.min.js',
+        [],
+        null,
+        true
     );
-}
-add_action('wp_enqueue_scripts', 'hiko_load_scripts');
+
+    wp_enqueue_script(
+        'bbox',
+        'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.1/dist/baguetteBox.min.js',
+        [],
+        null,
+        true
+    );
+
+    wp_enqueue_script(
+        'slimselect',
+        'https://cdn.jsdelivr.net/npm/slim-select@1.26.0/dist/slimselect.min.js',
+        [],
+        null,
+        true
+    );
+
+    wp_enqueue_script('main', $custom_js, ['lazyload', 'bbox', 'slimselect'], null, true);
+    wp_enqueue_style('slimselect', 'https://cdn.jsdelivr.net/npm/slim-select@1.26.0/dist/slimselect.min.css');
+    wp_enqueue_style('bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.1/dist/baguetteBox.min.css');
+    wp_enqueue_style('main', $custom_css);
+});
 
 
 function conditional_body_class($classes)
@@ -245,11 +182,7 @@ function language_switcher()
         ?>
 
         <span>
-            <a
-            href="<?= ($is_disabled) ? '#' : $lang['url']; ?>"
-            class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>"
-            aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>"
-            >
+            <a href="<?= ($is_disabled) ? '#' : $lang['url']; ?>" class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>" aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>">
                 <?= $lang['slug'] ?>
             </a>
         </span>
@@ -315,15 +248,8 @@ function cmb2_output_gallery($file_list_meta_key)
     <div class="gallery">
 
         <?php foreach ((array) $files as $file_id => $file_url) : ?>
-            <a
-                href="<?= $file_url; ?>"
-                data-caption="<?= wp_get_attachment_caption($file_id); ?>"
-            >
-                <img
-                    src="<?= wp_get_attachment_image_src($file_id, 'medium')[0]; ?>"
-                    alt="<?= wp_get_attachment_caption($file_id); ?>"
-                    class="img-fluid img-thumbnail mr-3 mb-3"
-                >
+            <a href="<?= $file_url; ?>" data-caption="<?= wp_get_attachment_caption($file_id); ?>">
+                <img src="<?= wp_get_attachment_image_src($file_id, 'medium')[0]; ?>" alt="<?= wp_get_attachment_caption($file_id); ?>" class="img-fluid img-thumbnail mr-3 mb-3">
             </a>
 
         <?php endforeach; ?>
@@ -370,7 +296,7 @@ function encode_string_to_ASCII($string)
     $output = '';
 
     for ($i = 0; $i < strlen($string); $i++) {
-        $output .= '&#'.ord($string[$i]).';';
+        $output .= '&#' . ord($string[$i]) . ';';
     }
 
     return $output;
@@ -412,35 +338,7 @@ function get_custom_route_template($route, $template)
 }
 
 
-function blekastad_custom_route()
-{
-    $route = str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db'))) . 'letter';
-    get_custom_route_template($route, 'page-letter-detail.php');
-}
-add_action('init', 'blekastad_custom_route');
-
-
-function get_blekastad_data()
-{
-    $url = 'https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=public_list_all_letters&type=blekastad';
-    $data = file_get_contents($url);
-    wp_die($data);
-}
-add_action('wp_ajax_nopriv_get_blekastad_data', 'get_blekastad_data');
-add_action('wp_ajax_get_blekastad_data', 'get_blekastad_data');
-
-
-function get_blekastad_letter()
-{
-    $id = (int) $_GET['id'];
-    $url = "https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=list_public_letters_single&l_type=bl_letter&pods_id={$id}";
-    $data = file_get_contents($url);
-    wp_die($data);
-}
-add_action('wp_ajax_nopriv_get_blekastad_letter', 'get_blekastad_letter');
-add_action('wp_ajax_get_blekastad_letter', 'get_blekastad_letter');
-
-
+require 'inc/ajax.php';
 require 'inc/custom-fields.php';
 require 'inc/theme-options.php';
 require 'inc/navbar-walker.php';
