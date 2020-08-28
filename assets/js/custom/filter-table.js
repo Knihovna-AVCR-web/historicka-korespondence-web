@@ -1,6 +1,6 @@
 /* global Tabulator ajaxUrl homeUrl lettersSuffix */
 
-var table
+var table, selectAuthor, selectRecipient, selectOrigin, selectDestination
 
 function getTimestampFromDate(year, month, day) {
     let d = new Date()
@@ -92,6 +92,117 @@ function countDataDimension(resultData, row) {
     return resultData
 }
 
+function updateSelects(data, filtered) {
+    const counted = countData(data, filtered)
+    selectAuthor.setData(createSelectData(counted.authors))
+    selectRecipient.setData(createSelectData(counted.recipients))
+    selectOrigin.setData(createSelectData(counted.origins))
+    selectDestination.setData(createSelectData(counted.destinations))
+
+    if (!table) {
+        return
+    }
+
+    table.getFilters().forEach((currentFilter) => {
+        if (currentFilter.field == 'aut') {
+            setSingleSelectByFilter(selectAuthor, currentFilter)
+        }
+
+        if (currentFilter.field == 'rec') {
+            setSingleSelectByFilter(selectRecipient, currentFilter)
+        }
+
+        if (currentFilter.field == 'ori') {
+            setSingleSelectByFilter(selectOrigin, currentFilter)
+        }
+
+        if (currentFilter.field == 'des') {
+            setSingleSelectByFilter(selectDestination, currentFilter)
+        }
+    })
+}
+
+function setSingleSelectByFilter(select, currentFilter) {
+    select.setData([
+        select.data.data.find((item) => {
+            return item.value == currentFilter.value
+        }),
+    ])
+}
+
+function createSelectData(data) {
+    let result = []
+
+    data = Object.entries(data)
+
+    data.sort((a, b) => {
+        return b[1] - a[1]
+    })
+
+    result.push({ placeholder: true, text: '', value: '' })
+
+    data.forEach((item) => {
+        result.push({
+            text: item[0] + ' (' + item[1] + ')',
+            value: item[0],
+        })
+    })
+
+    return result
+}
+
+function setSelects() {
+    selectAuthor = new SlimSelect({
+        allowDeselect: true,
+        onChange: (info) => {
+            updateFilters(info.value, 'aut')
+        },
+        select: '#author',
+    })
+
+    selectRecipient = new SlimSelect({
+        allowDeselect: true,
+        onChange: (info) => {
+            updateFilters(info.value, 'rec')
+        },
+        select: '#recipient',
+    })
+
+    selectOrigin = new SlimSelect({
+        allowDeselect: true,
+        onChange: (info) => {
+            updateFilters(info.value, 'ori')
+        },
+        select: '#origin',
+    })
+
+    selectDestination = new SlimSelect({
+        allowDeselect: true,
+        onChange: (info) => {
+            updateFilters(info.value, 'des')
+        },
+        select: '#destination',
+    })
+}
+
+function updateFilters(filterValue, filterName) {
+    let currentFilters = table.getFilters()
+
+    currentFilters.forEach((currentFilter) => {
+        if (currentFilter.field == filterName) {
+            table.removeFilter(
+                currentFilter.field,
+                currentFilter.type,
+                currentFilter.value
+            )
+        }
+    })
+
+    if (filterValue && filterValue != 'undefined') {
+        table.addFilter(filterName, 'like', filterValue)
+    }
+}
+
 function getMinMaxYears(resultData, year) {
     year = parseInt(year)
 
@@ -111,10 +222,10 @@ function getMinMaxYears(resultData, year) {
 }
 
 if (document.getElementById('letters')) {
+    setSelects()
+
     table = new Tabulator('#letters-table', {
         ajaxResponse: function (url, params, response) {
-            document.getElementById('letters-filter').classList.remove('d-none')
-
             sessionStorage.setItem(
                 lettersSuffix + '-letters',
                 JSON.stringify(response)
@@ -137,7 +248,6 @@ if (document.getElementById('letters')) {
                 field: 'sig',
                 formatter: 'textarea',
                 title: 'Signature',
-                headerFilter: true,
             },
             {
                 field: 'date',
@@ -219,12 +329,13 @@ if (document.getElementById('letters')) {
         ],
         dataFiltered: function (filters, rows) {
             document.getElementById('search-count').innerHTML = rows.length
-            countData(rows, true)
+            updateSelects(rows, true)
         },
         dataLoaded: function (data) {
+            document.getElementById('letters-filter').classList.remove('d-none')
             document.getElementById('counter').classList.remove('d-none')
             document.getElementById('total-count').innerHTML = data.length
-            countData(data)
+            updateSelects(data, false)
         },
         layout: 'fitColumns',
         maxHeight: '100%',
