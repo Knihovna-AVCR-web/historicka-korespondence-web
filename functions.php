@@ -114,7 +114,6 @@ add_action('wp_enqueue_scripts', function () {
             'tabulator', 'https://cdn.jsdelivr.net/npm/tabulator-tables@4.7.2/dist/js/tabulator.min.js', [], null, true
         );
 
-        wp_enqueue_style('slimselect', 'https://cdn.jsdelivr.net/npm/slim-select@1.26.0/dist/slimselect.min.css');
         wp_enqueue_style('bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.1/dist/baguetteBox.min.css');
 
         $custom_js_deps = ['lazyload', 'bbox', 'slimselect', 'tabulator'];

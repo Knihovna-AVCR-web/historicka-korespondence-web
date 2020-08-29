@@ -1,6 +1,15 @@
 /* global Tabulator ajaxUrl homeUrl lettersSuffix */
 
-var table, selectAuthor, selectRecipient, selectOrigin, selectDestination
+var table,
+    selectAuthor,
+    selectRecipient,
+    selectOrigin,
+    selectDestination,
+    yearsFrom,
+    yearsTo
+
+const from = document.getElementById('from-year')
+const to = document.getElementById('to-year')
 
 function getTimestampFromDate(year, month, day) {
     let d = new Date()
@@ -45,7 +54,7 @@ function countData(data, filtered) {
     let recipients = {}
     let origins = {}
     let destinations = {}
-    let years = { min: null, max: null }
+    let years = []
 
     data.map((item) => {
         if (filtered) {
@@ -56,7 +65,11 @@ function countData(data, filtered) {
         recipients = countDataDimension(recipients, item.rec)
         origins = countDataDimension(origins, item.ori)
         destinations = countDataDimension(destinations, item.des)
-        years = getMinMaxYears(years, item.yy)
+
+        let year = parseInt(item.yy)
+        if (year != 0) {
+            years.push(year)
+        }
     })
 
     return {
@@ -64,7 +77,7 @@ function countData(data, filtered) {
         recipients: recipients,
         origins: origins,
         destinations: destinations,
-        years: years,
+        years: { min: Math.min(...years), max: Math.max(...years) },
     }
 }
 
@@ -99,6 +112,10 @@ function updateSelects(data, filtered) {
     selectOrigin.setData(createSelectData(counted.origins))
     selectDestination.setData(createSelectData(counted.destinations))
 
+    if (!filtered) {
+        updateYearsFilter(counted.years)
+    }
+
     if (!table) {
         return
     }
@@ -120,6 +137,16 @@ function updateSelects(data, filtered) {
             setSingleSelectByFilter(selectDestination, currentFilter)
         }
     })
+}
+
+function updateYearsFilter(years) {
+    from.setAttribute('min', years.min)
+    to.setAttribute('min', years.min)
+    from.setAttribute('max', years.max)
+    to.setAttribute('max', years.max)
+
+    from.setAttribute('placeholder', 'Min.' + years.min)
+    to.setAttribute('placeholder', 'Max.' + years.max)
 }
 
 function setSingleSelectByFilter(select, currentFilter) {
@@ -186,9 +213,7 @@ function setSelects() {
 }
 
 function updateFilters(filterValue, filterName) {
-    let currentFilters = table.getFilters()
-
-    currentFilters.forEach((currentFilter) => {
+    table.getFilters().forEach((currentFilter) => {
         if (currentFilter.field == filterName) {
             table.removeFilter(
                 currentFilter.field,
@@ -203,26 +228,39 @@ function updateFilters(filterValue, filterName) {
     }
 }
 
-function getMinMaxYears(resultData, year) {
-    year = parseInt(year)
+function filterByYears() {
+    table.getFilters().forEach((currentFilter) => {
+        if (currentFilter.field == 'yy') {
+            table.removeFilter(
+                currentFilter.field,
+                currentFilter.type,
+                currentFilter.value
+            )
+        }
+    })
 
-    if (!Number.isInteger(year) || year == 0) {
-        return resultData
+    let fromYear = parseInt(from.value)
+    let toYear = parseInt(to.value)
+
+    if (Number.isInteger(fromYear) && Number.isInteger(toYear)) {
+        let range = []
+        for (let i = fromYear; i <= toYear; i++) {
+            range.push(i)
+        }
+
+        table.setFilter('yy', 'in', range)
+    } else if (Number.isInteger(fromYear)) {
+        table.setFilter('yy', '>=', fromYear)
+    } else if (Number.isInteger(toYear)) {
+        table.setFilter('yy', '<=', toYear)
     }
-
-    if (resultData.min == null || resultData.min > year) {
-        resultData.min = year
-    }
-
-    if (resultData.max == null || resultData.max < year) {
-        resultData.max = year
-    }
-
-    return resultData
 }
 
 if (document.getElementById('letters')) {
     setSelects()
+
+    from.addEventListener('change', filterByYears)
+    to.addEventListener('change', filterByYears)
 
     table = new Tabulator('#letters-table', {
         ajaxResponse: function (url, params, response) {
@@ -253,9 +291,14 @@ if (document.getElementById('letters')) {
                 field: 'date',
                 formatter: 'textarea',
                 mutator: function (value, data) {
-                    let year = data.yy ? data.yy : 0
-                    let month = data.mm ? data.mm : 0
-                    let day = data.dd ? data.dd : 0
+                    let year = data.yy && data.yy != 0 ? data.yy : '?'
+                    let month = data.mm && data.mm != 0 ? data.mm : '?'
+                    let day = data.dd && data.dd != 0 ? data.dd : '?'
+
+                    if (year == '?' && month == '?' && day == '?') {
+                        return '?'
+                    }
+
                     return `${year}/${month}/${day}`
                 },
                 sorter: function (a, b, aRow, bRow) {
@@ -277,6 +320,14 @@ if (document.getElementById('letters')) {
                     return a - b
                 },
                 title: 'Date',
+            },
+            {
+                field: 'yy',
+                mutator: function (value, data) {
+                    return value ? parseInt(value) : 0
+                },
+                visible: false,
+                title: 'Year',
             },
             {
                 field: 'aut',

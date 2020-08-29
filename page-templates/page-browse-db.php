@@ -26,13 +26,27 @@ the_post();
     <div class="col-lg-3">
         <div id="letters-filter" class="d-none mb-3">
             <?php foreach ($selectData as $key => $val) : ?>
-                <div class="filter mb-4">
+                <div class="mb-4">
                     <label for="author" class="mb-1 d-block text-primary text-uppercase">
                         <?= $val; ?>
                     </label>
                     <select id="<?= $key; ?>"></select>
                 </div>
             <?php endforeach; ?>
+            <div class="form-row mb-4">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="from-year" class="mb-1 d-block text-primary text-uppercase">From</label>
+                        <input type="number" class="form-control form-control-sm" id="from-year" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="to-year" class="mb-1 d-block text-primary text-uppercase">To</label>
+                        <input type="number" class="form-control form-control-sm" id="to-year" autocomplete="off">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-lg-9">
