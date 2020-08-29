@@ -248,11 +248,11 @@ function filterByYears() {
             range.push(i)
         }
 
-        table.setFilter('yy', 'in', range)
+        table.addFilter('yy', 'in', range)
     } else if (Number.isInteger(fromYear)) {
-        table.setFilter('yy', '>=', fromYear)
+        table.addFilter('yy', '>=', fromYear)
     } else if (Number.isInteger(toYear)) {
-        table.setFilter('yy', '<=', toYear)
+        table.addFilter('yy', '<=', toYear)
     }
 }
 
@@ -276,9 +276,10 @@ if (document.getElementById('letters')) {
                 field: 'id',
                 formatter: function (cell) {
                     const id = cell.getValue()
-                    return `<a href="${homeUrl}browse/letter/${id}" target="_blank">Detail</a>`
+                    return `<a href="${homeUrl}browse/letter/?type=${letterType}&id=${id}" target="_blank">Detail</a>`
                 },
                 frozen: true,
+                headerSort: false,
                 title: '',
                 width: 54,
             },
@@ -388,10 +389,11 @@ if (document.getElementById('letters')) {
             document.getElementById('total-count').innerHTML = data.length
             updateSelects(data, false)
         },
+        initialSort: [{ column: 'date', dir: 'desc' }],
         layout: 'fitColumns',
         maxHeight: '100%',
         pagination: 'local',
-        paginationSize: 10,
+        paginationSize: 15,
         resizableColumns: false,
         selectable: false,
         tooltips: true,

@@ -21,6 +21,7 @@ the_post();
 </h1>
 <script>
     var lettersSuffix = '<?= carbon_get_post_meta(get_the_ID(), 'index_endpoint'); ?>';
+    var letterType = '<?= carbon_get_post_meta(get_the_ID(), 'single_endpoint'); ?>';
 </script>
 <div class="row main-content mb-5" id="letters">
     <div class="col-lg-3">

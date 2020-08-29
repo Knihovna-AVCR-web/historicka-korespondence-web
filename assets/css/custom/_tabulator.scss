@@ -25,7 +25,7 @@ $rowSelectedBackground: #9abcea !default; //row background color when selected
 $rowSelectedBackgroundHover: #769bcc !default; //row background color when selected and hovered
 
 $editBoxColor: #1d68cd !default; //border color for edit boxes
-$errorColor: #dd0000 !default; //error indication
+$errorColor: #d00 !default; //error indication
 
 //footer themeing
 $footerBackgroundColor: #e6e6e6 !default; //border to tabulator
@@ -35,10 +35,9 @@ $footerSeperatorColor: #999 !default; //footer bottom seperator color
 $footerActiveColor: #d00 !default; //footer bottom active text color
 
 // custom variables
-$rowAltBackgroundColor: $gray-200;
-$rowHoverBackground: $gray-300;
-$headerBackgroundColor: $gray-200;
-$footerBackgroundColor: $gray-200;
+$rowAltBackgroundColor: $table-accent-bg;
+$headerBackgroundColor: #fff;
+$footerBackgroundColor: #fff;
 $borderColor: $table-border-color;
 $headerBorderColor: $table-border-color;
 $rowBorderColor: $table-border-color;
@@ -48,16 +47,12 @@ $backgroundColor: $gray-100;
 //Tabulator Containing Element
 .tabulator {
     position: relative;
-
     border: 1px solid $borderColor;
-
     background-color: $backgroundColor;
-
     font-size: $textSize;
     text-align: left;
     overflow: hidden;
-
-    transform: translatez(0);
+    transform: translateZ(0);
 
     &[tabulator-layout='fitDataFill'] {
         .tabulator-tableHolder {
@@ -79,17 +74,13 @@ $backgroundColor: $gray-100;
     .tabulator-header {
         position: relative;
         box-sizing: border-box;
-
         width: 100%;
-
         border-bottom: 1px solid $headerSeperatorColor;
         background-color: $headerBackgroundColor;
         color: $headerTextColor;
         font-weight: bold;
-
         white-space: nowrap;
         overflow: hidden;
-
         user-select: none;
 
         &.tabulator-header-hidden {
@@ -134,7 +125,6 @@ $backgroundColor: $gray-100;
                 .tabulator-col-title {
                     box-sizing: border-box;
                     width: 100%;
-
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -144,11 +134,8 @@ $backgroundColor: $gray-100;
                     .tabulator-title-editor {
                         box-sizing: border-box;
                         width: 100%;
-
                         border: 1px solid #999;
-
                         padding: 1px;
-
                         background: #fff;
                     }
                 }
@@ -173,10 +160,8 @@ $backgroundColor: $gray-100;
                 .tabulator-col-group-cols {
                     position: relative;
                     display: flex;
-
                     border-top: 1px solid $headerBorderColor;
                     overflow: hidden;
-
                     margin-right: -1px;
                 }
             }
@@ -251,7 +236,6 @@ $backgroundColor: $gray-100;
                     .tabulator-col-title {
                         writing-mode: vertical-rl;
                         text-orientation: mixed;
-
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -304,7 +288,6 @@ $backgroundColor: $gray-100;
         .tabulator-calcs-holder {
             box-sizing: border-box;
             min-width: 600%;
-
             background: lighten($headerBackgroundColor, 5%) !important;
 
             .tabulator-row {
@@ -317,7 +300,6 @@ $backgroundColor: $gray-100;
 
             border-top: 1px solid $rowBorderColor;
             border-bottom: 1px solid $headerBorderColor;
-
             overflow: hidden;
         }
 
@@ -356,10 +338,8 @@ $backgroundColor: $gray-100;
 
             span {
                 display: inline-block;
-
                 margin: 0 auto;
                 padding: 10px;
-
                 color: #ccc;
                 font-weight: bold;
                 font-size: 20px;
@@ -403,16 +383,13 @@ $backgroundColor: $gray-100;
         font-weight: bold;
         white-space: nowrap;
         user-select: none;
-
         user-select: none;
 
         .tabulator-calcs-holder {
             box-sizing: border-box;
             width: calc(100% + 20px);
             margin: -5px -10px 5px -10px;
-
             text-align: left;
-
             background: lighten($footerBackgroundColor, 5%) !important;
 
             .tabulator-row {
@@ -425,7 +402,6 @@ $backgroundColor: $gray-100;
 
             border-bottom: 1px solid $rowBorderColor;
             border-top: 1px solid $rowBorderColor;
-
             overflow: hidden;
 
             &:only-child {
@@ -444,10 +420,8 @@ $backgroundColor: $gray-100;
         //pagination container element
         .tabulator-page-size {
             display: inline-block;
-
             margin: 0 5px;
             padding: 2px 5px;
-
             border: 1px solid $footerBorderColor;
             border-radius: 3px;
         }
@@ -459,13 +433,10 @@ $backgroundColor: $gray-100;
         //pagination button
         .tabulator-page {
             display: inline-block;
-
             margin: 0 2px;
             padding: 2px 5px;
-
             border: 1px solid $footerBorderColor;
             border-radius: 3px;
-
             background: rgba(255, 255, 255, 0.2);
 
             &.active {
@@ -509,11 +480,9 @@ $backgroundColor: $gray-100;
         position: absolute;
         display: flex;
         align-items: center;
-
         top: 0;
         left: 0;
         z-index: 100;
-
         height: 100%;
         width: 100%;
         background: rgba(0, 0, 0, 0.4);
@@ -522,12 +491,9 @@ $backgroundColor: $gray-100;
         //loading message element
         .tabulator-loader-msg {
             display: inline-block;
-
             margin: 0 auto;
             padding: 10px 20px;
-
             border-radius: 10px;
-
             background: #fff;
             font-weight: bold;
             font-size: 16px;
@@ -579,10 +545,8 @@ $backgroundColor: $gray-100;
 
     &.tabulator-moving {
         position: absolute;
-
         border-top: 1px solid $rowBorderColor;
         border-bottom: 1px solid $rowBorderColor;
-
         pointer-events: none;
         z-index: 15;
     }
@@ -608,9 +572,7 @@ $backgroundColor: $gray-100;
     .tabulator-frozen {
         display: inline-block;
         position: absolute;
-
         background-color: inherit;
-
         z-index: 10;
 
         &.tabulator-frozen-left {
@@ -624,9 +586,7 @@ $backgroundColor: $gray-100;
 
     .tabulator-responsive-collapse {
         box-sizing: border-box;
-
         padding: 5px;
-
         border-top: 1px solid $rowBorderColor;
         border-bottom: 1px solid $rowBorderColor;
 
@@ -674,11 +634,11 @@ $backgroundColor: $gray-100;
 
         &.tabulator-validation-fail {
             border: 1px solid $errorColor;
+
             input,
             select {
                 border: 1px;
                 background: transparent;
-
                 color: $errorColor;
             }
         }
@@ -695,7 +655,6 @@ $backgroundColor: $gray-100;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             user-select: none;
 
             //handle holder
@@ -715,15 +674,11 @@ $backgroundColor: $gray-100;
         .tabulator-data-tree-branch {
             display: inline-block;
             vertical-align: middle;
-
             height: 9px;
             width: 7px;
-
             margin-top: -9px;
             margin-right: 5px;
-
             border-bottom-left-radius: 1px;
-
             border-left: 2px solid $rowBorderColor;
             border-bottom: 2px solid $rowBorderColor;
         }
@@ -733,16 +688,12 @@ $backgroundColor: $gray-100;
             justify-content: center;
             align-items: center;
             vertical-align: middle;
-
             height: 11px;
             width: 11px;
-
             margin-right: 5px;
-
             border: 1px solid $rowTextColor;
             border-radius: 2px;
             background: rgba(0, 0, 0, 0.1);
-
             overflow: hidden;
 
             &:hover {
@@ -753,21 +704,17 @@ $backgroundColor: $gray-100;
             .tabulator-data-tree-control-collapse {
                 display: inline-block;
                 position: relative;
-
                 height: 7px;
                 width: 1px;
-
                 background: transparent;
 
-                &:after {
+                &::after {
                     position: absolute;
                     content: '';
                     left: -3px;
                     top: 3px;
-
                     height: 1px;
                     width: 7px;
-
                     background: $rowTextColor;
                 }
             }
@@ -775,21 +722,17 @@ $backgroundColor: $gray-100;
             .tabulator-data-tree-control-expand {
                 display: inline-block;
                 position: relative;
-
                 height: 7px;
                 width: 1px;
-
                 background: $rowTextColor;
 
-                &:after {
+                &::after {
                     position: absolute;
                     content: '';
                     left: -3px;
                     top: 3px;
-
                     height: 1px;
                     width: 7px;
-
                     background: $rowTextColor;
                 }
             }
@@ -799,15 +742,11 @@ $backgroundColor: $gray-100;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             user-select: none;
-
             height: 15px;
             width: 15px;
-
             border-radius: 20px;
             background: #666;
-
             color: $rowBackgroundColor;
             font-weight: bold;
             font-size: 1.1em;
@@ -835,7 +774,6 @@ $backgroundColor: $gray-100;
             display: inline-block;
             height: 14px;
             width: 14px;
-
             border-radius: 14px;
         }
     }
@@ -850,7 +788,6 @@ $backgroundColor: $gray-100;
         padding-left: 10px;
         background: #ccc;
         font-weight: bold;
-
         min-width: 100%;
 
         &:hover {
@@ -916,20 +853,15 @@ $backgroundColor: $gray-100;
     position: absolute;
     display: inline-block;
     box-sizing: border-box;
-
     background: $rowBackgroundColor;
     border: 1px solid $rowBorderColor;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-
     font-size: $textSize;
-
     overflow-y: auto;
-
     z-index: 10000;
 
     .tabulator-menu-item {
         padding: 5px 10px;
-
         user-select: none;
 
         &.tabulator-menu-item-disabled {
@@ -951,21 +883,15 @@ $backgroundColor: $gray-100;
     position: absolute;
     display: inline-block;
     box-sizing: border-box;
-
     max-height: 200px;
-
     background: $rowBackgroundColor;
     border: 1px solid $rowBorderColor;
-
     font-size: $textSize;
-
     overflow-y: auto;
-
     z-index: 10000;
 
     .tabulator-edit-select-list-item {
         padding: 4px;
-
         color: $rowTextColor;
 
         &.active {
@@ -983,7 +909,6 @@ $backgroundColor: $gray-100;
 
         &:hover {
             cursor: pointer;
-
             color: $rowBackgroundColor;
             background: $editBoxColor;
         }
@@ -991,17 +916,14 @@ $backgroundColor: $gray-100;
 
     .tabulator-edit-select-list-notice {
         padding: 4px;
-
         color: $rowTextColor;
         text-align: center;
     }
 
     .tabulator-edit-select-list-group {
         border-bottom: 1px solid $rowBorderColor;
-
         padding: 4px;
         padding-top: 6px;
-
         color: $rowTextColor;
         font-weight: bold;
     }
@@ -1015,7 +937,6 @@ $backgroundColor: $gray-100;
     bottom: 0;
     left: 0;
     right: 0;
-
     z-index: 10000;
 }
 
@@ -1029,15 +950,11 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
     .tabulator-data-tree-branch {
         display: inline-block;
         vertical-align: middle;
-
         height: 9px;
         width: 7px;
-
         margin-top: -9px;
         margin-right: 5px;
-
         border-bottom-left-radius: 1px;
-
         border-left: 2px solid $rowBorderColor;
         border-bottom: 2px solid $rowBorderColor;
     }
@@ -1052,7 +969,6 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
         padding-left: 10px;
         background: #ccc;
         font-weight: bold;
-
         min-width: 100%;
 
         &:hover {
@@ -1128,16 +1044,12 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
         justify-content: center;
         align-items: center;
         vertical-align: middle;
-
         height: 11px;
         width: 11px;
-
         margin-right: 5px;
-
         border: 1px solid $rowTextColor;
         border-radius: 2px;
         background: rgba(0, 0, 0, 0.1);
-
         overflow: hidden;
 
         &:hover {
@@ -1148,21 +1060,17 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
         .tabulator-data-tree-control-collapse {
             display: inline-block;
             position: relative;
-
             height: 7px;
             width: 1px;
-
             background: transparent;
 
-            &:after {
+            &::after {
                 position: absolute;
                 content: '';
                 left: -3px;
                 top: 3px;
-
                 height: 1px;
                 width: 7px;
-
                 background: $rowTextColor;
             }
         }
@@ -1170,21 +1078,17 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
         .tabulator-data-tree-control-expand {
             display: inline-block;
             position: relative;
-
             height: 7px;
             width: 1px;
-
             background: $rowTextColor;
 
-            &:after {
+            &::after {
                 position: absolute;
                 content: '';
                 left: -3px;
                 top: 3px;
-
                 height: 1px;
                 width: 7px;
-
                 background: $rowTextColor;
             }
         }
