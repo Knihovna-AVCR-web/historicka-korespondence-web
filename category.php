@@ -26,7 +26,6 @@ echo do_shortcode('[breadcrumbs]');
         <a href="<?php the_permalink(); ?>">
             <?php _e('Více', 'hiko') ?>
         </a>
-
     </div>
 <?php endwhile;
 

@@ -1,4 +1,4 @@
-.header {
+header {
     background-color: #736357;
     padding-top: 4px;
 }
@@ -9,11 +9,6 @@
     & .row {
         margin: 0;
     }
-}
-
-.main-content {
-    line-height: 1.75;
-    min-height: 55vh;
 }
 
 .lead {

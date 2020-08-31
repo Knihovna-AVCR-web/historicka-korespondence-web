@@ -1,18 +1,9 @@
 @media print {
-    .footer {
+    footer {
         display: none;
     }
 
     .entry {
         border-bottom: 0;
-    }
-
-    .main-content {
-        min-height: 100%;
-
-        & .col-lg-8,
-        & .col-md-10 {
-            max-width: 100%;
-        }
     }
 }

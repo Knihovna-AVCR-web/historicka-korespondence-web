@@ -1,11 +1,18 @@
 <?php
 
-function crb_load()
-{
-    require_once(get_template_directory() . '/vendor/autoload.php');
+add_action('after_setup_theme', function () {
+    add_theme_support('title-tag');
+
+    require_once get_template_directory() . '/vendor/autoload.php';
+
     \Carbon_Fields\Carbon_Fields::boot();
-}
-add_action('after_setup_theme', 'crb_load');
+
+    require_once get_template_directory() . '/inc/ajax.php';
+    require_once get_template_directory() . '/inc/custom-fields.php';
+    require_once get_template_directory() . '/inc/theme-options.php';
+    require_once get_template_directory() . '/inc/navbar-walker.php';
+    require_once get_template_directory() . '/inc/breadcrumbs.php';
+});
 
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
@@ -44,14 +51,12 @@ add_filter('script_loader_src', 'hiko_remove_wp_version_strings');
 add_filter('style_loader_src', 'hiko_remove_wp_version_strings');
 
 
-function hiko_remove_version()
-{
+add_filter('the_generator', function () {
     return '';
-}
-add_filter('the_generator', 'hiko_remove_version');
+});
 
-function clean_style_tag($input)
-{
+
+add_filter('style_loader_tag', function ($input) {
     $re = "!<link rel='stylesheet'\s?(id='[^']+')?\s+href='(.*)' type='text/css' media='(.*)' />!";
     preg_match_all(
         $re,
@@ -64,12 +69,10 @@ function clean_style_tag($input)
 
     $media = $matches[3][0] !== '' && $matches[3][0] !== 'all' ? ' media="' . $matches[3][0] . '"' : '';
     return '<link rel="stylesheet" href="' . $matches[2][0] . '"' . $media . '>' . "\n";
-}
-add_filter('style_loader_tag', 'clean_style_tag');
+});
 
 
-function add_security_headers()
-{
+add_action('send_headers', function () {
     header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
 
     header('X-Frame-Options: DENY');
@@ -77,131 +80,62 @@ function add_security_headers()
     header('X-XSS-Protection: 1; mode=block');
 
     header('X-Content-Type-Options: nosniff');
-}
-add_action('send_headers', 'add_security_headers', 1);
+}, 1);
 
 
-function hiko_load_scripts()
-{
+add_action('wp_enqueue_scripts', function () {
     $custom_js = get_template_directory_uri() . '/assets/dist/custom.min.js';
     $custom_js .= '?v=' . filemtime(get_template_directory() . '/assets/dist/custom.min.js');
-
     $custom_css = get_template_directory_uri() . '/assets/dist/main.css';
     $custom_css .= '?v=' . filemtime(get_template_directory() . '/assets/dist/main.css');
-    wp_deregister_script('jquery');
-    wp_deregister_script('jquery-migrate');
-    wp_deregister_script('wp-embed');
-    wp_register_script(
-        'jquery',
-        'https://code.jquery.com/jquery-3.3.1.min.js',
-        false,
-        null,
-        true
-    );
+    $custom_js_deps = ['lazyload'];
 
-    if (is_user_logged_in()) {
-        wp_enqueue_script('jquery');
-    }
+    wp_dequeue_script('jquery');
+    wp_deregister_script('wp-embed');
 
     wp_enqueue_script(
         'bootstrap',
-        'https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.25/dist/bootstrap-native-v4.min.js',
+        'https://cdn.jsdelivr.net/npm/bootstrap.native@3.0.10/dist/bootstrap-native.min.js',
         [],
         null,
         true
     );
+
     wp_enqueue_script(
         'lazyload',
-        'https://cdn.jsdelivr.net/npm/vanilla-lazyload@10.19.0/dist/lazyload.min.js',
+        'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js',
         [],
         null,
         true
     );
 
     if (!is_front_page()) {
-        if (is_user_logged_in() || is_localhost()) {
-            wp_enqueue_script(
-                'vue',
-                'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
-                [],
-                null,
-                true
-            );
-        } else {
-            wp_enqueue_script(
-                'vue',
-                'https://cdn.jsdelivr.net/npm/vue',
-                [],
-                null,
-                true
-            );
-        }
+        wp_enqueue_script(
+            'slimselect',
+            'https://cdn.jsdelivr.net/npm/slim-select@1.26.0/dist/slimselect.min.js',
+            [],
+            null,
+            true
+        );
 
         wp_enqueue_script(
-            'bbox',
-            'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.js',
+            'tabulator',
+            'https://cdn.jsdelivr.net/npm/tabulator-tables@4.7.2/dist/js/tabulator.min.js',
             [],
             null,
             true
         );
-        wp_enqueue_script(
-            'axios',
-            'https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js',
-            [],
-            null,
-            true
-        );
-        wp_enqueue_script(
-            'lodash',
-            'https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js',
-            [],
-            null,
-            true
-        );
-        wp_enqueue_script(
-            'main',
-            $custom_js,
-            ['lazyload', 'axios', 'vue', 'bbox', 'lodash'],
-            null,
-            true
-        );
-    } else {
-        wp_enqueue_script(
-            'main',
-            $custom_js,
-            ['lazyload',],
-            null,
-            true
-        );
+
+        $custom_js_deps = ['lazyload', 'slimselect', 'tabulator'];
     }
 
-    wp_localize_script('main', 'globals', [
-        'url' => admin_url('admin-ajax.php?action=get_blekastad_data'),
-        'detail' => admin_url('admin-ajax.php?action=get_blekastad_letter'),
-        'loading' => 'Loading',
-        'error' => 'Can\'t load data, please try again.',
-        'home' => str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db')))
-    ]);
+    wp_enqueue_script('main', $custom_js, $custom_js_deps, null, true);
 
-    wp_dequeue_style('wp-block-library');
-
-    if (!is_front_page()) {
-        wp_enqueue_style(
-            'bbox',
-            'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.0/dist/baguetteBox.min.css'
-        );
-    }
-
-    wp_enqueue_style(
-        'main',
-        $custom_css
-    );
-}
-add_action('wp_enqueue_scripts', 'hiko_load_scripts');
+    wp_enqueue_style('main', $custom_css);
+});
 
 
-function conditional_body_class($classes)
-{
+add_filter('body_class', function ($classes) {
     if (is_page_template('page-templates/page-blekastad-front.php')) {
         $classes[] = 'blekastad-front';
     } elseif (is_page_template('page-templates/page-home.php')) {
@@ -209,16 +143,54 @@ function conditional_body_class($classes)
     }
 
     return $classes;
-}
-add_filter('body_class', 'conditional_body_class');
+});
 
-
-function register_all_menus()
-{
+add_action('init', function () {
     register_nav_menu('main-menu', 'Main Menu');
     register_nav_menu('blekastad-menu', 'Blekastad Menu');
+});
+
+
+add_action('template_redirect', function () {
+    global $post;
+
+    $slug = $post->post_name;
+
+    if ($slug != 'browse') {
+        return;
+    }
+
+    $db = isset($_GET['db']) && !empty($_GET['db']) ? $_GET['db'] : false;
+
+    if ($db == 'bl_letter') {
+        $url = get_permalink(carbon_get_theme_option('mb_db'));
+        exit(wp_redirect($url));
+    } else {
+        exit(wp_redirect(home_url('projekty')));
+    }
+});
+
+
+function showBlekastadNav()
+{
+    $show = false;
+
+    global $post;
+
+    $slug = $post->post_name;
+
+    if (is_page_template('page-templates/page-blekastad-front.php')) {
+        $show = true;
+    } else if (get_post_meta(get_queried_object_id(), 'bl_submenu', true) == 'on') {
+        $show = true;
+    } else if ($slug == 'letter' && isset($_GET['type']) && $_GET['type'] == 'bl_letter') {
+        $show = true;
+    }
+
+    if ($show) {
+        require_once get_template_directory() . '/partials/blekastad-nav.php';
+    }
 }
-add_action('init', 'register_all_menus');
 
 
 function language_switcher()
@@ -231,25 +203,18 @@ function language_switcher()
         return false;
     }
 
-    $output = [];
-
     $languages = pll_the_languages([
         'raw' => 1,
         'hide_current' => 0
     ]);
 
+    $output = [];
+
     foreach ($languages as $lang) {
-        ob_start();
-
         $is_disabled = $lang['current_lang'] || $lang['no_translation'];
-        ?>
-
+        ob_start(); ?>
         <span>
-            <a
-            href="<?= ($is_disabled) ? '#' : $lang['url']; ?>"
-            class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>"
-            aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>"
-            >
+            <a href="<?= ($is_disabled) ? '#' : $lang['url']; ?>" class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>" aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>">
                 <?= $lang['slug'] ?>
             </a>
         </span>
@@ -292,19 +257,6 @@ function get_esc_setted_value($value)
 }
 
 
-function get_site_title()
-{
-    if (is_home()) {
-        echo bloginfo('name');
-        return;
-    }
-
-    echo wp_title(' | ', false, 'right');
-    echo bloginfo('name');
-    return;
-}
-
-
 function cmb2_output_gallery($file_list_meta_key)
 {
     $files = get_post_meta(get_the_ID(), $file_list_meta_key, 1);
@@ -315,15 +267,8 @@ function cmb2_output_gallery($file_list_meta_key)
     <div class="gallery">
 
         <?php foreach ((array) $files as $file_id => $file_url) : ?>
-            <a
-                href="<?= $file_url; ?>"
-                data-caption="<?= wp_get_attachment_caption($file_id); ?>"
-            >
-                <img
-                    src="<?= wp_get_attachment_image_src($file_id, 'medium')[0]; ?>"
-                    alt="<?= wp_get_attachment_caption($file_id); ?>"
-                    class="img-fluid img-thumbnail mr-3 mb-3"
-                >
+            <a href="<?= $file_url; ?>" data-caption="<?= wp_get_attachment_caption($file_id); ?>">
+                <img src="<?= wp_get_attachment_image_src($file_id, 'medium')[0]; ?>" alt="<?= wp_get_attachment_caption($file_id); ?>" class="img-fluid img-thumbnail mr-3 mb-3">
             </a>
 
         <?php endforeach; ?>
@@ -370,7 +315,7 @@ function encode_string_to_ASCII($string)
     $output = '';
 
     for ($i = 0; $i < strlen($string); $i++) {
-        $output .= '&#'.ord($string[$i]).';';
+        $output .= '&#' . ord($string[$i]) . ';';
     }
 
     return $output;
@@ -399,49 +344,119 @@ function get_encoded_mailto_link($classes)
     return ob_get_clean();
 }
 
-
-function get_custom_route_template($route, $template)
+function get_content_from_url($url)
 {
-    $route = trim($route, '/');
-    $url_path = trim(parse_url(add_query_arg([]), PHP_URL_PATH), '/');
-
-    if (strpos($url_path, $route) !== false) {
-        load_template(get_template_directory() . '/page-templates/' . $template);
-        exit();
+    if (!is_localhost()) {
+        return file_get_contents($url);
     }
+
+    return file_get_contents(
+        $url,
+        false,
+        stream_context_create([
+            'http' => ['method' => 'GET'], 'ssl' => ['verify_peer' => false, 'allow_self_signed' => true]
+        ])
+    );
 }
 
-
-function blekastad_custom_route()
+function get_single_letter_meta()
 {
-    $route = str_replace(home_url(), '', get_permalink(carbon_get_theme_option('mb_db'))) . 'letter';
-    get_custom_route_template($route, 'page-letter-detail.php');
+    $letter = null;
+    $type = isset($_GET['type']) ? $_GET['type'] : false;
+    $id = isset($_GET['id']) ?  (int) $_GET['id'] : false;
+
+    if ($type && $id) {
+        $letter = get_content_from_url(admin_url("admin-ajax.php?action=get_single_hiko_letter&type={$type}&id=$id"));
+        $letter = json_decode($letter, true);
+        $letter['document_type'] = get_letter_doc_meta($letter['document_type']);
+        $letter['related_resources'] = get_letter_related_resources($letter['related_resources']);
+
+    }
+
+    return $letter;
 }
-add_action('init', 'blekastad_custom_route');
 
-
-function get_blekastad_data()
+function custom_format_date($day, $month, $year)
 {
-    $url = 'https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=public_list_all_letters&type=blekastad';
-    $data = file_get_contents($url);
-    wp_die($data);
+    $day = $day && $day != 0 ? $day : '?';
+    $month = $month && $month != 0 ? $month : '?';
+    $year = $year && $year != 0 ? $year : '????';
+
+    if ($year == '????' && $month == '?' && $day == '?') {
+        return '?';
+    }
+
+    return "{$day}/{$month}/{$year}";
 }
-add_action('wp_ajax_nopriv_get_blekastad_data', 'get_blekastad_data');
-add_action('wp_ajax_get_blekastad_data', 'get_blekastad_data');
 
-
-function get_blekastad_letter()
+function get_letter_object_meta($id, $name, $meta, $type = false)
 {
-    $id = (int) $_GET['id'];
-    $url = "https://historicka-korespondence.cz/administrace/wp-admin/admin-ajax.php?action=list_public_letters_single&l_type=bl_letter&pods_id={$id}";
-    $data = file_get_contents($url);
-    wp_die($data);
+    if ($type) {
+        $filtered_meta = array_filter($meta, function ($row) use($id, $type) {
+            return ($row['id'] == (string) $id && $row['type'] == $type);
+        });
+
+        $filtered_meta = array_values($filtered_meta)[0];
+        $filtered_meta['name'] = $name;
+        return $filtered_meta;
+    }
+
+    $object_meta_index = array_search((string) $id, array_column($meta, 'id'));
+    $meta[$object_meta_index]['name'] = $name;
+    return $meta[$object_meta_index];
+
 }
-add_action('wp_ajax_nopriv_get_blekastad_letter', 'get_blekastad_letter');
-add_action('wp_ajax_get_blekastad_letter', 'get_blekastad_letter');
 
 
-require 'inc/custom-fields.php';
-require 'inc/theme-options.php';
-require 'inc/navbar-walker.php';
-require 'inc/breadcrumbs.php';
+function format_letter_object($data, $element)
+{
+    $result = "<{$element} class='mb-1'>{$data['name']}";
+
+    if (!empty($data['marked']) && $data['marked'] != $data['name']) {
+        $result .= '<span class="text-secondary d-block">Marked as: ' . $data['marked'] . '</span>';
+    }
+
+    if (isset($data['salutation']) && !empty($data['salutation'])) {
+        $result .= '<span class="text-secondary d-block">Salutation: ' . $data['salutation'] . '</span>';
+    }
+
+    $result .= "</{$element}>";
+
+    return $result;
+}
+
+function get_letter_doc_meta($data)
+{
+    $result = [
+        'copy' => '',
+        'preservation' => '',
+        'type' => '',
+    ];
+
+    if (empty($data)) {
+        return $result;
+    }
+
+    $data = json_decode($data, true);
+
+    foreach ($data as $item) {
+        $result[key($item)] = $item[key($item)];
+    }
+
+    return $result;
+}
+
+function get_letter_related_resources($resources)
+{
+    $resources = json_decode($resources, true);
+
+    $result = [];
+
+    foreach ($resources as $resource) {
+        if (!empty($resource['title'])) {
+            $result[] = $resource;
+        }
+    }
+
+    return $result;
+}

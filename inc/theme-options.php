@@ -5,7 +5,7 @@ use Carbon_Fields\Field;
 
 function hk_theme_options()
 {
-    Container::make('theme_options', 'Nastavení stránky')
+    Container::make('theme_options', 'Nastavení webu')
     ->add_fields([
         Field::make('select', 'mb_front', 'Úvodní stránka MB')
             ->add_options('get_all_posts'),
