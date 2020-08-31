@@ -250,6 +250,17 @@ function filterByYears() {
     }
 }
 
+function verifyCache() {
+    const cachedDate = sessionStorage[lettersSuffix + '-date']
+    const interval = 600000 // 10 minutes
+
+    if (!cachedDate) {
+        return false
+    }
+
+    return cachedDate > Date.now() - interval
+}
+
 if (document.getElementById('letters')) {
     setSelects()
 
@@ -262,6 +273,8 @@ if (document.getElementById('letters')) {
                 lettersSuffix + '-letters',
                 JSON.stringify(response)
             )
+
+            sessionStorage.setItem(lettersSuffix + '-date', Date.now())
 
             return response
         },
@@ -393,7 +406,7 @@ if (document.getElementById('letters')) {
         tooltips: true,
     })
 
-    if (sessionStorage[lettersSuffix + '-letters']) {
+    if (verifyCache()) {
         table.setData(
             JSON.parse(sessionStorage.getItem(lettersSuffix + '-letters'))
         )
