@@ -26,9 +26,7 @@
     <header class="header">
         <?php
         require 'partials/main-nav.php';
-        if (is_page_template('page-templates/page-blekastad-front.php') || get_post_meta(get_queried_object_id(), 'bl_submenu', true) == 'on') {
-            require 'partials/blekastad-nav.php';
-        }
+        showBlekastadNav();
         ?>
     </header>
     <main class="container-fluid">

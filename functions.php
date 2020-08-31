@@ -151,6 +151,48 @@ add_action('init', function () {
 });
 
 
+add_action('template_redirect', function () {
+    global $post;
+
+    $slug = $post->post_name;
+
+    if ($slug != 'browse') {
+        return;
+    }
+
+    $db = isset($_GET['db']) && !empty($_GET['db']) ? $_GET['db'] : false;
+
+    if ($db == 'bl_letter') {
+        $url = get_permalink(carbon_get_theme_option('mb_db'));
+        exit(wp_redirect($url));
+    } else {
+        exit(wp_redirect(home_url('projekty')));
+    }
+});
+
+
+function showBlekastadNav()
+{
+    $show = false;
+
+    global $post;
+
+    $slug = $post->post_name;
+
+    if (is_page_template('page-templates/page-blekastad-front.php')) {
+        $show = true;
+    } else if (get_post_meta(get_queried_object_id(), 'bl_submenu', true) == 'on') {
+        $show = true;
+    } else if ($slug == 'letter' && isset($_GET['type']) && $_GET['type'] == 'bl_letter') {
+        $show = true;
+    }
+
+    if ($show) {
+        require_once get_template_directory() . '/partials/blekastad-nav.php';
+    }
+}
+
+
 function language_switcher()
 {
     if (!function_exists('pll_the_languages')) {
@@ -161,19 +203,16 @@ function language_switcher()
         return false;
     }
 
-    $output = [];
-
     $languages = pll_the_languages([
         'raw' => 1,
         'hide_current' => 0
     ]);
 
+    $output = [];
+
     foreach ($languages as $lang) {
-        ob_start();
-
         $is_disabled = $lang['current_lang'] || $lang['no_translation'];
-    ?>
-
+        ob_start(); ?>
         <span>
             <a href="<?= ($is_disabled) ? '#' : $lang['url']; ?>" class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>" aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>">
                 <?= $lang['slug'] ?>
@@ -421,4 +460,3 @@ function get_letter_related_resources($resources)
 
     return $result;
 }
-

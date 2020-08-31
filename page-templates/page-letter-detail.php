@@ -19,7 +19,7 @@ $letter = get_single_letter_meta();
 <?php else : ?>
     <div class="row main-content my-5">
         <div class="col-md-3">
-            <a href="<?= home_url("browse?db={$db}") ?>" class="text-primary h3 d-block mb-3">Back to search</a>
+            <a href="<?= home_url("browse?db={$db}") ?>" class="text-primary h3 d-block mb-3">Back to list</a>
         </div>
         <div class="col-md-9">
             <?php require get_template_directory() . '/partials/letter-single.php'; ?>
