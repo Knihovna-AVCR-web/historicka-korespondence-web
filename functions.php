@@ -294,15 +294,3 @@ function get_encoded_mailto_link($classes)
     <?php
     return ob_get_clean();
 }
-
-
-function get_custom_route_template($route, $template)
-{
-    $route = trim($route, '/');
-    $url_path = trim(parse_url(add_query_arg([]), PHP_URL_PATH), '/');
-
-    if (strpos($url_path, $route) !== false) {
-        load_template(get_template_directory() . '/page-templates/' . $template);
-        exit();
-    }
-}

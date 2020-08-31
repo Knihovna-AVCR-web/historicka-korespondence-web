@@ -1,12 +1,6 @@
-/* global Tabulator ajaxUrl homeUrl lettersSuffix */
+/* global Tabulator SlimSelect ajaxUrl homeUrl lettersSuffix letterType */
 
-var table,
-    selectAuthor,
-    selectRecipient,
-    selectOrigin,
-    selectDestination,
-    yearsFrom,
-    yearsTo
+var table, selectAuthor, selectRecipient, selectOrigin, selectDestination
 
 const from = document.getElementById('from-year')
 const to = document.getElementById('to-year')
@@ -324,7 +318,7 @@ if (document.getElementById('letters')) {
             },
             {
                 field: 'yy',
-                mutator: function (value, data) {
+                mutator: function (value) {
                     return value ? parseInt(value) : 0
                 },
                 visible: false,

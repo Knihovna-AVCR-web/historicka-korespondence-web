@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,15 +22,13 @@
     require_once 'partials/fonts.php';
     require_once 'partials/analytics.php'; ?>
 </head>
-<body <?php body_class(); ?>>
-
-    <div class="header">
+<body <?php body_class('d-flex h-100 flex-column'); ?>>
+    <header class="header">
         <?php
         require 'partials/main-nav.php';
         if (is_page_template('page-templates/page-blekastad-front.php') || get_post_meta(get_queried_object_id(), 'bl_submenu', true) == 'on') {
             require 'partials/blekastad-nav.php';
         }
         ?>
-    </div>
-
-    <div class="container-fluid">
+    </header>
+    <main class="container-fluid">
