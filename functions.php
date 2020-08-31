@@ -94,29 +94,39 @@ add_action('wp_enqueue_scripts', function () {
     wp_deregister_script('wp-embed');
 
     wp_enqueue_script(
-        'bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap.native@3.0.10/dist/bootstrap-native.min.js', [], null, true
+        'bootstrap',
+        'https://cdn.jsdelivr.net/npm/bootstrap.native@3.0.10/dist/bootstrap-native.min.js',
+        [],
+        null,
+        true
     );
 
     wp_enqueue_script(
-        'lazyload', 'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js', [], null, true
+        'lazyload',
+        'https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.2/dist/lazyload.min.js',
+        [],
+        null,
+        true
     );
 
     if (!is_front_page()) {
         wp_enqueue_script(
-            'bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.1/dist/baguetteBox.min.js', [], null, true
+            'slimselect',
+            'https://cdn.jsdelivr.net/npm/slim-select@1.26.0/dist/slimselect.min.js',
+            [],
+            null,
+            true
         );
 
         wp_enqueue_script(
-            'slimselect', 'https://cdn.jsdelivr.net/npm/slim-select@1.26.0/dist/slimselect.min.js', [], null, true
+            'tabulator',
+            'https://cdn.jsdelivr.net/npm/tabulator-tables@4.7.2/dist/js/tabulator.min.js',
+            [],
+            null,
+            true
         );
 
-        wp_enqueue_script(
-            'tabulator', 'https://cdn.jsdelivr.net/npm/tabulator-tables@4.7.2/dist/js/tabulator.min.js', [], null, true
-        );
-
-        wp_enqueue_style('bbox', 'https://cdn.jsdelivr.net/npm/baguettebox.js@1.11.1/dist/baguetteBox.min.css');
-
-        $custom_js_deps = ['lazyload', 'bbox', 'slimselect', 'tabulator'];
+        $custom_js_deps = ['lazyload', 'slimselect', 'tabulator'];
     }
 
     wp_enqueue_script('main', $custom_js, $custom_js_deps, null, true);
@@ -162,7 +172,7 @@ function language_switcher()
         ob_start();
 
         $is_disabled = $lang['current_lang'] || $lang['no_translation'];
-        ?>
+    ?>
 
         <span>
             <a href="<?= ($is_disabled) ? '#' : $lang['url']; ?>" class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>" aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>">
@@ -294,3 +304,121 @@ function get_encoded_mailto_link($classes)
     <?php
     return ob_get_clean();
 }
+
+function get_content_from_url($url)
+{
+    if (!is_localhost()) {
+        return file_get_contents($url);
+    }
+
+    return file_get_contents(
+        $url,
+        false,
+        stream_context_create([
+            'http' => ['method' => 'GET'], 'ssl' => ['verify_peer' => false, 'allow_self_signed' => true]
+        ])
+    );
+}
+
+function get_single_letter_meta()
+{
+    $letter = null;
+    $type = isset($_GET['type']) ? $_GET['type'] : false;
+    $id = isset($_GET['id']) ?  (int) $_GET['id'] : false;
+
+    if ($type && $id) {
+        $letter = get_content_from_url(admin_url("admin-ajax.php?action=get_single_hiko_letter&type={$type}&id=$id"));
+        $letter = json_decode($letter, true);
+        $letter['document_type'] = get_letter_doc_meta($letter['document_type']);
+        $letter['related_resources'] = get_letter_related_resources($letter['related_resources']);
+
+    }
+
+    return $letter;
+}
+
+function custom_format_date($day, $month, $year)
+{
+    $day = $day && $day != 0 ? $day : '?';
+    $month = $month && $month != 0 ? $month : '?';
+    $year = $year && $year != 0 ? $year : '????';
+
+    if ($year == '????' && $month == '?' && $day == '?') {
+        return '?';
+    }
+
+    return "{$day}/{$month}/{$year}";
+}
+
+function get_letter_object_meta($id, $name, $meta, $type = false)
+{
+    if ($type) {
+        $filtered_meta = array_filter($meta, function ($row) use($id, $type) {
+            return ($row['id'] == (string) $id && $row['type'] == $type);
+        });
+
+        $filtered_meta = array_values($filtered_meta)[0];
+        $filtered_meta['name'] = $name;
+        return $filtered_meta;
+    }
+
+    $object_meta_index = array_search((string) $id, array_column($meta, 'id'));
+    $meta[$object_meta_index]['name'] = $name;
+    return $meta[$object_meta_index];
+
+}
+
+
+function format_letter_object($data, $element)
+{
+    $result = "<{$element} class='mb-1'>{$data['name']}";
+
+    if (!empty($data['marked']) && $data['marked'] != $data['name']) {
+        $result .= '<span class="text-secondary d-block">Marked as: ' . $data['marked'] . '</span>';
+    }
+
+    if (isset($data['salutation']) && !empty($data['salutation'])) {
+        $result .= '<span class="text-secondary d-block">Salutation: ' . $data['salutation'] . '</span>';
+    }
+
+    $result .= "</{$element}>";
+
+    return $result;
+}
+
+function get_letter_doc_meta($data)
+{
+    $result = [
+        'copy' => '',
+        'preservation' => '',
+        'type' => '',
+    ];
+
+    if (empty($data)) {
+        return $result;
+    }
+
+    $data = json_decode($data, true);
+
+    foreach ($data as $item) {
+        $result[key($item)] = $item[key($item)];
+    }
+
+    return $result;
+}
+
+function get_letter_related_resources($resources)
+{
+    $resources = json_decode($resources, true);
+
+    $result = [];
+
+    foreach ($resources as $resource) {
+        if (!empty($resource['title'])) {
+            $result[] = $resource;
+        }
+    }
+
+    return $result;
+}
+
