@@ -37,12 +37,12 @@ const remember = require('gulp-remember')
 const plumber = require('gulp-plumber')
 const beep = require('beepbeep')
 
-const errorHandler = r => {
+const errorHandler = (r) => {
     notify.onError('\n\n❌  ===> ERROR: <%= error.message %>\n')(r)
     beep()
 }
 
-const browsersync = done => {
+const browsersync = (done) => {
     browserSync.init({
         proxy: config.projectURL,
         open: false,
@@ -52,7 +52,7 @@ const browsersync = done => {
     done()
 }
 
-const reload = done => {
+const reload = (done) => {
     browserSync.reload()
     done()
 }
@@ -148,7 +148,7 @@ gulp.task('images', () => {
         )
 })
 
-gulp.task('clearCache', function(done) {
+gulp.task('clearCache', function (done) {
     return cache.clearAll(done)
 })
 
@@ -176,7 +176,7 @@ gulp.task('translate', () => {
 
 gulp.task(
     'default',
-    gulp.parallel('styles', 'customJS', 'images', browsersync, () => {
+    gulp.parallel('styles', 'customJS', browsersync, () => {
         gulp.watch('./**/*.php', reload)
         gulp.watch('./assets/css/**/*.scss', gulp.parallel('styles'))
         gulp.watch('./assets/js/custom/*.js', gulp.series('customJS', reload))
