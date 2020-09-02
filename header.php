@@ -26,7 +26,7 @@
     <header class="header">
         <?php
         require 'partials/main-nav.php';
-        showBlekastadNav();
+        show_blekastad_nav();
         ?>
     </header>
     <main class="container-fluid">

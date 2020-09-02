@@ -2,6 +2,8 @@
 
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
+    register_nav_menu('main-menu', 'Main Menu');
+    register_nav_menu('blekastad-menu', 'Blekastad Menu');
 
     require_once get_template_directory() . '/vendor/autoload.php';
 
@@ -145,11 +147,6 @@ add_filter('body_class', function ($classes) {
     return $classes;
 });
 
-add_action('init', function () {
-    register_nav_menu('main-menu', 'Main Menu');
-    register_nav_menu('blekastad-menu', 'Blekastad Menu');
-});
-
 
 add_action('template_redirect', function () {
     global $post;
@@ -171,7 +168,41 @@ add_action('template_redirect', function () {
 });
 
 
-function showBlekastadNav()
+add_action('admin_menu', function () {
+    remove_menu_page('edit-comments.php');
+});
+
+
+function nonbreaking_spaces($content)
+{
+    $content = str_replace(
+        [
+            ' k ', ' K ',
+            ' o ', ' O ',
+            ' s ', ' S ',
+            ' u ', ' U ',
+            ' v ', ' V ',
+            ' z ', ' Z ',
+        ],
+        [
+            ' k&nbsp;', ' K&nbsp;',
+            ' o&nbsp;', ' O&nbsp;',
+            ' s&nbsp;', ' S&nbsp;',
+            ' u&nbsp;', ' U&nbsp;',
+            ' v&nbsp;', ' V&nbsp;',
+            ' z&nbsp;', ' Z&nbsp;',
+        ],
+        $content
+    );
+
+    return $content;
+}
+add_filter('the_title', 'nonbreaking_spaces');
+add_filter('the_content', 'nonbreaking_spaces');
+add_filter('the_excerpt', 'nonbreaking_spaces');
+
+
+function show_blekastad_nav()
 {
     $show = false;
 
