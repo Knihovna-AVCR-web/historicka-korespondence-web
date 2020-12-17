@@ -14,7 +14,6 @@ add_action('after_setup_theme', function () {
     require_once get_template_directory() . '/inc/ajax.php';
     require_once get_template_directory() . '/inc/custom-fields.php';
     require_once get_template_directory() . '/inc/theme-options.php';
-    require_once get_template_directory() . '/inc/navbar-walker.php';
     require_once get_template_directory() . '/inc/breadcrumbs.php';
 });
 
