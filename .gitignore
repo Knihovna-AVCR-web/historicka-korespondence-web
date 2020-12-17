@@ -31,12 +31,10 @@ node_modules/
 
 # Composer #
 ##########
-/vendor/
 vendor/
-!assets/css/bootstrap/vendor/
 
 assets/dist/
 assets/img/raw/
-wpgulp.config.js
+.config.js
 
 .vscode/
