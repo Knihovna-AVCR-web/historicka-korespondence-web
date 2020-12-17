@@ -38,19 +38,18 @@ $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
                 </li>
             <?php endforeach; ?>
             <li class="p-3">
-                <button type="button" @click="searchOpen = !searchOpen">
-                <svg  class="w-4 h-5 text-sm cursor-pointer fill-current text-brown-dark hover:text-red-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
-                </svg>
+                <button type="button" @click="searchOpen = !searchOpen" class="flex w-5 text-sm cursor-pointer text-brown-dark hover:text-red-700">
+                    <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
+                    </svg>
                 </button>
-
             </li>
         </ul>
     </div>
-    <div x-show="searchOpen" class="relative w-full" style="display:none;">
-        <form class="container py-4 mx-auto">
+    <div x-show="searchOpen" class="w-full py-4 mx-auto" style="display:none;">
+        <form>
             <label for="search" class="sr-only"><?php _e('Hledat', 'hiko'); ?></label>
-            <input type="search" name="s" id="search" placeholder="<?php _e('Hledat', 'hiko'); ?>" autofocus="autofocus" class="w-full p-2 text-xl transition appearance-none lg:text-2xl ring-1 ring-brown-dark ring-opacity-50">
+            <input type="search" name="s" id="search" placeholder="<?php _e('Hledat', 'hiko'); ?>" autofocus class="w-full p-2 text-xl transition appearance-none lg:text-2xl ring-1 ring-brown-dark ring-opacity-50">
         </form>
     </div>
 </nav>
