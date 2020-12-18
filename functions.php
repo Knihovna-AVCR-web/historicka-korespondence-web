@@ -49,6 +49,39 @@ add_action('template_redirect', function () {
 });
 
 
+function custom_pagination()
+{
+    global $wp_query;
+
+    $big = 999999999;
+
+    $pages =  paginate_links([
+        'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+        'current' => max(1, get_query_var('paged')),
+        'format' => '?paged=%#%',
+        'next_text' => 'Další &rarr;',
+        'prev_next' => true,
+        'prev_text' => '&larr; Předchozí',
+        'total' => $wp_query->max_num_pages,
+        'type' => 'array',
+    ]);
+
+
+    $pagination = '<ul class="flex flex-wrap space-x-4">';
+    foreach ((array) $pages as $page) {
+        if (preg_match('/\bcurrent\b/', $page)) {
+            $pagination .= "<li>$page</li>";
+        } else {
+            $pagination .= "<li class='underline'>$page</li>";
+        }
+    }
+
+    $pagination .= '</ul>';
+
+    return $pagination;
+}
+
+
 function nonbreaking_spaces($content)
 {
     $content = str_replace(
@@ -103,10 +136,6 @@ function show_blekastad_nav()
 function language_switcher()
 {
     if (!function_exists('pll_the_languages')) {
-        return false;
-    }
-
-    if (!is_user_logged_in()) {
         return false;
     }
 
