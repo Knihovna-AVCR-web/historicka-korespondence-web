@@ -34,3 +34,7 @@
 .prose hr.wp-block-separator {
     @apply my-3;
 }
+
+.front .prose a {
+    @apply text-brown-dark;
+}

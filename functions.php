@@ -232,16 +232,16 @@ function output_intro_box($permalink, $title, $content)
 {
     ob_start();
     ?>
-    <div class="col-lg-4 col-md-6">
-        <div class="featured-box">
-            <h3 class="title">
-                <a href="<?= $permalink; ?>">
-                    <?= $title; ?>
-                </a>
-            </h3>
+    <article class="w-full my-4 md:px-5 md:w-6/12 xl:w-4/12 front">
+        <h2 class="mb-3 text-2xl border-b-2">
+            <a href="<?= $permalink; ?>">
+                <?= $title; ?>
+            </a>
+        </h2>
+        <div class="text-sm prose">
             <?= $content; ?>
         </div>
-    </div>
+    </article>
     <?php
     return ob_get_clean();
 }

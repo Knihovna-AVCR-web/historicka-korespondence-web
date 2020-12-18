@@ -30,10 +30,9 @@ global $wp_query;
         <?php get_template_part('partials/searchform'); ?>
     <?php endif; ?>
 </article>
-
 <div class="my-6">
-        <?= custom_pagination(); ?>
-    </div>
+    <?= custom_pagination(); ?>
+</div>
 <?php
 require 'partials/entry-footer.php';
 get_footer();

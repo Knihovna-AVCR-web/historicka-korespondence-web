@@ -26,6 +26,19 @@ module.exports = {
             screens: {
                 print: { raw: 'print' },
             },
+            typography: (theme) => ({
+                DEFAULT: {
+                    css: {
+                        color: '#524640',
+                        a: {
+                            color: theme('colors.red.700'),
+                            '&:hover': {
+                                color: theme('colors.red.800'),
+                            },
+                        },
+                    },
+                },
+            }),
         },
     },
     variants: {},
