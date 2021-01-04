@@ -32,23 +32,12 @@ $blocks = parse_blocks(get_the_content());
 
 ?>
 <img class="w-full lazy" data-sizes="(max-width: 1400px) 100vw, 1400px" data-srcset="
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_200.jpg 200w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_579.jpg 579w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_831.jpg 831w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1041.jpg 1041w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1221.jpg 1221w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1386.jpg 1386w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1537.jpg 1537w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1686.jpg 1686w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1816.jpg 1816w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1950.jpg 1950w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2057.jpg 2057w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2175.jpg 2175w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2287.jpg 2287w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2397.jpg 2397w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2503.jpg 2503w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2557.jpg 2557w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2559.jpg 2559w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2560.jpg 2560w" data-src="<?= $img_dir; ?>main_bg_urfh37_c_scale,w_2560.jpg" alt="" role="presentation">
 
 <div class="px-5 py-12 bg-brown">
