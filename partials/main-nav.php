@@ -1,7 +1,7 @@
 <?php
 $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
 ?>
-<div x-data="{ miniSearchOpen: false, mobileMenuOpen: false, searchOpen: false }">
+<div x-data="{ miniSearchOpen: false, mobileMenuOpen: false, searchOpen: false }" class="bg-white">
     <div class="top-0 z-10 flex flex-wrap items-start justify-between w-full p-5 shadow-md xl:items-end">
         <a href="<?= home_url() ?>" class="flex items-center py-2 mr-6">
             <img src="<?= get_template_directory_uri() . '/assets/img/logo.png'; ?>" alt="<?= bloginfo('name') ?>" class="hidden w-16 h-auto mr-6 sm:block">

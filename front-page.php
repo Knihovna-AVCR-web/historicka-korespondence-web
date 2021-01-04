@@ -68,7 +68,7 @@ $blocks = parse_blocks(get_the_content());
         ?>
     </div>
 </div>
-<div class="container flex flex-wrap justify-between px-5 py-10 mx-auto">
+<div class="container flex flex-wrap justify-between px-5 mx-auto mt-24">
     <a href="https://lib.cas.cz" target="_blank">
         <img data-src="<?= $img_dir; ?>knav.png" alt="Knihovna AV ČR" class="m-2 lazy" style="min-height:24px; min-width: 24px;">
     </a>

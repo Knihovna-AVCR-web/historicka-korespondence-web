@@ -23,7 +23,7 @@
     require_once 'partials/analytics.php'; ?>
 </head>
 <body <?php body_class('h-full flex flex-col font-merriweather text-brown-dark'); ?>>
-    <header>
+    <header class="z-10 pt-1 bg-brown">
         <?php
         require 'partials/main-nav.php';
         show_blekastad_nav();

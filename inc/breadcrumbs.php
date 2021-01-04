@@ -3,7 +3,7 @@
 add_shortcode('breadcrumbs', function () {
     ob_start(); ?>
     <nav aria-label="breadcrumb">
-        <ol class="flex flex-wrap pb-3 mb-6 text-sm text-red-700 border-b-2 border-red-700">
+        <ol class="flex flex-wrap mb-6 text-sm text-red-700">
             <li class="inline-flex items-center">
                 <a href="<?= home_url('/'); ?>">
                     <?php _e('Úvod', 'hiko'); ?>

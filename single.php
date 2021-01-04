@@ -5,7 +5,7 @@ require 'partials/entry-header.php';
 echo do_shortcode('[breadcrumbs]');
 ?>
 
-<article class="prose">
+<article class="py-5 prose border-t-2 border-b-2 border-red-700">
     <p class="text-sm">
         <?php the_date(); ?>
     </p>
