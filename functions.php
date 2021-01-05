@@ -358,11 +358,11 @@ function format_letter_object($data, $element)
     $result = "<{$element} class='mb-1'>{$data['name']}";
 
     if (!empty($data['marked']) && $data['marked'] != $data['name']) {
-        $result .= '<span class="text-secondary d-block">Marked as: ' . $data['marked'] . '</span>';
+        $result .= '<span class="block pl-3 text-gray-500">Marked as: ' . $data['marked'] . '</span>';
     }
 
     if (isset($data['salutation']) && !empty($data['salutation'])) {
-        $result .= '<span class="text-secondary d-block">Salutation: ' . $data['salutation'] . '</span>';
+        $result .= '<span class="block pl-3 text-gray-500">Salutation: ' . $data['salutation'] . '</span>';
     }
 
     $result .= "</{$element}>";
