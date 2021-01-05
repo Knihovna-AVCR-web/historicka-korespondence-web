@@ -13,7 +13,7 @@
     height: 30px;
     padding: 6px;
     border: 1px solid #dcdee2;
-    border-radius: 4px;
+    border-radius: 1px;
     background-color: #fff;
     outline: 0;
     box-sizing: border-box;
@@ -100,7 +100,8 @@
     margin: -3px 0 0 0;
 }
 
-.ss-main .ss-multi-selected {
+.ss-main .ss-multi-selected,
+.ss-like-input {
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -108,7 +109,6 @@
     width: 100%;
     padding: 0 0 0 3px;
     border: 1px solid #dcdee2;
-    border-radius: 4px;
     background-color: #fff;
     outline: 0;
     box-sizing: border-box;
@@ -192,7 +192,7 @@
     margin: 3px 5px 3px 0;
     color: #fff;
     background-color: #d00;
-    border-radius: 4px;
+    border-radius: 1px;
     animation-name: scaleIn;
     animation-duration: 0.2s;
     animation-timing-function: ease-out;
@@ -292,7 +292,7 @@
     padding: 6px 8px;
     margin: 0;
     border: 1px solid #dcdee2;
-    border-radius: 4px;
+    border-radius: 1px;
     background-color: #fff;
     outline: 0;
     text-align: left;
@@ -307,7 +307,7 @@
 }
 
 .ss-content .ss-search input:focus {
-    box-shadow: 0 0 5px #d00;
+    box-shadow: 0 0 1px #444;
 }
 
 .ss-content .ss-search .ss-addable {
@@ -321,7 +321,7 @@
     height: 30px;
     margin: 0 0 0 8px;
     border: 1px solid #dcdee2;
-    border-radius: 4px;
+    border-radius: 1px;
     box-sizing: border-box;
 }
 

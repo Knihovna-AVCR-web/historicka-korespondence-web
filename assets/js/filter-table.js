@@ -395,8 +395,8 @@ if (document.getElementById('letters')) {
             updateSelects(rows, true)
         },
         dataLoaded: function (data) {
-            document.getElementById('letters-filter').classList.remove('d-none')
-            document.getElementById('counter').classList.remove('d-none')
+            document.getElementById('letters-filter').classList.remove('none')
+            document.getElementById('counter').classList.remove('none')
             document.getElementById('total-count').innerHTML = data.length
             updateSelects(data, false)
         },
