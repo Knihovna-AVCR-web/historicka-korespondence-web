@@ -26,6 +26,11 @@ add_action('wp_enqueue_scripts', function () {
 
     wp_enqueue_script('main', $dist_uri . 'app.js', [], filemtime($dist_dir . 'app.js'), true);
     wp_enqueue_style('main', $dist_uri . 'app.css', [], filemtime($dist_dir . 'app.css'));
+
+    if (is_page_template('page-templates/page-browse-db.php')) {
+        wp_enqueue_script('table', $dist_uri . 'filter-table.js', [], filemtime($dist_dir . 'filter-table.js'), true);
+        wp_enqueue_style('table', $dist_uri . 'filter-table.css', [], filemtime($dist_dir . 'filter-table.css'));
+    }
 });
 
 

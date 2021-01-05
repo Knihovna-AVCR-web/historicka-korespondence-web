@@ -1,4 +1,8 @@
-/* global Tabulator SlimSelect ajaxUrl homeUrl lettersSuffix letterType */
+/* global ajaxUrl homeUrl lettersSuffix letterType */
+
+import SlimSelect from 'slim-select'
+
+import Tabulator from 'tabulator-tables'
 
 var table, selectAuthor, selectRecipient, selectOrigin, selectDestination
 

@@ -12,7 +12,11 @@ mix.postCss('assets/css/app.css', '', [
     require('tailwindcss')('./tailwind.config.js'),
 ])
 
+mix.css('assets/css/filter-table.css', '')
+
 mix.js('assets/js/app.js', '')
+
+mix.js('assets/js/filter-table.js', '')
 
 if (mix.inProduction()) {
     wpPot({
