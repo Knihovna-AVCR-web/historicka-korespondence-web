@@ -24,6 +24,8 @@ add_action('wp_enqueue_scripts', function () {
 
     is_user_logged_in() ? wp_enqueue_script('jquery') : wp_dequeue_script('jquery');
 
+    wp_deregister_script('wp-embed');
+
     wp_enqueue_script('main', $dist_uri . 'app.js', [], filemtime($dist_dir . 'app.js'), true);
     wp_enqueue_style('main', $dist_uri . 'app.css', [], filemtime($dist_dir . 'app.css'));
 
