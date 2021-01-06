@@ -46,7 +46,7 @@ add_action('template_redirect', function () {
     $db = isset($_GET['db']) && !empty($_GET['db']) ? $_GET['db'] : false;
 
     if ($db == 'bl_letter') {
-        $url = get_permalink(carbon_get_theme_option('mb_db'));
+        $url = get_permalink(carbon_get_theme_option(ICL_LANGUAGE_CODE . '_mb_db'));
         exit(wp_redirect($url));
     } else {
         exit(wp_redirect(home_url('projekty')));

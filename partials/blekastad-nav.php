@@ -1,5 +1,5 @@
 <?php
-$blekastad_front = get_permalink(carbon_get_theme_option('mb_front'));
+$blekastad_front = get_permalink(carbon_get_theme_option(ICL_LANGUAGE_CODE . '_mb_front'));
 $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['blekastad-menu']);
 ?>
 <nav class="flex flex-col flex-wrap items-start justify-between w-full px-5 py-2 text-sm bg-red-700 shadow-md lg:flex-row">

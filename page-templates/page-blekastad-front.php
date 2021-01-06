@@ -6,7 +6,7 @@ Template Name: Blekastad Front Page
 
 get_header();
 
-$db_url = get_permalink(carbon_get_theme_option('mb_db'));
+$db_url = get_permalink(carbon_get_theme_option(ICL_LANGUAGE_CODE . '_mb_db'));
 
 $blocks = parse_blocks(get_the_content());
 
