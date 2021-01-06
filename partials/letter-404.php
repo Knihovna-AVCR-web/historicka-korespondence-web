@@ -4,7 +4,9 @@ get_header();
 
 require get_template_directory() . '/partials/entry-header.php'; ?>
 
-<h1>Letter not found</h1>
+<div class="prose text-center">
+    <h1>Letter not found</h1>
+</div>
 
 <?php
 

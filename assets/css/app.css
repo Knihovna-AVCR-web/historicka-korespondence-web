@@ -1,0 +1,40 @@
+@import './../../node_modules/baguettebox.js/dist/baguetteBox.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.stretched-link::after {
+    content: "";
+
+    @apply absolute inset-0 bg-transparent pointer-events-auto;
+}
+
+.prose .wp-block-gallery {
+    @apply my-0;
+}
+
+.prose .blocks-gallery-grid {
+    @apply my-0 list-none;
+}
+
+.prose .blocks-gallery-grid img {
+    @apply my-0;
+}
+
+.prose .blocks-gallery-grid > li {
+    @apply pl-0;
+}
+
+.prose .blocks-gallery-grid > li::before,
+.prose ul > .badge::before {
+    content: none;
+}
+
+.prose hr.wp-block-separator {
+    @apply my-3;
+}
+
+.front .prose a {
+    @apply text-brown-dark;
+}

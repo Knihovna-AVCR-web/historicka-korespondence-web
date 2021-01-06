@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="h-100">
+<html <?php language_attributes(); ?> class="h-full">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,11 +22,11 @@
     require_once 'partials/fonts.php';
     require_once 'partials/analytics.php'; ?>
 </head>
-<body <?php body_class('d-flex h-100 flex-column'); ?>>
-    <header class="header">
+<body <?php body_class('h-full flex flex-col font-merriweather text-brown-dark'); ?>>
+    <header class="z-10 pt-1 bg-brown">
         <?php
         require 'partials/main-nav.php';
         show_blekastad_nav();
         ?>
     </header>
-    <main class="container-fluid">
+    <main class="mb-24">

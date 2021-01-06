@@ -30,19 +30,13 @@ add_action('carbon_fields_register_fields', function () {
         ])
         ->set_render_callback(
             function ($block) { ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 jumbotron text-center mb-0">
-                    <p class="lead">
-                        <?= $block['content']; ?>
-                    </p>
-                    <a href="<?= get_permalink($block['link']); ?>" class="btn btn-outline-white btn-sm text-uppercase btn-state-primary px-4 mt-4" style="font-size:16px">
-                        <?php _e('Více', 'hiko'); ?>&nbsp;&nbsp;&raquo;
-                    </a>
-                </div>
-            </div>
-        </div>
-                <?php
+            <p class="mb-6 leading-relaxed">
+                <?= $block['content']; ?>
+            </p>
+            <a href="<?= get_permalink($block['link']); ?>" class="px-6 py-2 text-sm uppercase duration-150 border border-white rounded-sm hover:bg-red-700 hover:border-red-700" >
+                <?php _e('Více', 'hiko'); ?>&nbsp;&nbsp;&raquo;
+            </a>
+            <?php
             }
         );
 });
@@ -62,8 +56,7 @@ if (file_exists(dirname(__FILE__) . '/cmb2/init.php')) {
 }
 
 
-add_action('cmb2_admin_init', function () {
-    {
+add_action('cmb2_admin_init', function () { {
         $cmb = new_cmb2_box([
             'id' => 'hk_metabox',
             'title' => 'Nastavení obsahu',
@@ -77,13 +70,6 @@ add_action('cmb2_admin_init', function () {
             'name' => 'Blekastad podmenu',
             'id' => 'bl_submenu',
             'type' => 'checkbox',
-        ]);
-
-        $cmb->add_field([
-            'name' => 'Galerie',
-            'id' => 'hk_gallery',
-            'type' => 'file_list',
-            'query_args' => ['type' => 'image'],
         ]);
     }
 });

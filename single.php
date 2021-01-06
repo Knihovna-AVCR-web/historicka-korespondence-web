@@ -1,29 +1,20 @@
 <?php
-
 get_header();
-
 the_post();
-
 require 'partials/entry-header.php';
-
 echo do_shortcode('[breadcrumbs]');
-
 ?>
 
-<h1>
-    <?php the_title(); ?>
-</h1>
-
-<p>
-    <?php the_date(); ?>
-</p>
+<article class="py-5 prose border-t-2 border-b-2 border-red-700">
+    <p class="text-sm">
+        <?php the_date(); ?>
+    </p>
+    <h1>
+        <?php the_title(); ?>
+    </h1>
+    <?php the_content(); ?>
+</article>
 
 <?php
-
-the_content();
-
-cmb2_output_gallery('hk_gallery');
-
 require 'partials/entry-footer.php';
-
 get_footer();

@@ -1,4 +1,1 @@
-<div class="row bg-row main-content">
-    <div class="container">
-        <div class="col-lg-8 col-md-10">
-            <div class="entry my-5">
+<div class="px-5 mx-auto mt-12 max-w-prose">
