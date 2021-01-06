@@ -39,9 +39,7 @@ add_action('wp_enqueue_scripts', function () {
 add_action('template_redirect', function () {
     global $post;
 
-    $slug = $post->post_name;
-
-    if ($slug != 'browse') {
+    if (!$post || $post->post_name != 'browse') {
         return;
     }
 
@@ -120,17 +118,19 @@ add_filter('the_excerpt', 'nonbreaking_spaces');
 
 function show_blekastad_nav()
 {
-    $show = false;
-
     global $post;
 
-    $slug = $post->post_name;
+    if (!$post) {
+        return;
+    }
+
+    $show = false;
 
     if (is_page_template('page-templates/page-blekastad-front.php')) {
         $show = true;
     } else if (get_post_meta(get_queried_object_id(), 'bl_submenu', true) == 'on') {
         $show = true;
-    } else if ($slug == 'letter' && isset($_GET['type']) && $_GET['type'] == 'bl_letter') {
+    } else if ($post->post_name == 'letter' && isset($_GET['type']) && $_GET['type'] == 'bl_letter') {
         $show = true;
     }
 
