@@ -154,11 +154,9 @@ function language_switcher()
     foreach ($languages as $lang) {
         $is_disabled = $lang['current_lang'] || $lang['no_translation'];
         ob_start(); ?>
-        <span>
-            <a href="<?= ($is_disabled) ? '#' : $lang['url']; ?>" class="text-uppercase <?= ($is_disabled) ? 'disabled text-muted' : 'text-body'; ?>" aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>">
-                <?= $lang['slug'] ?>
-            </a>
-        </span>
+        <a href="<?= ($is_disabled) ? '#' : $lang['url']; ?>" class="uppercase text-sm <?= ($is_disabled) ? 'cursor-not-allowed text-gray-400 hover:text-gray-400' : 'hover:text-red-700'; ?>" aria-disabled="<?= ($is_disabled) ? 'true' : 'false'; ?>">
+            <?= $lang['slug'] ?>
+        </a>
         <?php
         $output[] = ob_get_clean();
     }

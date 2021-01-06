@@ -6,10 +6,13 @@ module.exports = {
         content: ['./**/*.php'],
         options: {
             safelist: [
+                'cursor-not-allowed',
                 'flex',
                 'flex-col',
                 'font-merriweather',
                 'hidden',
+                'hover:text-gray-400',
+                'text-gray-400',
                 'text-yellow-900',
             ],
         },

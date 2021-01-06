@@ -1,8 +1,8 @@
 <?php
 $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
 ?>
-<div x-data="{ miniSearchOpen: false, mobileMenuOpen: false, searchOpen: false }" class="bg-white">
-    <div class="top-0 z-10 flex flex-wrap items-start justify-between w-full p-5 shadow-md xl:items-end">
+<div x-data="{ miniSearchOpen: false, mobileMenuOpen: false, searchOpen: false }" class="relative bg-white">
+    <div class="flex flex-wrap items-start justify-between w-full p-5 shadow-md xl:items-end">
         <a href="<?= home_url() ?>" class="flex items-center py-2 mr-6">
             <img src="<?= get_template_directory_uri() . '/assets/img/logo.png'; ?>" alt="<?= bloginfo('name') ?>" class="hidden w-16 h-auto mr-6 sm:block">
             <div class="w-40 text-xl">
@@ -41,6 +41,9 @@ $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
                         </svg>
                     </button>
                 </li>
+                <li class="p-3">
+                    <?= language_switcher(); ?>
+                </li>
             </ul>
         </nav>
         <div x-show="searchOpen" class="w-full py-4 mx-auto" style="display:none;">
@@ -78,6 +81,9 @@ $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
                     <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
                 </svg>
             </button>
+            <div>
+            <?= language_switcher(); ?>
+            </div>
         </nav>
         <div x-show="miniSearchOpen" class="w-full py-4 mx-auto" style="display:none;">
             <form>
