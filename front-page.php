@@ -38,7 +38,7 @@ $blocks = parse_blocks(get_the_content());
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1221.jpg 1221w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_1537.jpg 1537w,
     <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2057.jpg 2057w,
-    <?= $img_dir; ?>main_bg_urfh37_c_scale,w_2560.jpg 2560w" data-src="<?= $img_dir; ?>main_bg_urfh37_c_scale,w_2560.jpg" alt="" role="presentation">
+    <?= $img_dir; ?>main_bg_xezach_c_scale,w_2545 2560w" data-src="<?= $img_dir; ?>main_bg_xezach_c_scale,w_2545.jpg" alt="" role="presentation">
 
 <div class="px-5 py-12 bg-brown">
     <div class="max-w-4xl mx-auto text-xl italic text-center text-white">
