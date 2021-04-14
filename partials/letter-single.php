@@ -348,7 +348,7 @@
 <div class="flex flex-wrap mb-6 -m-x-1 gallery">
     <?php foreach ($letter['images'] as $img) : ?>
         <a href="<?= $img['img']['large']; ?>" data-caption="<?= $img['description']; ?>">
-            <img data-src="<?= $img['img']['thumb']; ?>" class="w-32 h-auto m-1 lazy" alt="<?= $img['description']; ?>">
+            <img data-src="<?= $img['img']['thumb']; ?>" class="w-32 h-auto m-1 lazy shadow" alt="<?= $img['description']; ?>">
         </a>
     <?php endforeach; ?>
 </div>
