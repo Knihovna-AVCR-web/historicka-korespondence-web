@@ -48,9 +48,9 @@ add_action('template_redirect', function () {
     if ($db == 'bl_letter') {
         $url = get_permalink(carbon_get_theme_option(ICL_LANGUAGE_CODE . '_mb_db'));
         exit(wp_redirect($url));
-    } else {
-        exit(wp_redirect(home_url('projekty')));
     }
+
+    exit(wp_redirect(home_url('projekty')));
 });
 
 
@@ -307,13 +307,11 @@ function get_single_letter_meta()
 {
     $letter = null;
     $type = isset($_GET['type']) ? $_GET['type'] : false;
-    $id = isset($_GET['id']) ?  (int) $_GET['id'] : false;
+    $id = isset($_GET['id']) ? (int) $_GET['id'] : false;
 
     if ($type && $id) {
         $letter = get_content_from_url(admin_url("admin-ajax.php?action=get_single_hiko_letter&type={$type}&id=$id"));
         $letter = json_decode($letter, true);
-        $letter['document_type'] = get_letter_doc_meta($letter['document_type']);
-        $letter['related_resources'] = get_letter_related_resources($letter['related_resources']);
     }
 
     return $letter;
@@ -334,25 +332,6 @@ function custom_format_date($day, $month, $year)
 }
 
 
-function get_letter_object_meta($id, $name, $meta, $type = false)
-{
-    if ($type) {
-        $filtered_meta = array_filter($meta, function ($row) use($id, $type) {
-            return ($row['id'] == (string) $id && $row['type'] == $type);
-        });
-
-        $filtered_meta = array_values($filtered_meta)[0];
-        $filtered_meta['name'] = $name;
-        return $filtered_meta;
-    }
-
-    $object_meta_index = array_search((string) $id, array_column($meta, 'id'));
-    $meta[$object_meta_index]['name'] = $name;
-    return $meta[$object_meta_index];
-
-}
-
-
 function format_letter_object($data, $element)
 {
     $result = "<{$element} class='mb-1'>{$data['name']}";
@@ -366,44 +345,6 @@ function format_letter_object($data, $element)
     }
 
     $result .= "</{$element}>";
-
-    return $result;
-}
-
-
-function get_letter_doc_meta($data)
-{
-    $result = [
-        'copy' => '',
-        'preservation' => '',
-        'type' => '',
-    ];
-
-    if (empty($data)) {
-        return $result;
-    }
-
-    $data = json_decode($data, true);
-
-    foreach ($data as $item) {
-        $result[key($item)] = $item[key($item)];
-    }
-
-    return $result;
-}
-
-
-function get_letter_related_resources($resources)
-{
-    $resources = json_decode($resources, true);
-
-    $result = [];
-
-    foreach ($resources as $resource) {
-        if (!empty($resource['title'])) {
-            $result[] = $resource;
-        }
-    }
 
     return $result;
 }

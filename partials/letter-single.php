@@ -58,8 +58,8 @@
                 <td class="w-1/5 py-2">Author</td>
                 <td class="py-2">
                     <ul class="list-disc list-inside">
-                        <?php foreach ($letter['l_author'] as $authorID => $authorName) : ?>
-                            <?= format_letter_object(get_letter_object_meta($authorID, $authorName, $letter['authors_meta']), 'li'); ?>
+                        <?php foreach ($letter['l_author'] as $author) : ?>
+                            <?= format_letter_object($author, 'li'); ?>
                         <?php endforeach; ?>
                     </ul>
                     <?php if ($letter['author_uncertain']) : ?>
@@ -86,8 +86,8 @@
                 <td class="w-1/5 py-2">Recipient</td>
                 <td class="py-2">
                     <ul class="list-disc list-inside">
-                        <?php foreach ($letter['recipient'] as $recipientID => $recipientName) : ?>
-                            <?= format_letter_object(get_letter_object_meta($recipientID, $recipientName, $letter['authors_meta']), 'li'); ?>
+                        <?php foreach ($letter['recipient'] as $recipient) : ?>
+                            <?= format_letter_object($recipient, 'li'); ?>
                         <?php endforeach; ?>
                     </ul>
                     <?php if ($letter['recipient_uncertain']) : ?>
@@ -116,7 +116,7 @@
                     <ul class="list-disc list-inside">
                         <?php foreach ($letter['people_mentioned'] as $person) : ?>
                             <li class="mb-1">
-                                <?= $person; ?>
+                                <?= $person['name']; ?>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -144,8 +144,8 @@
                 <td class="w-1/5 py-2">Origin</td>
                 <td class="py-2">
                     <ul class="list-disc list-inside">
-                        <?php foreach ($letter['origin'] as $originID => $originName) : ?>
-                            <?= format_letter_object(get_letter_object_meta($originID, $originName, $letter['places_meta'], 'origin'), 'li'); ?>
+                        <?php foreach ($letter['origin'] as $origin) : ?>
+                            <?= format_letter_object($origin, 'li'); ?>
                         <?php endforeach; ?>
                     </ul>
                     <?php if ($letter['origin_uncertain']) : ?>
@@ -172,8 +172,8 @@
                 <td class="w-1/5 py-2">Destination</td>
                 <td class="py-2">
                     <ul class="list-disc list-inside">
-                        <?php foreach ($letter['dest'] as $destinationID => $destinationName) : ?>
-                            <?= format_letter_object(get_letter_object_meta($destinationID, $destinationName, $letter['places_meta'], 'destination'), 'li'); ?>
+                        <?php foreach ($letter['dest'] as $destination) : ?>
+                            <?= format_letter_object($destination, 'li'); ?>
                         <?php endforeach; ?>
                     </ul>
                     <?php if ($letter['dest_uncertain']) : ?>
@@ -224,7 +224,7 @@
                 <td class="w-1/5 py-2">Languages</td>
                 <td class="py-2">
                     <ul class="list-disc list-inside">
-                        <?php foreach (explode(';', $letter['languages']) as $lang) : ?>
+                        <?php foreach ($letter['languages'] as $lang) : ?>
                             <li class="mb-1">
                                 <?= $lang; ?>
                             </li>
@@ -255,70 +255,72 @@
 </table>
 
 <h2 class="text-lg font-bold">Repositories and versions</h2>
-<table class="w-full mb-10 text-sm">
-    <tbody>
-        <?php if ($letter['l_number']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Letter number</td>
-                <td class="py-2"><?= $letter['l_number']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['repository']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Repository</td>
-                <td class="py-2"><?= $letter['repository']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['archive']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Archive</td>
-                <td class="py-2"><?= $letter['archive']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['collection']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Collection</td>
-                <td class="py-2"><?= $letter['collection']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['signature']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Signature</td>
-                <td class="py-2"><?= $letter['signature']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['location_note']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Note on location</td>
-                <td class="py-2"><?= $letter['location_note']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['document_type']['type']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Document type</td>
-                <td class="py-2"><?= $letter['document_type']['type']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['document_type']['preservation']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Preservation</td>
-                <td class="py-2"><?= $letter['document_type']['preservation']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['document_type']['copy']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Type of copy</td>
-                <td class="py-2"><?= $letter['document_type']['copy']; ?></td>
-            </tr>
-        <?php endif; ?>
-        <?php if ($letter['manifestation_notes']) : ?>
-            <tr class="align-baseline border-t border-b border-gray-200">
-                <td class="w-1/5 py-2">Notes on nanifestation</td>
-                <td class="py-2"><?= $letter['manifestation_notes']; ?></td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+<?php foreach ($letter['copies'] as $c) : ?>
+    <table class="w-full mb-10 text-sm">
+        <tbody>
+            <?php if ($c['l_number']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Letter number</td>
+                    <td class="py-2"><?= $c['l_number']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['repository']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Repository</td>
+                    <td class="py-2"><?= $c['repository']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['archive']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Archive</td>
+                    <td class="py-2"><?= $c['archive']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['collection']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Collection</td>
+                    <td class="py-2"><?= $c['collection']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['signature']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Signature</td>
+                    <td class="py-2"><?= $c['signature']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['location_note']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Note on location</td>
+                    <td class="py-2"><?= $c['location_note']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['type']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Document type</td>
+                    <td class="py-2"><?= $c['type']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['preservation']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Preservation</td>
+                    <td class="py-2"><?= $c['preservation']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['copy']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Type of copy</td>
+                    <td class="py-2"><?= $c['copy']; ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($c['manifestation_notes']) : ?>
+                <tr class="align-baseline border-t border-b border-gray-200">
+                    <td class="w-1/5 py-2">Notes on nanifestation</td>
+                    <td class="py-2"><?= $c['manifestation_notes']; ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+<?php endforeach; ?>
 
 <?php if (!empty($letter['related_resources'])) : ?>
     <h2 class="text-lg font-bold">Related resources</h2>
