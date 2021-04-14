@@ -239,7 +239,7 @@
                 <td class="py-2">
                     <?php foreach (array_values($letter['keywords']) as $kw) : ?>
                         <li class="mb-1">
-                            <?= $kw; ?>
+                            <?= $kw['name']; ?>
                         </li>
                     <?php endforeach; ?>
                 </td>
