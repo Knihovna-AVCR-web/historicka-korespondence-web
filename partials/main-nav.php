@@ -1,6 +1,4 @@
-<?php
-$menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
-?>
+<?php $menu_items = get_main_menu(); ?>
 <div x-data="{ miniSearchOpen: false, mobileMenuOpen: false, searchOpen: false }" class="relative bg-white">
     <div class="flex flex-wrap items-start justify-between w-full p-5 shadow-md xl:items-end">
         <a href="<?= home_url() ?>" class="flex items-center py-2 mr-6">
@@ -21,16 +19,32 @@ $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
         </button>
         <nav class="hidden xl:flex xl:items-center">
             <ul class="flex flex-col h-full xl:items-end xl:justify-end xl:flex-row">
-                <?php foreach ((array) $menu_items as $item) : ?>
+                <?php foreach ($menu_items as $item) : ?>
                     <li class="p-3">
-                        <?php if (($item->type !== 'taxonomy' && $item->object_id == get_the_ID()) || ($item->type === 'taxonomy' && single_cat_title('', false) === $item->title)) : ?>
-                            <a class="text-sm text-red-700" href="<?= $item->url; ?>" <?= !empty($item->target) ? 'target="' . esc_attr($item->target) . '"' : '' ?>>
-                                <?= $item->title; ?>
+                        <?php if (empty($item['children'])) : ?>
+                            <a class="text-sm hover:text-red-700" href="<?= $item['url']; ?>" <?= !empty($item['target']) ? 'target="' . esc_attr($item['target']) . '"' : '' ?>>
+                                <?= $item['title']; ?>
                             </a>
                         <?php else : ?>
-                            <a class="text-sm hover:text-red-700" href="<?= $item->url; ?>" <?= !empty($item->target) ? 'target="' . esc_attr($item->target) . '"' : '' ?>>
-                                <?= $item->title; ?>
-                            </a>
+                            <div @click.away="flyoutMenuOpen = false" x-data="{ flyoutMenuOpen: false }" class="relative">
+                                <button type="button" @click="flyoutMenuOpen = !flyoutMenuOpen" class="inline-flex items-center text-sm group hover:text-red-700" aria-haspopup="true">
+                                    <span><?= $item['title']; ?></span>
+                                    <svg class="w-5 h-5 ml-1 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div class="absolute z-10 px-2 mt-3 transform sm:px-0 lg:ml-0 lg:left-1/3 lg:-translate-x-1/2" x-show="flyoutMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" style="display: none;" :aria-expanded="flyoutMenuOpen ? 'true' : 'false'">
+                                    <div class="overflow-hidden ring-1 ring-brown-dark">
+                                        <div class="flex-col bg-white">
+                                            <?php foreach ($item['children'] as $subitem) :  ?>
+                                                <a href="<?= $subitem['url']; ?>" class="flex items-start py-2 pl-4 text-sm hover:text-red-700" <?= $subitem['target']; ?>>
+                                                    <?= $subitem['title']; ?>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
@@ -72,9 +86,29 @@ $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
         </div>
         <nav class="flex flex-col">
             <?php foreach ($menu_items as $item) : ?>
-                <a href="<?= $item->url; ?>" class="block py-2 text-sm hover:text-red-700" <?= $item->target; ?>>
-                    <?= $item->title; ?>
-                </a>
+                <?php if (empty($item['children'])) : ?>
+                    <a class="block py-2 text-sm hover:text-red-700" href="<?= $item['url']; ?>" <?= !empty($item['target']) ? 'target="' . esc_attr($item['target']) . '"' : '' ?>>
+                        <?= $item['title']; ?>
+                    </a>
+                <?php else : ?>
+                    <div @click.away="flyoutMenuOpen = false" x-data="{ flyoutMenuOpen: false }" class="relative py-2">
+                        <button type="button" @click="flyoutMenuOpen = !flyoutMenuOpen" class="inline-flex items-center text-sm group hover:text-red-700" aria-haspopup="true">
+                            <span><?= $item['title']; ?></span>
+                            <svg class="w-5 h-5 ml-1 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div x-show="flyoutMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" style="display: none;" :aria-expanded="flyoutMenuOpen ? 'true' : 'false'">
+                            <div class="flex-col bg-white">
+                                <?php foreach ($item['children'] as $subitem) :  ?>
+                                    <a href="<?= $subitem['url']; ?>" class="flex items-start p-2 text-sm hover:text-red-700" <?= $subitem['target']; ?>>
+                                        <?= $subitem['title']; ?>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php endforeach; ?>
             <button type="button" @click="miniSearchOpen = !miniSearchOpen" class="flex w-5 py-2 text-sm cursor-pointer text-brown-dark hover:text-red-700">
                 <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -82,7 +116,7 @@ $menu_items = wp_get_nav_menu_items(get_nav_menu_locations()['main-menu']);
                 </svg>
             </button>
             <div>
-            <?= language_switcher(); ?>
+                <?= language_switcher(); ?>
             </div>
         </nav>
         <div x-show="miniSearchOpen" class="w-full py-4 mx-auto" style="display:none;">
