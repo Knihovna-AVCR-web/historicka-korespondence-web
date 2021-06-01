@@ -33,8 +33,8 @@
                                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                     </svg>
                                 </button>
-                                <div class="absolute z-10 px-2 mt-3 transform sm:px-0 lg:ml-0 lg:left-1/3 lg:-translate-x-1/2" x-show="flyoutMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" style="display: none;" :aria-expanded="flyoutMenuOpen ? 'true' : 'false'">
-                                    <div class="overflow-hidden ring-1 ring-brown-dark">
+                                <div class="absolute z-10 w-40 px-2 mt-3 transform sm:px-0 lg:ml-0 lg:left-1/3 lg:-translate-x-1/2" x-show="flyoutMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" style="display: none;" :aria-expanded="flyoutMenuOpen ? 'true' : 'false'">
+                                    <div class="overflow-hidden shadow-lg ring-1 ring-black ring-opacity-5">
                                         <div class="flex-col bg-white">
                                             <?php foreach ($item['children'] as $subitem) :  ?>
                                                 <a href="<?= $subitem['url']; ?>" class="flex items-start py-2 pl-4 text-sm hover:text-red-700" <?= $subitem['target']; ?>>
@@ -91,21 +91,19 @@
                         <?= $item['title']; ?>
                     </a>
                 <?php else : ?>
-                    <div @click.away="flyoutMenuOpen = false" x-data="{ flyoutMenuOpen: false }" class="relative py-2">
-                        <button type="button" @click="flyoutMenuOpen = !flyoutMenuOpen" class="inline-flex items-center text-sm group hover:text-red-700" aria-haspopup="true">
+                    <div @click.away="flyoutMenuOpen = false" x-data="{ flyoutMenuOpen: false }" class="relative my-1">
+                        <button type="button" @click="flyoutMenuOpen = !flyoutMenuOpen" class="flex items-center w-full px-1 py-2 text-sm group hover:text-red-700" aria-haspopup="true">
                             <span><?= $item['title']; ?></span>
-                            <svg class="w-5 h-5 ml-1 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <svg class="w-5 h-5 ml-1 group-hover:text-red-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
-                        <div x-show="flyoutMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" style="display: none;" :aria-expanded="flyoutMenuOpen ? 'true' : 'false'">
-                            <div class="flex-col bg-white">
-                                <?php foreach ($item['children'] as $subitem) :  ?>
-                                    <a href="<?= $subitem['url']; ?>" class="flex items-start p-2 text-sm hover:text-red-700" <?= $subitem['target']; ?>>
-                                        <?= $subitem['title']; ?>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
+                        <div class="px-2 transform sm:px-0 lg:ml-0 lg:left-1/3 lg:-translate-x-1/2" x-show="flyoutMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" style="display: none;" :aria-expanded="flyoutMenuOpen ? 'true' : 'false'">
+                            <?php foreach ($item['children'] as $subitem) :  ?>
+                                <a href="<?= $subitem['url']; ?>" class="block px-3 py-2 text-sm hover:text-red-700">
+                                    <?= $subitem['title']; ?>
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endif; ?>
