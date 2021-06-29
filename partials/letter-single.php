@@ -314,7 +314,7 @@
             <?php endif; ?>
             <?php if ($c['manifestation_notes']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
-                    <td class="w-1/5 py-2">Notes on nanifestation</td>
+                    <td class="w-1/5 py-2">Notes on manifestation</td>
                     <td class="py-2"><?= $c['manifestation_notes']; ?></td>
                 </tr>
             <?php endif; ?>
