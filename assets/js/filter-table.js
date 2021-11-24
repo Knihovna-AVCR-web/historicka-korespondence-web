@@ -400,7 +400,7 @@ if (document.getElementById('letters')) {
             document.getElementById('total-count').innerHTML = data.length
             updateSelects(data, false)
         },
-        initialSort: [{ column: 'date', dir: 'desc' }],
+        initialSort: [{ column: 'date', dir: 'asc' }],
         layout: 'fitColumns',
         maxHeight: '100%',
         pagination: 'local',
