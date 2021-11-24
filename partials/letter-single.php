@@ -219,7 +219,7 @@
                 <td class="py-2"><?= $letter['explicit']; ?></td>
             </tr>
         <?php endif; ?>
-        <?php if (!empty($letter['languages'])) : ?>
+        <?php if (!empty(array_filter($letter['languages']))) : ?>
             <tr class="align-baseline border-t border-b border-gray-200">
                 <td class="w-1/5 py-2">Languages</td>
                 <td class="py-2">
@@ -237,11 +237,13 @@
             <tr class="align-baseline border-t border-b border-gray-200">
                 <td class="py-2">Keywords</td>
                 <td class="py-2">
-                    <?php foreach (array_values($letter['keywords']) as $kw) : ?>
-                        <li class="mb-1">
-                            <?= $kw['name']; ?>
-                        </li>
-                    <?php endforeach; ?>
+                    <ul class="list-disc list-inside">
+                        <?php foreach (array_values($letter['keywords']) as $kw) : ?>
+                            <li class="mb-1">
+                                <?= $kw['name']; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </td>
             </tr>
         <?php endif; ?>
@@ -258,61 +260,61 @@
 <?php foreach ($letter['copies'] as $c) : ?>
     <table class="w-full mb-10 text-sm">
         <tbody>
-            <?php if ($c['l_number']) : ?>
+            <?php if (isset($c['l_number']) && $c['l_number']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Letter number</td>
                     <td class="py-2"><?= $c['l_number']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['repository']) : ?>
+            <?php if (isset($c['repository']) && $c['repository']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Repository</td>
                     <td class="py-2"><?= $c['repository']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['archive']) : ?>
+            <?php if (isset($c['archive']) && $c['archive']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Archive</td>
                     <td class="py-2"><?= $c['archive']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['collection']) : ?>
+            <?php if (isset($c['collection']) && $c['collection']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Collection</td>
                     <td class="py-2"><?= $c['collection']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['signature']) : ?>
+            <?php if (isset($c['signature']) && $c['signature']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Signature</td>
                     <td class="py-2"><?= $c['signature']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['location_note']) : ?>
+            <?php if (isset($c['location_note']) && $c['location_note']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Note on location</td>
                     <td class="py-2"><?= $c['location_note']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['type']) : ?>
+            <?php if (isset($c['type']) && $c['type']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Document type</td>
                     <td class="py-2"><?= $c['type']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['preservation']) : ?>
+            <?php if (isset($c['preservation']) && $c['preservation']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Preservation</td>
                     <td class="py-2"><?= $c['preservation']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['copy']) : ?>
+            <?php if (isset($c['copy']) && $c['copy']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Type of copy</td>
                     <td class="py-2"><?= $c['copy']; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($c['manifestation_notes']) : ?>
+            <?php if (isset($c['manifestation_notes']) && $c['manifestation_notes']) : ?>
                 <tr class="align-baseline border-t border-b border-gray-200">
                     <td class="w-1/5 py-2">Notes on manifestation</td>
                     <td class="py-2"><?= $c['manifestation_notes']; ?></td>
@@ -328,17 +330,19 @@
         <tbody>
             <tr class="align-baseline border-t border-b border-gray-200">
                 <td class="py-2">
-                    <?php foreach ($letter['related_resources'] as $resource) : ?>
-                        <li class="mb-1">
-                            <?php if (!empty($resource['link'])) : ?>
-                                <a href="<?= $resource['link']; ?>" target="_blank">
+                    <ul class="list-disc list-inside max-w-prose">
+                        <?php foreach ($letter['related_resources'] as $resource) : ?>
+                            <li class="mb-1">
+                                <?php if (!empty($resource['link'])) : ?>
+                                    <a href="<?= $resource['link']; ?>" target="_blank" class="no-underline hover:underline">
+                                        <?= $resource['title']; ?>
+                                    </a>
+                                <?php else : ?>
                                     <?= $resource['title']; ?>
-                                </a>
-                            <?php else : ?>
-                                <?= $resource['title']; ?>
-                            <?php endif; ?>
-                        </li>
-                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </td>
             </tr>
         </tbody>
@@ -348,7 +352,7 @@
 <div class="flex flex-wrap mb-6 -m-x-1 gallery">
     <?php foreach ($letter['images'] as $img) : ?>
         <a href="<?= $img['img']['large']; ?>" data-caption="<?= $img['description']; ?>">
-            <img data-src="<?= $img['img']['thumb']; ?>" class="w-32 h-auto m-1 lazy shadow" alt="<?= $img['description']; ?>">
+            <img data-src="<?= $img['img']['thumb']; ?>" class="w-32 h-auto m-1 shadow lazy" alt="<?= $img['description']; ?>">
         </a>
     <?php endforeach; ?>
 </div>
