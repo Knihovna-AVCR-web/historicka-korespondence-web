@@ -359,3 +359,23 @@ function format_letter_object($data, $element)
 
     return $result;
 }
+
+function get_letter_title($letter)
+{
+    $author = empty($letter['l_author']) ? '' : $letter['l_author'][0]['simple_name'];
+    $recipient = empty($letter['recipient']) ? '' : $letter['recipient'][0]['simple_name'];
+    $origin = empty($letter['origin']) ? '' : $letter['origin'][0]['name'];
+    $destination = empty($letter['dest']) ? '' : $letter['dest'][0]['name'];
+    $title = '';
+
+    $title .= $letter['date_day'] ? $letter['date_day'] . '. ' : '? ';
+    $title .= $letter['date_month'] ? $letter['date_month'] . '. ' : '? ';
+    $title .= $letter['date_year'] ? $letter['date_year'] . ' ' : '? ';
+    $title .= $author ? "$author " : '';
+    $title .= $origin ? "($origin) " : '';
+    $title .= $recipient || $destination ? 'to ' : '';
+    $title .= $recipient ? "$recipient " : '';
+    $title .= $origin ? "($destination) " : '';
+
+    return $title;
+}

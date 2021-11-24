@@ -1,5 +1,5 @@
 <h1 class="mb-6 text-3xl">
-    <?= $letter['name'] ?>
+    <?= get_letter_title($letter) ?>
 </h1>
 
 <h2 class="text-lg font-bold">Dates</h2>
