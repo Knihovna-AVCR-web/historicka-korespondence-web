@@ -375,7 +375,7 @@ function get_letter_title($letter)
     $title .= $origin ? "($origin) " : '';
     $title .= $recipient || $destination ? 'to ' : '';
     $title .= $recipient ? "$recipient " : '';
-    $title .= $origin ? "($destination) " : '';
+    $title .= $destination ? "($destination) " : '';
 
     return $title;
 }
