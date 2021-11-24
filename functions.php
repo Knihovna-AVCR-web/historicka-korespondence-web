@@ -46,8 +46,15 @@ add_action('template_redirect', function () {
 
     $db = isset($_GET['db']) && !empty($_GET['db']) ? $_GET['db'] : false;
 
-    if ($db == 'bl_letter') {
-        $url = get_permalink(carbon_get_theme_option(ICL_LANGUAGE_CODE . '_mb_db'));
+    $options = [
+        'bl_letter' => ICL_LANGUAGE_CODE . '_mb_db',
+        'tgm_letter' => ICL_LANGUAGE_CODE . '_tgm_db',
+        'sachs_letter' => ICL_LANGUAGE_CODE . '_sachs_db',
+        'pol_letter' => ICL_LANGUAGE_CODE . '_pol_db',
+    ];
+
+    if (isset($options[$db])) {
+        $url = get_permalink(carbon_get_theme_option($options[$db]));
         exit(wp_redirect($url));
     }
 
@@ -170,7 +177,6 @@ function language_switcher()
 
 function get_all_posts()
 {
-    $results = [];
     $the_query = new WP_Query([
         'order' => 'ASC',
         'orderby' => 'title',
@@ -179,9 +185,13 @@ function get_all_posts()
         'posts_per_page' => -1,
     ]);
 
+    $results = [];
+
     while ($the_query->have_posts()) {
         $the_query->the_post();
-        $results[get_the_ID()] = get_the_title();
+        $parent = wp_get_post_parent_id(get_the_ID());
+        $parent = $parent ? get_the_title($parent) . ': ' : '';
+        $results[get_the_ID()] = $parent . get_the_title();
     }
 
     wp_reset_postdata();
