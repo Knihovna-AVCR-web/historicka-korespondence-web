@@ -20,7 +20,7 @@
     <?php
     wp_head();
     require_once 'partials/fonts.php';
-    require_once 'partials/analytics.php'; ?>
+    ?>
 </head>
 <body <?php body_class('h-full flex flex-col font-merriweather text-brown-dark'); ?>>
     <header class="z-10 pt-1 bg-brown">

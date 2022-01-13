@@ -17,7 +17,6 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('select', ICL_LANGUAGE_CODE . '_pol_db', 'Databáze Polanus')
                 ->add_options('get_all_posts'),
             Field::make('text', 'contact_email', 'Kontaktní e-mail')
-                ->set_attribute('pattern', '[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+'),
-            Field::make('text', 'ga_code', 'Číslo pro měření GA')
+                ->set_attribute('pattern', '[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+')
         ]);
 });
