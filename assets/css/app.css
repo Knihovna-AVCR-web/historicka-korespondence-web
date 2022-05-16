@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .stretched-link::after {
-    content: "";
+    content: '';
 
     @apply absolute inset-0 bg-transparent pointer-events-auto;
 }
@@ -35,6 +35,8 @@
     @apply my-3;
 }
 
-.front .prose a {
-    @apply text-brown-dark;
+.prose a {
+    color: #b91c1c;
+    text-decoration: underline;
+    font-weight: 500;
 }

@@ -1,4 +1,4 @@
-# Copyright (C) 2021 hiko
+# Copyright (C) 2022 hiko
 # This file is distributed under the same license as the hiko package.
 msgid ""
 msgstr ""
@@ -23,7 +23,11 @@ msgstr ""
 msgid "Zadaná stránka nebyla nalezena."
 msgstr ""
 
-#: ../front-page.php:54
+#: ../front-page.php:60
+msgid "Projekty"
+msgstr ""
+
+#: ../front-page.php:82
 msgid "Aktuálně"
 msgstr ""
 
@@ -67,15 +71,15 @@ msgstr ""
 msgid "Korespondence Milady Blekastad"
 msgstr ""
 
-#: ../partials/main-nav.php:10, ../partials/main-nav.php:60
+#: ../partials/main-nav.php:8, ../partials/main-nav.php:74
 msgid "Historická korespondence"
 msgstr ""
 
-#: ../partials/main-nav.php:13, ../partials/main-nav.php:63
+#: ../partials/main-nav.php:11, ../partials/main-nav.php:77
 msgid "online"
 msgstr ""
 
-#: ../partials/main-nav.php:51, ../partials/main-nav.php:52, ../partials/main-nav.php:90, ../partials/main-nav.php:91, ../partials/searchform.php:3
+#: ../partials/main-nav.php:65, ../partials/main-nav.php:66, ../partials/main-nav.php:122, ../partials/main-nav.php:123, ../partials/searchform.php:3
 msgid "Hledat"
 msgstr ""
 
