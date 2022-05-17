@@ -1,40 +1,6 @@
-# NPM #
-##########
-node_modules/
-/node_modules/
-
-# Packages #
-############
-*.7z
-*.dmg
-*.gz
-*.bz2
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-*.tgz
-*.map
-
-# Logs and databases #
-######################
-*.log
-*.sql
-*.env
-
-# SASS #
-##########
-**/.sass-cache
-**/.sass-cache/*
-**/.map
-
-# Composer #
-##########
-vendor/
-
-assets/dist/
-assets/img/raw/
-.config.js
-
-.vscode/
+/node_modules
+/vendor
+/public
+.env
+npm-debug.log
+yarn-error.log

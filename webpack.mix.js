@@ -2,21 +2,39 @@ const mix = require('laravel-mix')
 const config = require('./.config.js')
 const wpPot = require('wp-pot')
 
-mix.setPublicPath('./assets/dist/')
-
-mix.browserSync(config.projectURL)
+mix.setPublicPath('public')
 
 mix.webpackConfig({ devtool: 'source-map' })
 
-mix.postCss('assets/css/app.css', '', [
-    require('tailwindcss')('./tailwind.config.js'),
+mix.options({
+    processCssUrls: false,
+})
+
+mix.postCss('resources/styles/app.css', '', [
+    require('postcss-import'),
+    require('tailwindcss'),
+    require('autoprefixer'),
 ])
 
-mix.css('assets/css/filter-table.css', '')
+mix.js('resources/scripts/app.js', '')
 
-mix.js('assets/js/app.js', '')
+mix.copyDirectory('resources/images', 'public/images')
 
-mix.js('assets/js/filter-table.js', '')
+mix.browserSync({
+    proxy: config.projectURL,
+    files: [
+        './resources/views/**/*.php',
+        './resources/css/**/*.css',
+        './resources/js/**/*.js',
+        './tailwind.config.js',
+    ],
+})
+
+mix.override((config) => {
+    config.watchOptions = {
+        ignored: /node_modules/,
+    }
+})
 
 if (mix.inProduction()) {
     wpPot({
@@ -27,4 +45,5 @@ if (mix.inProduction()) {
         src: './**/*.php',
         team: 'Jarka Pachlová <pachlova@lib.cas.cz>',
     })
+    mix.version()
 }

@@ -1,17 +1,19 @@
-<?php
-get_header();
-the_post();
-require 'partials/entry-header.php';
-echo do_shortcode('[breadcrumbs]');
-?>
+<!doctype html>
+<html <?php language_attributes(); ?> class="h-full">
 
-<article class="py-5 prose border-t-2 border-b-2 border-red-700">
-    <h1>
-        <?php the_title(); ?>
-    </h1>
-    <?php the_content(); ?>
-</article>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <?php echo view('partials/favicons')->render(); ?>
+  <?php wp_head(); ?>
+</head>
 
-<?php
-require 'partials/entry-footer.php';
-get_footer();
+<body <?php body_class('flex flex-col h-full m-0 bg-gray-100'); ?>>
+  <?php wp_body_open(); ?>
+  <?php do_action('get_header'); ?>
+  <?php echo view(app('sage.view'), app('sage.data'))->render(); ?>
+  <?php do_action('get_footer'); ?>
+  <?php wp_footer(); ?>
+</body>
+
+</html>
