@@ -3,9 +3,8 @@
 @section('content')
     <article>
         <h1>
-            {{ $title }}
+            {{ __('Nenalezeno', 'hiko') }}
         </h1>
-        <hr>
         <p>
             {{ __('Zadaná stránka nebyla nalezena.', 'hiko') }}
         </p>

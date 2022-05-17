@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<x-breadcrumb />
     <h1>
-        {{ $title }}
+        {{ get_the_title() }}
     </h1>
-    <hr>
     {{ the_content() }}
 @endsection

@@ -20,7 +20,8 @@ add_action('after_setup_theme', function () {
     Carbon_Fields::boot();
 
     register_nav_menus([
-        'primary_navigation' => 'Hlavní menu',
+        'main-menu' => 'Hlavní menu',
+        'blekastad-menu' => 'Blekastad Menu',
     ]);
 
     add_theme_support('title-tag');

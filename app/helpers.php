@@ -2,6 +2,8 @@
 
 namespace App;
 
+use WP_Query;
+
 function assets()
 {
     $assets = json_decode(
@@ -48,26 +50,24 @@ function nonbreakingSpaces($content)
     return $content;
 }
 
-function stringToASCII($string)
+function getAllPosts()
 {
-    $output = '';
-    $length = strlen($string);
+    $query = new WP_Query([
+        'order' => 'ASC',
+        'orderby' => 'title',
+        'post_type' => ['post', 'page'],
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+    ]);
 
-    for ($i = 0; $i < $length; $i++) {
-        $output .= '&#' . ord($string[$i]) . ';';
-    }
+    $results = [];
 
-    return $output;
-}
+    collect($query->posts)
+        ->each(function ($item) use (&$results) {
+            $parent = wp_get_post_parent_id($item->ID);
+            $parentTitle = $parent ? get_the_title($parent) . ': ' : '';
+            $results[$item->ID] = $parentTitle . $item->post_title;
+        });
 
-function mailtoLink($email, $classes)
-{
-    $email = stringToASCII($email);
-    $mailto = stringToASCII('mailto:') . $email;
-
-    ob_start(); ?>
-    <a href="<?= $mailto; ?>" class="<?= $classes; ?>">
-        <?= $email; ?>
-    </a>
-    <?php return ob_get_clean();
+    return $results;
 }

@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
     important: true,
@@ -12,28 +13,25 @@ module.exports = {
         'hover:text-gray-400',
         'text-gray-400',
         'text-yellow-900',
+        'h-full',
+        'm-0',
+        'text-primary',
     ],
     theme: {
         extend: {
-            theme: {
-                colors: {
-                    'brown-dark': '#524640',
-                    brown: '#8f8279',
-                },
-                fontFamily: {
-                    merriweather: [
-                        'Merriweather',
-                        ...defaultTheme.fontFamily.sans,
-                    ],
-                },
-                screens: {
-                    print: { raw: 'print' },
-                },
+            colors: {
+                primary: colors.stone['700'],
+                brown: '#8f8279',
+            },
+            fontFamily: {
+                merriweather: ['Merriweather', ...defaultTheme.fontFamily.sans],
+            },
+            screens: {
+                print: { raw: 'print' },
             },
             typography: {
                 DEFAULT: {
                     css: {
-                        color: '#524640',
                         a: {
                             color: ({ theme }) => theme('colors.red.700'),
                             '&:hover': {
@@ -52,5 +50,8 @@ module.exports = {
             },
         },
     },
-    plugins: [require('@tailwindcss/typography')],
+    plugins: [
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/line-clamp'),
+    ],
 }

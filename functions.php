@@ -54,7 +54,7 @@ try {
 |
 */
 
-collect(['blocks', 'custom-fields', 'setup', 'filters', 'helpers',])
+collect(['blocks', 'custom-fields', 'setup', 'filters', 'helpers', 'options'])
     ->each(function ($file) {
         if (! locate_template($file = "app/{$file}.php", true, true)) {
             wp_die(
