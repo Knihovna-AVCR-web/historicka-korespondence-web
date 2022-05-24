@@ -71,3 +71,23 @@ function getAllPosts()
 
     return $results;
 }
+
+function getContent($url)
+{
+    $whitelist = [
+        '127.0.0.1',
+        '::1',
+    ];
+
+    if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+        return @file_get_contents($url);
+    }
+
+    return @file_get_contents(
+        $url,
+        false,
+        stream_context_create([
+            'http' => ['method' => 'GET'], 'ssl' => ['verify_peer' => false, 'allow_self_signed' => true]
+        ])
+    );
+}

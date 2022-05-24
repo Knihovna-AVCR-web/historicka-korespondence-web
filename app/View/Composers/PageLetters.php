@@ -40,19 +40,51 @@ class PageLetters extends Composer
 
     protected function loadLetter($letter)
     {
-        $url = @file_get_contents($this->url . '/api/letter/' . $letter . '?media=1');
+        $data = \App\getContent($this->url . '/api/letter/' . $letter . '?media=1');
 
-        if ($url === false) {
+        if ($data === false) {
             $this->metadata['error'] = __('Dopis nebyl nalezen.', 'hiko');
             return;
         }
 
-        $this->metadata['letter'] = json_decode($url, true)['data'];
-
+        $this->metadata['letter'] = json_decode($data, true)['data'];
     }
 
     protected function loadDB()
     {
+        $this->selectData();
+        $this->metadata['searchUrl'] = $this->url;
+    }
 
+    protected function selectData()
+    {
+        $select = [
+            'author' => [
+                'type' => 'identity',
+            ],
+            'recipient' => [
+                'type' => 'identity',
+            ],
+            'origin' => [
+                'type' => 'place',
+            ],
+            'destination' => [
+                'type' => 'place',
+            ],
+            'keyword' => [
+                'type' => 'keyword',
+            ],
+        ];
+
+        $this->metadata['select'] = collect($select)
+            ->map(function ($item, $key) {
+                return [
+                    'label' => ucfirst($key),
+                    'type' => $item['type'],
+                    'searchUrl' => $this->url . '/api/facets?model=' . $item['type'] . '&query=',
+                    'role' => $key,
+                ];
+            })
+            ->toArray();
     }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use WP_Error;
+use App\Ajax\JsonReader;
 
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_generator');
@@ -79,4 +80,14 @@ add_filter('rest_authentication_errors', function ($result) {
             'status' => 401,
         ]
     );
+});
+
+add_action('wp_ajax_nopriv_read_json', function () {
+    !isset($_GET['url']) ? wp_send_json_error('No URL provided.') : null;
+    (new JsonReader($_GET['url']))->read();
+});
+
+add_action('wp_ajax_read_json', function () {
+    !isset($_GET['url']) ? wp_send_json_error('No URL provided.') : null;
+    (new JsonReader($_GET['url']))->read();
 });

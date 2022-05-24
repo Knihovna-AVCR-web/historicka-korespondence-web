@@ -6,6 +6,12 @@ use Carbon_Fields\Carbon_Fields;
 
 add_action('wp_enqueue_scripts', function () {
     wp_dequeue_style('global-styles');
+
+    if (is_page_template('page-letters.blade.php')) {
+        wp_enqueue_script('filter', \App\assets()['/filter.js'], [], null, false);
+        wp_enqueue_style('filter', \App\assets()['/filter.css'], false, null);
+    }
+
     wp_enqueue_script('app', \App\assets()['/app.js'], [], null, false);
     wp_enqueue_style('app', \App\assets()['/app.css'], false, null);
 }, 100);

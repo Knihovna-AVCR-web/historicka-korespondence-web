@@ -18,6 +18,13 @@ mix.postCss('resources/styles/app.css', '', [
 
 mix.js('resources/scripts/app.js', '')
 
+mix.postCss('resources/styles/filter.css', '', [
+    require('postcss-import'),
+    require('autoprefixer'),
+])
+
+mix.js('resources/scripts/filter.js', '')
+
 mix.copyDirectory('resources/images', 'public/images')
 
 mix.browserSync({
