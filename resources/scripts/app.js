@@ -22,5 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     baguetteBox.run('.wp-block-media-text', {
         buttons: false,
     })
-    baguetteBox.run('.excerpt')
+    baguetteBox.run('.gallery', {
+        filter: /.+/i,
+    })
 })

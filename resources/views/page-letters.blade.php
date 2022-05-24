@@ -24,7 +24,7 @@
             </p>
         </div>
         @elseif (isset($letter))
-            @include('partial.letter', ['letter' => $letter])
+            @include('partials.letter', ['letter' => $letter])
         @else
         @endif
     </div>

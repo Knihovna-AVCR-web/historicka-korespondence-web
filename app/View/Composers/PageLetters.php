@@ -40,7 +40,7 @@ class PageLetters extends Composer
 
     protected function loadLetter($letter)
     {
-        $url = @file_get_contents($this->url . '/api/letter/' . $letter);
+        $url = @file_get_contents($this->url . '/api/letter/' . $letter . '?media=1');
 
         if ($url === false) {
             $this->metadata['error'] = __('Dopis nebyl nalezen.', 'hiko');
