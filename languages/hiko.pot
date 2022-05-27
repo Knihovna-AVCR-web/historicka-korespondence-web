@@ -1,0 +1,110 @@
+# n
+msgid ""
+msgstr ""
+"Project-Id-Version: n 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/hiko\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-05-27T14:55:32+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Domain: hiko\n"
+
+#. Theme Name of the theme
+msgid "Historicka korespondence"
+msgstr ""
+
+#. Author of the theme
+msgid "Jarka Pachlova"
+msgstr ""
+
+#: app/View/Components/Breadcrumb.php:26
+msgid "Úvod"
+msgstr ""
+
+#: app/View/Composers/PageLetters.php:46
+msgid "Dopis nebyl nalezen."
+msgstr ""
+
+#: resources/views/front-page.blade.php:18
+#: resources/views/front-page.blade.php:19
+msgid "Projekty"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Blekastad Front Page"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Letters"
+msgstr ""
+
+#: resources/views/404.blade.php:6
+msgid "Nenalezeno"
+msgstr ""
+
+#: resources/views/404.blade.php:10
+msgid "Zadaná stránka nebyla nalezena."
+msgstr ""
+
+#: resources/views/front-page.blade.php:42
+msgid "Aktuálně"
+msgstr ""
+
+#: resources/views/page-blekastad.blade.php:23
+msgid "Vstup do databáze"
+msgstr ""
+
+#: resources/views/page-blekastad.blade.php:29
+msgid "Korespondence"
+msgstr ""
+
+#: resources/views/page-blekastad.blade.php:33
+msgid "Milady Blekastad"
+msgstr ""
+
+#: resources/views/page-letters.blade.php:23
+#: resources/views/partials/letter.blade.php:4
+msgid "Zpět k soupisu"
+msgstr ""
+
+#: resources/views/partials/intro.blade.php:7
+msgid "Více"
+msgstr ""
+
+#: resources/views/partials/letter-filters.blade.php:26
+msgid "Vyhledat"
+msgstr ""
+
+#: resources/views/partials/main-nav.blade.php:7
+#: resources/views/partials/main-nav.blade.php:105
+msgid "Historická korespondence"
+msgstr ""
+
+#: resources/views/partials/main-nav.blade.php:11
+#: resources/views/partials/main-nav.blade.php:109
+msgid "online"
+msgstr ""
+
+#: resources/views/partials/main-nav.blade.php:90
+#: resources/views/partials/main-nav.blade.php:91
+#: resources/views/partials/main-nav.blade.php:170
+#: resources/views/partials/main-nav.blade.php:171
+#: resources/views/partials/search.blade.php:3
+msgid "Hledat"
+msgstr ""
+
+#: resources/views/search.blade.php:5
+msgid "Výsledky vyhledávání pro:"
+msgstr ""
+
+#: resources/views/search.blade.php:10
+msgid "Počet výsledků"
+msgstr ""
+
+#: resources/views/search.blade.php:26
+msgid "Zadaný výraz nebyl nalezen. Zkuste to znovu."
+msgstr ""

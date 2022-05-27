@@ -1,6 +1,5 @@
 const mix = require('laravel-mix')
 const config = require('./.config.js')
-const wpPot = require('wp-pot')
 
 mix.setPublicPath('public')
 
@@ -44,13 +43,5 @@ mix.override((config) => {
 })
 
 if (mix.inProduction()) {
-    wpPot({
-        bugReport: 'pachlova@lib.cas.cz',
-        destFile: './languages/hiko.pot',
-        domain: 'hiko',
-        package: 'hiko',
-        src: './**/*.php',
-        team: 'Jarka Pachlová <pachlova@lib.cas.cz>',
-    })
     mix.version()
 }
