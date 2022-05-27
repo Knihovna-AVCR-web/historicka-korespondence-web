@@ -48,6 +48,7 @@ class PageLetters extends Composer
         }
 
         $this->metadata['letter'] = json_decode($data, true)['data'];
+        $this->metadata['dbUrl'] = $this->url;
     }
 
     protected function loadDB()
