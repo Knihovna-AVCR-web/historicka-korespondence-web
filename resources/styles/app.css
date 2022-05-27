@@ -1,0 +1,33 @@
+@import './../../node_modules/baguettebox.js/dist/baguetteBox.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+.prose .wp-block-gallery {
+    @apply mt-0 mb-1;
+}
+
+.prose .blocks-gallery-grid {
+    @apply my-0 list-none;
+}
+
+.prose .blocks-gallery-grid img {
+    @apply my-0;
+}
+
+.prose .blocks-gallery-grid > li {
+    @apply pl-0;
+}
+
+.prose .blocks-gallery-grid > li::before {
+    content: none;
+}
+
+.prose hr.wp-block-separator {
+    @apply my-4;
+}
