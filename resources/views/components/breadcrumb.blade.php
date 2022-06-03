@@ -4,11 +4,11 @@
             <li class="inline-flex items-center p-0">
                 @if (isset($item['url']))
                     <a href="{{ $item['url'] }}">
-                        {{ $item['name'] }}
+                        {!! $item['name'] !!}
                     </a>
                 @else
                     <span class="text-gray-500">
-                        {{ $item['name'] }}
+                        {!! $item['name'] !!}
                     </span>
                 @endif
                 @if (!$loop->last)
