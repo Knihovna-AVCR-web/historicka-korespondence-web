@@ -13,6 +13,7 @@ class PageLetters extends Composer
         'tgm' => 'https://tgm.historicka-korespondence.cz',
         'sachs' => 'https://sachs.historicka-korespondence.cz',
         'polanus' => 'https://polanus.historicka-korespondence.cz',
+        'studenti' => 'https://studenti.historicka-korespondence.cz',
     ];
 
     public function __construct()
