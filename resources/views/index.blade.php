@@ -3,7 +3,7 @@
 @section('content')
 <x-breadcrumb />
     <h1>
-        {{ get_the_title() }}
+        {!! the_title() !!}
     </h1>
     {{ the_content() }}
 @endsection

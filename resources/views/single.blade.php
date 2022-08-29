@@ -4,7 +4,7 @@
     <x-breadcrumb />
     <article>
         <h1>
-            {{ the_title() }}
+            {!! the_title() !!}
         </h1>
         <p class="text-sm">
             {{ get_the_date() }}

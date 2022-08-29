@@ -13,7 +13,7 @@
                 @php(the_post())
                 <li>
                     <a href="{{ the_permalink() }}">
-                        {{ the_title() }}
+                        {!! the_title() !!}
                     </a>
                 </li>
             @endwhile
