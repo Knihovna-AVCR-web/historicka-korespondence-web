@@ -14,6 +14,7 @@ class PageLetters extends Composer
         'sachs' => 'https://sachs.historicka-korespondence.cz',
         'polanus' => 'https://polanus.historicka-korespondence.cz',
         'studenti' => 'https://studenti.historicka-korespondence.cz',
+        'ucenci' => 'https://ucenci.historicka-korespondence.cz',
     ];
 
     public function __construct()
