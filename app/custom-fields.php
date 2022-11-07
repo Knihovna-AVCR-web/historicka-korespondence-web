@@ -17,6 +17,7 @@ add_action('carbon_fields_register_fields', function () {
                         'sachs' => 'Sachs',
                         'polanus' => 'Polanus',
                         'studenti' => 'Studenti',
+                        'ucenci' => 'Pobělohorští učenci ',
                     ];
                 }),
         ]);
