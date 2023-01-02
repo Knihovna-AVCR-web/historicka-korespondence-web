@@ -4,7 +4,8 @@
             {{ $item['label'] }}
         </label>
         <select x-data="ajaxChoices({ url: '{{ $item['searchUrl'] }}', element: $el })" x-init="initSelect()" id="{{ $item['role'] }}" class="mb-4"
-            x-model="formData.{{ $item['role'] }}"></select>
+            :value="formData.{{ $item['role'] }}" @change="formData.{{ $item['role'] }} = $event.target.value">
+        ></select>
     @endforeach
     <label for="from-year" class="block mb-1 text-red-700 uppercase">From</label>
     <input type="number" x-model="formData.after" class="w-full p-2 mb-4 bg-gray-100 border border-gray-300 rounded-sm"

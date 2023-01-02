@@ -90,6 +90,9 @@ window.filterTable = function (params) {
             const self = this
 
             const queryString = Object.keys(self.formData)
+                .filter((key) => {
+                    return self.formData[key] !== ''
+                })
                 .map((key) => {
                     if (key === 'after' || key === 'before') {
                         return (
@@ -97,7 +100,7 @@ window.filterTable = function (params) {
                         )
                     }
 
-                    return key + '=' + parseInt(self.formData[key].value)
+                    return key + '=' + parseInt(self.formData[key])
                 })
                 .join('&')
 
