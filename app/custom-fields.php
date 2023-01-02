@@ -18,6 +18,7 @@ add_action('carbon_fields_register_fields', function () {
                         'polanus' => 'Polanus',
                         'studenti' => 'Studenti',
                         'ucenci' => 'Pobělohorští učenci ',
+                        'musil' => 'Musil',
                     ];
                 }),
         ]);
